@@ -1,0 +1,185 @@
+{
+  "schema": "rch.paper_artifacts.v1",
+  "figures": {
+    "fig_schema_method_pipeline.pdf": {
+      "path": "analysis/generated/figures/fig_schema_method_pipeline.pdf",
+      "status": "generated_conceptual"
+    },
+    "fig_schema_rch_implementation_flow.pdf": {
+      "path": "analysis/generated/figures/fig_schema_rch_implementation_flow.pdf",
+      "status": "generated_conceptual"
+    },
+    "fig_synthetic_clean_l1_locality_vs_n.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_clean_l1_locality_vs_n.pdf",
+      "status": "generated_from_synthetic"
+    },
+    "fig_mixed_recall_heatmap.pdf": {
+      "path": "analysis/generated/figures/fig_mixed_recall_heatmap.pdf",
+      "status": "generated_from_synthetic_real",
+      "synthetic_exact_cells": 56,
+      "real_metric_column": "recall_8_64",
+      "real_metric_cells": 16,
+      "real_metric_status_counts": {
+        "exact": 80
+      }
+    },
+    "fig_synthetic_contamination_kendall_tau.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_contamination_kendall_tau.pdf",
+      "status": "generated_from_synthetic"
+    },
+    "fig_synthetic_contamination_tau_by_bit_rule.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_contamination_tau_by_bit_rule.pdf",
+      "status": "generated_from_synthetic"
+    },
+    "fig_synthetic_clean_runtime_vs_n.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_clean_runtime_vs_n.pdf",
+      "status": "generated_from_synthetic"
+    },
+    "fig_synthetic_block_read_cache_miss.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_block_read_cache_miss.pdf",
+      "status": "generated_from_synthetic_m8_cache_miss_rate"
+    },
+    "fig_mixed_bit_allocation_by_rule.pdf": {
+      "path": "analysis/generated/figures/fig_mixed_bit_allocation_by_rule.pdf",
+      "status": "generated_from_synthetic_real"
+    },
+    "fig_mixed_ablation_a5_vs_a6_miad.pdf": {
+      "path": "analysis/generated/figures/fig_mixed_ablation_a5_vs_a6_miad.pdf",
+      "status": "generated_from_synthetic_real"
+    },
+    "fig_synthetic_clean_l2_locality_vs_n.pdf": {
+      "path": "analysis/generated/figures/fig_synthetic_clean_l2_locality_vs_n.pdf",
+      "status": "generated_from_synthetic"
+    },
+    "fig_real_refinement_ablation_miad.pdf": {
+      "path": "analysis/generated/figures/fig_real_refinement_ablation_miad.pdf",
+      "status": "generated_from_real_refinement"
+    }
+  },
+  "tables": {
+    "table_meta_determinism_by_preset.tex": {
+      "path": "analysis/generated/tables/table_meta_determinism_by_preset.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_meta_determinism_by_preset.tex",
+        "csv": "analysis/generated/tables/table_meta_determinism_by_preset.csv",
+        "json": "analysis/generated/tables/table_meta_determinism_by_preset.json"
+      },
+      "row_count": 1
+    },
+    "table_mixed_claim_status.tex": {
+      "path": "analysis/generated/tables/table_mixed_claim_status.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_mixed_claim_status.tex",
+        "csv": "analysis/generated/tables/table_mixed_claim_status.csv",
+        "json": "analysis/generated/tables/table_mixed_claim_status.json"
+      },
+      "row_count": 5
+    },
+    "table_mixed_metric_leaders.tex": {
+      "path": "analysis/generated/tables/table_mixed_metric_leaders.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_mixed_metric_leaders.tex",
+        "csv": "analysis/generated/tables/table_mixed_metric_leaders.csv",
+        "json": "analysis/generated/tables/table_mixed_metric_leaders.json"
+      },
+      "row_count": 11
+    },
+    "table_mixed_rch_quantization_summary.tex": {
+      "path": "analysis/generated/tables/table_mixed_rch_quantization_summary.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_mixed_rch_quantization_summary.tex",
+        "csv": "analysis/generated/tables/table_mixed_rch_quantization_summary.csv",
+        "json": "analysis/generated/tables/table_mixed_rch_quantization_summary.json"
+      },
+      "row_count": 10
+    },
+    "table_cgal_a7_fixture.tex": {
+      "path": "analysis/generated/tables/table_cgal_a7_fixture.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_cgal_a7_fixture.tex",
+        "csv": "analysis/generated/tables/table_cgal_a7_fixture.csv",
+        "json": "analysis/generated/tables/table_cgal_a7_fixture.json"
+      },
+      "row_count": 2
+    },
+    "table_real_dataset_catalog.tex": {
+      "path": "analysis/generated/tables/table_real_dataset_catalog.tex",
+      "status": "generated",
+      "formats": {
+        "tex": "analysis/generated/tables/table_real_dataset_catalog.tex",
+        "csv": "analysis/generated/tables/table_real_dataset_catalog.csv",
+        "json": "analysis/generated/tables/table_real_dataset_catalog.json"
+      },
+      "row_count": 4
+    }
+  },
+  "stats": {
+    "synthetic_refinement_effects.csv": {
+      "path": "analysis/generated/stats/synthetic_refinement_effects.csv",
+      "status": "generated",
+      "row_count": 45150,
+      "comparison": "all_minus_off"
+    },
+    "real_refinement_effects.csv": {
+      "path": "analysis/generated/stats/real_refinement_effects.csv",
+      "status": "generated",
+      "row_count": 430,
+      "comparison": "all_minus_off"
+    }
+  },
+  "outputs": {
+    "path": "analysis/generated/outputs/output_snapshot_manifest.json",
+    "status": "generated",
+    "tree_count": 3,
+    "copied_tree_count": 3,
+    "file_count": 20,
+    "total_bytes": 29232769,
+    "trees": {
+      "synthetic_dataset": {
+        "source": "experiments/outputs/synthetic_dataset",
+        "destination": "analysis/generated/outputs/synthetic_dataset",
+        "status": "copied",
+        "file_count": 14,
+        "total_bytes": 28732086,
+        "missing_file_count": 0
+      },
+      "real_dataset": {
+        "source": "experiments/outputs/real_dataset",
+        "destination": "analysis/generated/outputs/real_dataset",
+        "status": "copied",
+        "file_count": 4,
+        "total_bytes": 499197,
+        "missing_file_count": 0
+      },
+      "a7_cgal_appendix": {
+        "source": "experiments/outputs/a7_cgal_appendix",
+        "destination": "analysis/generated/outputs/a7_cgal_appendix",
+        "status": "copied",
+        "file_count": 2,
+        "total_bytes": 1486,
+        "missing_file_count": 0
+      }
+    }
+  },
+  "inputs": {
+    "synthetic_rows": 45150,
+    "synthetic_refinement_rows": 90300,
+    "real_rows": 430,
+    "real_refinement_rows": 860,
+    "a7_rows": 2,
+    "test_logs": 0,
+    "dataset_catalog_rows": 4,
+    "synthetic_statistics_present": true,
+    "real_statistics_present": true
+  },
+  "scope_notes": [
+    "fig_synthetic_block_read_cache_miss requires finite M8 cache-miss-rate measurements; the generator fails closed (RuntimeError) when no perf counters are present \u2014 no M9 fallback.",
+    "fig_mixed_recall_heatmap uses synthetic recall_8_64 and prefers Real recall_8_64 when that exact full-cloud column is present; the figure manifest records the Real metric column and status counts.",
+    "Mesh-quality/application-scope material is intentionally not generated as a figure; downstream mesh quality belongs in future work unless a measured artifact is added."
+  ]
+}

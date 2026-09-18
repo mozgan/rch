@@ -1,0 +1,20 @@
+\begin{table}
+\caption{A6/RCH quantization summary by metric orientation}
+\label{tab:rch_quantization_summary}
+\begin{tabular}{llllllllll}
+\toprule
+scope & bit\_rule & miad & normalized\_miad & m1\_l1 & m1\_l2 & recall\_8\_64 & sort\_seconds & n\_metric & n\_runtime \\
+\midrule
+synthetic clean & C0\_uniform & 1.02859 &  & 2538.82 & 4.42501e-05 & 0.738344 & 0.00115592 & 70 & 105 \\
+synthetic clean & C1\_monotone\_half & 1.13371 &  & 752.533 & 0.00017985 & 0.786056 & 0.00115253 & 70 & 105 \\
+synthetic clean & C2\_occupancy\_floor1 & 0.692026 &  & 834.325 & 0.000134322 & 0.821491 & 0.00113663 & 70 & 105 \\
+synthetic clean & C3\_frame\_core\_occupancy & 0.681455 &  & 597.917 & 0.000182241 & 0.832322 & 0.00113155 & 70 & 105 \\
+synthetic clean & C4\_hybrid & 0.675458 &  & 963.375 & 0.000150195 & 0.815551 & 0.00114812 & 70 & 105 \\
+real D0 & C0\_uniform & 0.365533 & 0.00543735 & 753315 & 3.49147e-11 & 0.773125 & 2.2996 & 10 & 10 \\
+real D0 & C1\_monotone\_half & 1.90493 & 0.0322958 & 304629 & 3.49147e-11 & 0.293235 & 2.31643 & 10 & 10 \\
+real D0 & C2\_occupancy\_floor1 & 0.425572 & 0.00641583 & 348826 & 3.49147e-11 & 0.774152 & 2.3166 & 10 & 10 \\
+real D0 & C3\_frame\_core\_occupancy & 0.424174 & 0.00656109 & 344712 & 3.49147e-11 & 0.774398 & 2.31673 & 10 & 10 \\
+real D0 & C4\_hybrid & 0.425572 & 0.00641583 & 348826 & 3.49147e-11 & 0.774152 & 2.31712 & 10 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}

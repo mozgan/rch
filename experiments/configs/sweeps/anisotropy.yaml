@@ -1,0 +1,49 @@
+# E-axis sweep: declares synthetic geometry families used by run_matrix.py.
+#
+# References:
+#   - George E. P. Box, Mervin E. Muller, A Note on the Generation of Random
+#     Normal Deviates, 1958, DOI: 10.1214/aoms/1177706645.
+#   - John H. Halton, On the efficiency of certain quasi-random sequences of
+#     points in evaluating multi-dimensional integrals, 1960.
+schema: rch.sweep.anisotropy.v1
+geometries:
+  - id: E0
+    label: isotropic sphere
+    generator: gaussian_ellipsoid
+    geometry: sphere
+    axes: [1.0, 1.0, 1.0]
+  - id: E1
+    label: anisotropic plate 5:1:1
+    generator: gaussian_ellipsoid
+    geometry: plate_5to1
+    axes: [5.0, 1.0, 1.0]
+  - id: E2
+    label: elongated rod 10:1:1
+    generator: gaussian_ellipsoid
+    geometry: rod_10to1
+    axes: [10.0, 1.0, 1.0]
+  - id: E5
+    label: surface patch paraboloid_low
+    generator: surface_patch
+    family: paraboloid_low
+  - id: E6
+    label: torus R=1 r=0.3
+    generator: torus
+    family: standard
+  - id: E7
+    label: cylinder H/2r=4
+    generator: cylinder
+    family: standard
+  - id: E8
+    label: mixed-density three_blobs
+    generator: mixed_density
+    family: three_blobs
+degeneracy_cases:
+  - id: G_coplanar
+    label: coplanar z=0
+    generator: degeneracy_cases
+    case: coplanar
+  - id: G_collinear
+    label: collinear y=z=0
+    generator: degeneracy_cases
+    case: collinear

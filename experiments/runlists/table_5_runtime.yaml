@@ -1,0 +1,57 @@
+# runtime runlist: timing, memory, cache, block-read, and MIAD sweep.
+schema: rch.runlist.v1
+name: table_5_runtime
+timing_repeats: 3
+algorithm_ids:
+  - A0_input
+  - A1_lexicographic
+  - A2_morton
+  - A3_isotropic_hilbert
+  - A4_compact_hilbert_aabb
+  - A5_pca_compact_hilbert
+  - A5b_robust_frame_morton
+  - A6_rch
+  - A6_rch_b2_mrcd
+  - A6_rch_b3_ogk
+  - A7_cgal_spatial_sort
+bit_rules:
+  - id: C0_uniform
+    label: C0 uniform (10 bits/axis)
+    bit_allocator: uniform
+    allocation_model: fixed_equal_depth
+    budget_projection: equal_depth_axis_cap
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C1_monotone_half
+    label: C1 monotone-half
+    bit_allocator: monotone_half
+    allocation_model: extent_ranked_monotone_half
+    budget_projection: extent_ranked_half_budget
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C2_occupancy_floor1
+    label: C2 occupancy floor1
+    bit_allocator: occupancy_floor1
+    allocation_model: covering_occupancy_floor1
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C3_frame_core_occupancy
+    label: C3 frame-core occupancy
+    bit_allocator: frame_core_occupancy
+    allocation_model: robust_core_occupancy
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C4_hybrid
+    label: C4 hybrid
+    bit_allocator: hybrid_occupancy
+    allocation_model: robust_core_delta_covering_occupancy
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+contamination_ids: [D0, D1, D2, D3, D4]
+geometry_ids: [E0, E1, E2, E5, E6, E7, E8]
+point_counts: [128, 256, 512]
+seeds: [0, 1, 2, 3, 4]
+metrics: [sort_seconds, peak_rss_kb, cache_references, cache_misses, cache_miss_rate, perf_status, block_read_mean, block_read_p95, miad]

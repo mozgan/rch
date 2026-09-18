@@ -1,0 +1,107 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Synthetic statistical analysis summary",
+  "label": "tab:synthetic_statistics",
+  "columns": [
+    "analysis",
+    "metric",
+    "n",
+    "estimate",
+    "ci95",
+    "p",
+    "effect",
+    "effect_within"
+  ],
+  "rows": [
+    {
+      "analysis": "H1",
+      "metric": "miad",
+      "n": 30,
+      "estimate": -0.24352633067050333,
+      "ci95": "[-0.3998910834455317, -0.1634188069127045]",
+      "p": 0.0029296875,
+      "effect": -0.6,
+      "effect_within": -1.0
+    },
+    {
+      "analysis": "H2",
+      "metric": "miad",
+      "n": 30,
+      "estimate": -0.12857494612964593,
+      "ci95": "[-0.16248367823335308, -0.08209133282054015]",
+      "p": 0.0029296875,
+      "effect": -0.4266666666666667,
+      "effect_within": -0.8666666666666667
+    },
+    {
+      "analysis": "H7_A7",
+      "metric": "miad",
+      "n": 30,
+      "estimate": -0.6946745278872353,
+      "ci95": "[-0.7862778677993085, -0.5582576290878315]",
+      "p": 0.0029296875,
+      "effect": -0.9666666666666667,
+      "effect_within": -1.0
+    },
+    {
+      "analysis": "H3",
+      "metric": "kendall_tau_clean",
+      "n": 420,
+      "estimate": 0.14482230392156858,
+      "ci95": "[0.09892769607843135, 0.18462009803921575]",
+      "p": 4.999750012499375e-05,
+      "effect": 0.3430498866213152,
+      "effect_within": 0.3619047619047619
+    },
+    {
+      "analysis": "C0_uniform:E1_vs_E2",
+      "metric": "Spearman rho (miad)",
+      "n": 8,
+      "estimate": 0.9761904761904763,
+      "ci95": "",
+      "p": 3.314396026200098e-05,
+      "effect": "ok",
+      "effect_within": ""
+    },
+    {
+      "analysis": "C1_monotone_half:E1_vs_E2",
+      "metric": "Spearman rho (miad)",
+      "n": 6,
+      "estimate": 0.028571428571428574,
+      "ci95": "",
+      "p": 0.9571545189504373,
+      "effect": "ok",
+      "effect_within": ""
+    },
+    {
+      "analysis": "C2_occupancy_floor1:E1_vs_E2",
+      "metric": "Spearman rho (miad)",
+      "n": 7,
+      "estimate": 0.8214285714285715,
+      "ci95": "",
+      "p": 0.0234488083456915,
+      "effect": "ok",
+      "effect_within": ""
+    },
+    {
+      "analysis": "C3_frame_core_occupancy:E1_vs_E2",
+      "metric": "Spearman rho (miad)",
+      "n": 6,
+      "estimate": 0.8857142857142858,
+      "ci95": "",
+      "p": 0.01884548104956266,
+      "effect": "ok",
+      "effect_within": ""
+    },
+    {
+      "analysis": "C4_hybrid:E1_vs_E2",
+      "metric": "Spearman rho (miad)",
+      "n": 6,
+      "estimate": 0.942857142857143,
+      "ci95": "",
+      "p": 0.004804664723032055,
+      "effect": "ok",
+      "effect_within": ""
+    }
+  ]
+}

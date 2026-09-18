@@ -1,0 +1,12 @@
+scope,metric,direction,algorithm_id,bit_rule,estimate,n,note
+synthetic clean,miad,lower,A5_pca_compact_hilbert,C3_frame_core_occupancy,0.671284,70,table_3 D0 mean
+synthetic clean,m1_l1_locality,lower,A5b_robust_frame_morton,C1_monotone_half,143.067,70,table_3 D0 mean
+synthetic clean,m1_l2_locality,higher,A5b_robust_frame_morton,C1_monotone_half,0.000295705,70,table_3 D0 mean
+synthetic clean,recall_8_64,higher,A5b_robust_frame_morton,C1_monotone_half,0.912179,70,table_3 D0 mean
+synthetic D1-D4,kendall_tau_clean,higher,A7_cgal_spatial_sort,C2_occupancy_floor1,0.813288,140,frame/curve stability set; 3 tied
+synthetic runtime,sort_seconds,lower,A0_input,C0_uniform,2.63291e-05,105,table_5 D0 mean
+synthetic runtime,cache_miss_rate,lower,A6_rch_b3_ogk,C3_frame_core_occupancy,0.226368,105,table_5 D0 mean
+real D0,normalized_miad,lower,A3_isotropic_hilbert,C0_uniform,0.00522789,10,full-cloud exact rows; 6 tied
+real D0,m1_l1_locality,lower,A6_rch_b3_ogk,C3_frame_core_occupancy,94399.6,10,full-cloud exact rows
+real D0,m1_l2_locality,higher,A2_morton,C0_uniform,3.49147e-11,10,minimum-ratio diagnostic; 38 tied
+real D0,recall_8_64,higher,A3_isotropic_hilbert,C0_uniform,0.782188,10,full-cloud exact rows; 6 tied

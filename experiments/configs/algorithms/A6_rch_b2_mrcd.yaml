@@ -1,0 +1,10 @@
+# B2 estimator ablation for A6 RCH.
+#
+# References:
+#   - Mia Hubert, Peter J. Rousseeuw, Tim Verdonck, A Deterministic Algorithm
+#     for Robust Location and Scatter, 2012, DOI: 10.1080/10618600.2012.672100.
+id: A6_rch_b2_mrcd
+label: A6 RCH / B2 MRCD
+method: rch
+frame_estimator: mrcd
+include_in_tables: true

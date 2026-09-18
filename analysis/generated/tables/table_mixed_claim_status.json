@@ -1,0 +1,37 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Claim status summary",
+  "label": "tab:claim_status",
+  "columns": [
+    "claim",
+    "status",
+    "evidence"
+  ],
+  "rows": [
+    {
+      "claim": "H1 synthetic MIAD",
+      "status": "Confirmed",
+      "evidence": "p_adj=0.0029296875"
+    },
+    {
+      "claim": "H2 synthetic MIAD",
+      "status": "Confirmed",
+      "evidence": "p_adj=0.0029296875"
+    },
+    {
+      "claim": "H3 contamination stability",
+      "status": "Confirmed",
+      "evidence": "p=4.999750012499375e-05; median_delta=0.14482230392156858"
+    },
+    {
+      "claim": "A7 CGAL baseline comparison",
+      "status": "Confirmed",
+      "evidence": "p_adj=0.0029296875; median_delta=-0.6946745278872353"
+    },
+    {
+      "claim": "H1 real-data direction",
+      "status": "Failed",
+      "evidence": "comparisons=10; failed=10"
+    }
+  ]
+}

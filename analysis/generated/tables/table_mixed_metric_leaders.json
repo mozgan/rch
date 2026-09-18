@@ -1,0 +1,127 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Metric-specific leaders in the generated benchmark artifacts",
+  "label": "tab:mixed_metric_leaders",
+  "columns": [
+    "scope",
+    "metric",
+    "direction",
+    "algorithm_id",
+    "bit_rule",
+    "estimate",
+    "n",
+    "note"
+  ],
+  "rows": [
+    {
+      "scope": "synthetic clean",
+      "metric": "miad",
+      "direction": "lower",
+      "algorithm_id": "A5_pca_compact_hilbert",
+      "bit_rule": "C3_frame_core_occupancy",
+      "estimate": "0.671284",
+      "n": 70,
+      "note": "table_3 D0 mean"
+    },
+    {
+      "scope": "synthetic clean",
+      "metric": "m1_l1_locality",
+      "direction": "lower",
+      "algorithm_id": "A5b_robust_frame_morton",
+      "bit_rule": "C1_monotone_half",
+      "estimate": "143.067",
+      "n": 70,
+      "note": "table_3 D0 mean"
+    },
+    {
+      "scope": "synthetic clean",
+      "metric": "m1_l2_locality",
+      "direction": "higher",
+      "algorithm_id": "A5b_robust_frame_morton",
+      "bit_rule": "C1_monotone_half",
+      "estimate": "0.000295705",
+      "n": 70,
+      "note": "table_3 D0 mean"
+    },
+    {
+      "scope": "synthetic clean",
+      "metric": "recall_8_64",
+      "direction": "higher",
+      "algorithm_id": "A5b_robust_frame_morton",
+      "bit_rule": "C1_monotone_half",
+      "estimate": "0.912179",
+      "n": 70,
+      "note": "table_3 D0 mean"
+    },
+    {
+      "scope": "synthetic D1-D4",
+      "metric": "kendall_tau_clean",
+      "direction": "higher",
+      "algorithm_id": "A7_cgal_spatial_sort",
+      "bit_rule": "C2_occupancy_floor1",
+      "estimate": "0.813288",
+      "n": 140,
+      "note": "frame/curve stability set; 3 tied"
+    },
+    {
+      "scope": "synthetic runtime",
+      "metric": "sort_seconds",
+      "direction": "lower",
+      "algorithm_id": "A0_input",
+      "bit_rule": "C0_uniform",
+      "estimate": "2.63291e-05",
+      "n": 105,
+      "note": "table_5 D0 mean"
+    },
+    {
+      "scope": "synthetic runtime",
+      "metric": "cache_miss_rate",
+      "direction": "lower",
+      "algorithm_id": "A6_rch_b3_ogk",
+      "bit_rule": "C3_frame_core_occupancy",
+      "estimate": "0.226368",
+      "n": 105,
+      "note": "table_5 D0 mean"
+    },
+    {
+      "scope": "real D0",
+      "metric": "normalized_miad",
+      "direction": "lower",
+      "algorithm_id": "A3_isotropic_hilbert",
+      "bit_rule": "C0_uniform",
+      "estimate": "0.00522789",
+      "n": 10,
+      "note": "full-cloud exact rows; 6 tied"
+    },
+    {
+      "scope": "real D0",
+      "metric": "m1_l1_locality",
+      "direction": "lower",
+      "algorithm_id": "A6_rch_b3_ogk",
+      "bit_rule": "C3_frame_core_occupancy",
+      "estimate": "94399.6",
+      "n": 10,
+      "note": "full-cloud exact rows"
+    },
+    {
+      "scope": "real D0",
+      "metric": "m1_l2_locality",
+      "direction": "higher",
+      "algorithm_id": "A2_morton",
+      "bit_rule": "C0_uniform",
+      "estimate": "3.49147e-11",
+      "n": 10,
+      "note": "minimum-ratio diagnostic; 38 tied"
+    },
+    {
+      "scope": "real D0",
+      "metric": "recall_8_64",
+      "direction": "higher",
+      "algorithm_id": "A3_isotropic_hilbert",
+      "bit_rule": "C0_uniform",
+      "estimate": "0.782188",
+      "n": 10,
+      "note": "full-cloud exact rows; 6 tied"
+    }
+  ]
+}

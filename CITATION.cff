@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use RCH, please cite the associated article and the archived release."
+type: software
+title: "Robust Compact Hilbert (RCH)"
+version: 0.1.0
+date-released: 2026-08-21
+license: MIT
+repository-code: "https://github.com/mozgan/rch"
+authors:
+  - family-names: Ozgan
+    given-names: Mehmet
+    affiliation: "Ostim Technical University"
+    email: "m.ozgan@icloud.com"
+  - family-names: Erbay
+    given-names: Hasan
+    affiliation: "Ostim Technical University"
+preferred-citation:
+  type: article
+  title: "Robust compact Hilbert ordering of anisotropic and contaminated point clouds"
+  authors:
+    - family-names: Ozgan
+      given-names: Mehmet
+    - family-names: Erbay
+      given-names: Hasan
+  status: "manuscript in preparation"

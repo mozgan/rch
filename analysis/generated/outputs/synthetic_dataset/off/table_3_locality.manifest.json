@@ -1,0 +1,12 @@
+{
+  "schema": "rch.synthetic.run_matrix.v1",
+  "generated_at_utc": "2026-08-16T20:11:22.282028+00:00",
+  "runlist": "experiments/runlists/table_3_locality.yaml",
+  "rows": 15050,
+  "timing_repeats": 1,
+  "refinement": "off",
+  "rch_order": "build/bench/src/cli/rch_order",
+  "cgal_adapter": "build/cgal-adapter/adapters/cgal/rch_cgal_spatial_sort",
+  "perf_status": "not_requested",
+  "block_read_probe": ""
+}

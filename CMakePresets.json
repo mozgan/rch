@@ -1,0 +1,166 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 25, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "_base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "RCH_BUILD_TESTS": "ON"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug (Clang 20 — default)",
+      "inherits": "_base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release (Clang 20 — default)",
+      "inherits": "_base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "release-clang",
+      "displayName": "Release — Clang 20",
+      "inherits": "release",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "release-gcc",
+      "displayName": "Release — GCC 13",
+      "inherits": "release",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "asan",
+      "displayName": "Debug + AddressSanitizer (Clang)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "RCH_ENABLE_ASAN":    "ON",
+        "RCH_ENABLE_UBSAN":   "ON"
+      }
+    },
+    {
+      "name": "ubsan",
+      "displayName": "Debug + UndefinedBehaviorSanitizer (Clang)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "RCH_ENABLE_UBSAN":   "ON"
+      }
+    },
+    {
+      "name": "fuzz",
+      "displayName": "Debug + libFuzzer + ASan/UBSan (Clang)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "RCH_BUILD_FUZZ":     "ON",
+        "RCH_ENABLE_ASAN":    "ON",
+        "RCH_ENABLE_UBSAN":   "ON"
+      }
+    },
+    {
+      "name": "tsan",
+      "displayName": "Debug + ThreadSanitizer (Clang)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "RCH_ENABLE_TSAN":    "ON"
+      }
+    },
+    {
+      "name": "ci-clang",
+      "displayName": "CI matrix — Clang 20 (Debug + tests)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "ci-gcc",
+      "displayName": "CI matrix — GCC 13 (Debug + tests)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "repro",
+      "displayName": "Reproducibility (Release + integer-domain hash-locked)",
+      "inherits": "release-clang",
+      "cacheVariables": {
+        "RCH_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "bench",
+      "displayName": "Benchmarks (Release + tools)",
+      "inherits": "release-clang",
+      "cacheVariables": {
+        "RCH_BUILD_BENCHMARKS": "ON",
+        "RCH_BUILD_TOOLS": "ON"
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage (Debug + Clang instrumentation)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "RCH_ENABLE_COVERAGE": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "debug",         "configurePreset": "debug" },
+    { "name": "release",       "configurePreset": "release" },
+    { "name": "release-clang", "configurePreset": "release-clang" },
+    { "name": "release-gcc",   "configurePreset": "release-gcc" },
+    { "name": "asan",          "configurePreset": "asan" },
+    { "name": "ubsan",         "configurePreset": "ubsan" },
+    { "name": "fuzz",          "configurePreset": "fuzz" },
+    { "name": "tsan",          "configurePreset": "tsan" },
+    { "name": "ci-clang",      "configurePreset": "ci-clang" },
+    { "name": "ci-gcc",        "configurePreset": "ci-gcc" },
+    { "name": "repro",         "configurePreset": "repro" },
+    { "name": "bench",         "configurePreset": "bench" },
+    { "name": "coverage",      "configurePreset": "coverage" }
+  ],
+  "testPresets": [
+    {
+      "name": "_test_base",
+      "hidden": true,
+      "output": { "outputOnFailure": true, "verbosity": "default" },
+      "execution": { "stopOnFailure": false, "noTestsAction": "error" }
+    },
+    { "name": "debug",         "configurePreset": "debug",         "inherits": "_test_base" },
+    { "name": "release",       "configurePreset": "release",       "inherits": "_test_base" },
+    { "name": "release-clang", "configurePreset": "release-clang", "inherits": "_test_base" },
+    { "name": "release-gcc",   "configurePreset": "release-gcc",   "inherits": "_test_base" },
+    { "name": "asan",          "configurePreset": "asan",          "inherits": "_test_base" },
+    { "name": "ubsan",         "configurePreset": "ubsan",         "inherits": "_test_base" },
+    { "name": "fuzz",          "configurePreset": "fuzz",          "inherits": "_test_base" },
+    { "name": "tsan",          "configurePreset": "tsan",          "inherits": "_test_base" },
+    { "name": "ci-clang",      "configurePreset": "ci-clang",      "inherits": "_test_base" },
+    { "name": "ci-gcc",        "configurePreset": "ci-gcc",        "inherits": "_test_base" },
+    { "name": "repro",         "configurePreset": "repro",         "inherits": "_test_base" },
+    { "name": "bench",         "configurePreset": "bench",         "inherits": "_test_base" },
+    { "name": "coverage",      "configurePreset": "coverage",      "inherits": "_test_base" }
+  ]
+}

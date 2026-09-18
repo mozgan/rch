@@ -1,0 +1,28 @@
+# D-axis sweep: clean plus uniform-bbox and clustered outlier fractions.
+#
+# References:
+#   - Peter J. Rousseeuw, Katrien Van Driessen, A Fast Algorithm for the
+#     Minimum Covariance Determinant Estimator, 1999,
+#     DOI: 10.1080/00401706.1999.10485670.
+schema: rch.sweep.contamination.v1
+levels:
+  - id: D0
+    label: clean
+    mode: clean
+    fraction: 0.0
+  - id: D1
+    label: 5 percent uniform-bbox outliers
+    mode: uniform_bbox
+    fraction: 0.05
+  - id: D2
+    label: 15 percent uniform-bbox outliers
+    mode: uniform_bbox
+    fraction: 0.15
+  - id: D3
+    label: 25 percent uniform-bbox outliers
+    mode: uniform_bbox
+    fraction: 0.25
+  - id: D4
+    label: clustered outliers
+    mode: clustered
+    fraction: 0.25

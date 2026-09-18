@@ -1,0 +1,3 @@
+algorithm_id,policy,point_count,order_path,permutation_hash,permutation
+A7_cgal_spatial_sort,median,8,experiments/outputs/a7_cgal_appendix/a7_cgal_spatial_sort_median.order.csv,27b58ee1fbe0a71b5d958c6789f7d475f820db9198f161b0ff1c806fd9cd7626,6 7 0 5 2 3 1 4
+A7_cgal_spatial_sort,middle,8,experiments/outputs/a7_cgal_appendix/a7_cgal_spatial_sort_middle.order.csv,27b58ee1fbe0a71b5d958c6789f7d475f820db9198f161b0ff1c806fd9cd7626,6 7 0 5 2 3 1 4

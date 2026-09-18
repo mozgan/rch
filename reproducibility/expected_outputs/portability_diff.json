@@ -1,0 +1,64 @@
+{
+  "schema": "rch.portability_diff.v1",
+  "references": [
+    {
+      "author": "National Institute of Standards and Technology",
+      "work": "Secure Hash Standard (SHS), FIPS PUB 180-4",
+      "date": "2015",
+      "doi": "10.6028/NIST.FIPS.180-4"
+    },
+    {
+      "author": "Rundgren, Jordan and Erdtman",
+      "work": "JSON Canonicalization Scheme (JCS), RFC 8785",
+      "date": "2020",
+      "doi": "10.17487/RFC8785"
+    },
+    {
+      "author": "ISO/IEC",
+      "work": "Programming Languages - C++",
+      "date": "2020"
+    }
+  ],
+  "scope": {
+    "host_arch": "x86_64",
+    "os_family": "linux",
+    "claim": "Integer-domain ordering outputs are bit-exact across the listed Clang/GCC runs; floating diagnostics are not hash-locked."
+  },
+  "integer_domain": {
+    "fixture_count": 100,
+    "point_count_per_fixture": 48,
+    "method_count": 8,
+    "compiler_count": 2,
+    "canonical_digest": "47988b235101f522d9f440ea92e2a9007785a141e855b23349069c884efc2ace",
+    "integer_domain_mismatches": 0,
+    "compiler_runs": [
+      {
+        "compiler": "clang",
+        "arch": "x86_64",
+        "fixture_count": 100,
+        "method_count": 8,
+        "mismatches": 0
+      },
+      {
+        "compiler": "gcc",
+        "arch": "x86_64",
+        "fixture_count": 100,
+        "method_count": 8,
+        "mismatches": 0
+      }
+    ]
+  },
+  "float_diagnostics": {
+    "bit_exact_claim": false,
+    "accepted_equivalence": "semantic_tolerance",
+    "status": "reported_not_hash_locked",
+    "tracked_fields": [
+      "center",
+      "half_extent"
+    ],
+    "tolerance_policy": {
+      "absolute": 1e-12,
+      "relative": 1e-12
+    }
+  }
+}

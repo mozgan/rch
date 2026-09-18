@@ -1,0 +1,21 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Determinism/test matrix evidence",
+  "label": "tab:determinism_matrix",
+  "columns": [
+    "preset",
+    "configure",
+    "build",
+    "ctest",
+    "log"
+  ],
+  "rows": [
+    {
+      "preset": "no logs",
+      "configure": "Not verified",
+      "build": "Not verified",
+      "ctest": "Not verified",
+      "log": ""
+    }
+  ]
+}

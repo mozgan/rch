@@ -1,0 +1,17 @@
+// Auto-generated from cmake/version.hpp.in by CMake. DO NOT EDIT BY HAND.
+// RCH (Robust Compact Hilbert) version macros and constexpr accessors.
+#pragma once
+
+#define RCH_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define RCH_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define RCH_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define RCH_VERSION_STRING "@PROJECT_VERSION@"
+
+namespace rch::core::version {
+
+inline constexpr int         major = RCH_VERSION_MAJOR;
+inline constexpr int         minor = RCH_VERSION_MINOR;
+inline constexpr int         patch = RCH_VERSION_PATCH;
+inline constexpr const char* string = RCH_VERSION_STRING;
+
+}  // namespace rch::core::version

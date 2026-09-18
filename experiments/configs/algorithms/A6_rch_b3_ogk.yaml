@@ -1,0 +1,11 @@
+# B3 estimator ablation for A6 RCH.
+#
+# References:
+#   - Ricardo A. Maronna, Ruben H. Zamar, Robust Estimates of Location and
+#     Dispersion for High-Dimensional Datasets, 2002,
+#     DOI: 10.1198/016214502753479301.
+id: A6_rch_b3_ogk
+label: A6 RCH / B3 OGK
+method: rch
+frame_estimator: ogk
+include_in_tables: true

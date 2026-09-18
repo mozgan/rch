@@ -1,0 +1,9 @@
+# A2 baseline.
+#
+# References:
+#   - Guy M. Morton, A Computer Oriented Geodetic Data Base and a New Technique
+#     in File Sequencing, 1966.
+id: A2_morton
+label: A2 Morton
+method: morton
+include_in_tables: true

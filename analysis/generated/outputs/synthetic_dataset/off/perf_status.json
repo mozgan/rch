@@ -1,0 +1,6 @@
+{
+  "schema": "rch.perf_status.v1",
+  "status": "available",
+  "perf": "perf",
+  "block_read_probe": "build/bench/src/cli/rch_block_read_probe"
+}

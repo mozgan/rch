@@ -1,0 +1,25 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "A7 CGAL appendix sanity",
+  "label": "tab:a7_cgal_appendix",
+  "columns": [
+    "algorithm_id",
+    "policy",
+    "point_count",
+    "permutation_hash"
+  ],
+  "rows": [
+    {
+      "algorithm_id": "A7_cgal_spatial_sort",
+      "policy": "median",
+      "point_count": 8.0,
+      "permutation_hash": "27b58ee1fbe0a71b5d958c6789f7d475f820db9198f161b0ff1c806fd9cd7626"
+    },
+    {
+      "algorithm_id": "A7_cgal_spatial_sort",
+      "policy": "middle",
+      "point_count": 8.0,
+      "permutation_hash": "27b58ee1fbe0a71b5d958c6789f7d475f820db9198f161b0ff1c806fd9cd7626"
+    }
+  ]
+}

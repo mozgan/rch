@@ -1,0 +1,18 @@
+# A7 CGAL spatial_sort appendix integration fixture (appendix full tables).
+# The recorded permutation hashes under experiments/outputs/a7_cgal_appendix/
+# were produced from exactly these eight points and two policies; editing this
+# file invalidates those recorded artifacts and the appendix table.
+#
+# References:
+#   - CGAL Project, spatial_sort reference manual, accessed 2026-07-27.
+schema: rch.fixture.a7_cgal_appendix.v1
+policies: [median, middle]
+points:
+  - [0.0, 0.0, 0.0]
+  - [1.0, 0.0, 0.0]
+  - [0.0, 1.0, 0.0]
+  - [0.0, 0.0, 1.0]
+  - [1.0, 1.0, 1.0]
+  - [0.25, 0.5, 0.75]
+  - [2.0, -1.0, 0.5]
+  - [-1.0, 2.0, 0.25]

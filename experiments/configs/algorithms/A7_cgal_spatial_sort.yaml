@@ -1,0 +1,16 @@
+# A7 CGAL spatial_sort sanity adapter.
+#
+# References:
+#   - CGAL Project, spatial_sort reference manual, accessed 2026-07-27.
+id: A7_cgal_spatial_sort
+label: A7 CGAL spatial_sort
+method: external_cgal_spatial_sort
+adapter_target: rch_cgal_spatial_sort
+cgal_policy: median
+supported_bit_rules:
+  - C2_occupancy_floor1
+  - C3_frame_core_occupancy
+  - C4_hybrid
+include_in_tables: true
+appendix_only: true
+external_baseline: true

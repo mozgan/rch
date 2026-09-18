@@ -1,0 +1,69 @@
+# ----------------------------------------------------------------------------
+# stanford_3d_scanning.yml — real-dataset manifest (Bunny + Armadillo).
+#
+# References:
+#   - Stanford University Computer Graphics Laboratory, The Stanford 3D
+#     Scanning Repository, accessed 2026-07-27.
+#   - Greg Turk, Marc Levoy, Zippered Polygon Meshes from Range Images, 1994,
+#     DOI: 10.1145/192161.192241.
+# ----------------------------------------------------------------------------
+schema: rch.dataset_manifest.v1
+source:
+  id: stanford_3d_scanning_repository
+  name: Stanford 3D Scanning Repository
+  homepage: https://graphics.stanford.edu/data/3Dscanrep/
+  citation: Stanford University Computer Graphics Laboratory, The Stanford 3D Scanning Repository.
+  license_summary: Research use and free mirroring/redistribution with credit; no commercial product use without permission.
+  license_url: https://graphics.stanford.edu/data/3Dscanrep/
+datasets:
+  - id: stanford_bunny
+    label: Stanford Bunny
+    url: https://graphics.stanford.edu/pub/3Dscanrep/bunny.tar.gz
+    filename: bunny.tar.gz
+    sha256: a5720bd96d158df403d153381b8411a727a1d73cff2f33dc9b212d6f75455b84
+    archive_type: tar.gz
+    inner_path: bunny/reconstruction/bun_zipper.ply
+    canonical_format: ascii_ply
+    expected_vertices: 35947
+    expected_faces: 69451
+    source_note: Stanford page reports zipper reconstruction, 35947 vertices and 69451 triangles.
+  - id: stanford_armadillo
+    label: Stanford Armadillo
+    url: https://graphics.stanford.edu/pub/3Dscanrep/armadillo/Armadillo.ply.gz
+    filename: Armadillo.ply.gz
+    sha256: 8b9b56cc36e66d54429b1e1e75bd89e833645bfe0dc7c1afd1205877a7356a3f
+    archive_type: gz
+    inner_path: Armadillo.ply
+    canonical_format: binary_big_endian_ply
+    expected_vertices: 172974
+    expected_faces: 345944
+    source_note: Stanford page reports vripped reconstruction and 345944 triangles; local PLY header reports 172974 vertices.
+#  - id: stanford_dragon
+#    label: Stanford Dragon
+#    url: https://graphics.stanford.edu/pub/3Dscanrep/dragon/dragon_recon.tar.gz
+#    filename: dragon_recon.tar.gz
+#    sha256: 74ac1d90989c9b1732edee82d57e9ce71452144cf4355f108d8c9c616d28d02f
+#    archive_type: tar.gz
+#    inner_path: dragon_recon/dragon_vrip.ply
+#    canonical_format: ascii_ply
+#    expected_vertices: 437645
+#    expected_faces: 871414
+#    source_note: |
+#      Stanford page reports the full vrip reconstruction of Dragon. SHA-256 captured
+#      via a fresh download from the official Stanford mirror; PLY header reports 437645 vertices
+#      and 871414 faces (ascii_ply).
+#  - id: stanford_lucy
+#    label: Stanford Lucy
+#    url: https://graphics.stanford.edu/data/3Dscanrep/lucy.tar.gz
+#    filename: lucy.tar.gz
+#    sha256: c4beb1f7bfa965643bbbf889bd1849a4b4b955e95c731941be61e6edac65616a
+#    archive_type: tar.gz
+#    inner_path: lucy.ply
+#    canonical_format: binary_big_endian_ply
+#    expected_vertices: 14027872
+#    expected_faces: 28055742
+#    source_note: |
+#      Stanford page reports the Lucy archive (~322 MB compressed). SHA-256 captured
+#      from the official Stanford mirror; PLY header reports 14,027,872 vertices and 28,055,742
+#      faces (binary_big_endian_ply). The archive contains `lucy.ply` at the root (no `lucy/`
+#      directory wrapper), contrary to the earlier `_optional.yml` placeholder.

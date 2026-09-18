@@ -1,0 +1,13 @@
+# A6 proposed method.
+#
+# References:
+#   - Peter J. Rousseeuw, Katrien Van Driessen, A Fast Algorithm for the
+#     Minimum Covariance Determinant Estimator, 1999,
+#     DOI: 10.1080/00401706.1999.10485670.
+#   - Craig Gotsman, Michael Lindenbaum, On the Metric Properties of Discrete
+#     Space-Filling Curves, 1996, DOI: 10.1109/83.499920.
+id: A6_rch
+label: A6 RCH (robust frame + Hilbert)
+method: rch
+frame_estimator: det_mcd
+include_in_tables: true

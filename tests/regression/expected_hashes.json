@@ -1,0 +1,340 @@
+{
+  "cases": [
+    {
+      "fixture": "cube_8.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "4127011bd5fdb62b025c5dbd751d6c8a9783962168c24295f3c76f773573326c"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "196b09daa1b66e20055c83e1b7c8f5017765f55066e233fe9e9e83b879c8e09c"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "03870dae7efb9ec574f424fd056df894058bc2f8efa7b3d19b80ffb7b09495b4"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "720f9bd30e041e5a7821e3c1dae56b07a36a7452efd6ee466ffc6d20cc1a5d9e"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "ad197442206827819f4d34c8b9aa4042772686ee853921abc724e12457da61cb"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "ff25b661ec9cb896d5db6a912c40a2619a22afc11c0e8ba85112079ff692883b"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "1a25ecd6d8cfa0ef7e77f89628f598d3db89e48f90f8c1ccc29e4ffe7d97ecdc"
+    },
+    {
+      "fixture": "cube_8.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "0f248664098365b83ee8a2dba7cfab45cd9fbaca66e7991b65c788be79b9b4ec"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "420ec5ad6fac77df4009502c63b0016159a84a9ee6b08f07694ecb7dd34dddea"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "79627bd1716ae2f6f4d4e3fef3d1ac1a238e9f1bd1b67993c4ff7964477eff55"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "90e094ab1120d74b83314ce5fc2057444652bba5330e7a1f9a649f6d771896a2"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "a4c5d13bf0cd12d67dc9bdb62ae371292e864c4c0e66f50f862d2b943e6b66c3"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "83f3f895a6f43f3b91ae5741e1edd3c752eac5cedce122815fca8b7c87f8dca1"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "8c042c1a46292503d0377ffe21abc2f0cfa71cc2eced0daeb6fc625712051bfc"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "93f5d8c87b26181158fc2bc6402d7af06001008656e809af0baf203680564c65"
+    },
+    {
+      "fixture": "duplicate_points.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "eb69f477f88b3f0f03f025ac680659316751ac97ec3be1c60c98a4fccbd8c57d"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "420ec5ad6fac77df4009502c63b0016159a84a9ee6b08f07694ecb7dd34dddea"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "61fc542a14999f78a0622a4c33c1cee360855c5ccf7780a8f495d50365781905"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "4292ab114ca812205b8753fadf7219e71cb0d60f6d8aa7cf8ccb77b9cc6af097"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "c8107a8d39c845d1cc432bda45a5d5dcb35d0baef1dc7f6daec32c2c7b6f21ec"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "f28e2159adfe07b47c228b49b6d3abeb425c4cc50aecd336413afb5b2c051b6b"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "5dd0e3e18edf39bef482cd47a2eee95c55db543c70a308fb9bb529b8327c7b9f"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "d032fec5493313f3059b652fc4cc723cdb1bd7de86073f9ffcc5f9b936cb6330"
+    },
+    {
+      "fixture": "signed_zero.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "239f9471aa5f3cdbd86060bac9b4d8fdf5a89c3596a8b0fd64bdc51e48257281"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "input",
+      "status": "invalid_input",
+      "hash": "8d1cda2cd3e14049e59f29fc193805914f0baab072d5c7ee8255c19cf79a5163"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "lexicographic",
+      "status": "invalid_input",
+      "hash": "129f3f200fc5c1d0b61fc3bd1cf5f499408a79b129f571661afb2fcf22c5e9f4"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "morton",
+      "status": "invalid_input",
+      "hash": "5283fb352e8b6f700ebbc42f71103e6a3ffd964bad3c8e7673823e385f1aa546"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "isotropic_hilbert",
+      "status": "invalid_input",
+      "hash": "70e12052b8cea3a5086aed327a47530b21738edb0771b46088563d327c716850"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "invalid_input",
+      "hash": "3bd8f2137d27ccb80d58a2ece122eaf20eb85fdab12ab4e10c23437a3412b42f"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "invalid_input",
+      "hash": "d1e18962cf6a929d23fc4094f275ca879da0f593aa55859acc0f02c9d10ddc9c"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "robust_frame_morton",
+      "status": "invalid_input",
+      "hash": "8caa9da4135310de619ef6967af171db00294e2a723e5cc01d6a151742ad75db"
+    },
+    {
+      "fixture": "nan_inf_mixed.xyz",
+      "method": "rch",
+      "status": "invalid_input",
+      "hash": "f41d7c752ee59598150d73eaf3a4cd70d972089ad6e9128ac8f74a8759231861"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "420ec5ad6fac77df4009502c63b0016159a84a9ee6b08f07694ecb7dd34dddea"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "6f7ef19bfc79d1110d9fcc5e72a6bf12baf2cc00a0a0d816f05d45486686bc88"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "1fd03d21860c06fc2a585d7cd8ce245728c0e8b023614ac443acc0bf89719f65"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "38a569df8011775370d92a0aca2051ff1e5b39d3ad8571ae9f2070f2f078ad55"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "0a0518d94059450f0b4870d6bb8b5dfaae886828b731c5b72a36771e6466631b"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "d8ac86bfa44bf11d021aa97e2dc0cef0b43a92409fb86d0dbb5f45e6b97a6a97"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "a5febc07af0c73e4c59f96e8e09bc712d67b3e165aaef6be90f02e0473a6e227"
+    },
+    {
+      "fixture": "thin_plane.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "e9408059a20ebd985e99c1c102d0e89fbe6d734bc0f5716dd9f7b560daa8250a"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "420ec5ad6fac77df4009502c63b0016159a84a9ee6b08f07694ecb7dd34dddea"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "296e9d68b5fe3ec02ea54b43556b084fde414ce63e208de09d612c5e34f84716"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "864e36bcbb708b16348d4a40c46dff2af384e59c51970e0bd8575c26377afc0b"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "705b943a3bd7d5eb2e9cded5a1a7aeb071978352acb58a71e192f8963e22c400"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "37574f0daeb3e5805f7ee4b8dbbd62f698c5253bf089b99348d071a9b39c518b"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "93b25d690e79f0dc6b5b42cba61be293dcb79f962a107e1e5d6114d7b511c011"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "58e783c2f6b21efa0f2972308fae37253fd8dc1f082054c93b176f424bef732d"
+    },
+    {
+      "fixture": "anisotropic_rod.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "e2edfdea42a2ee26f1eef6b4114c86d6955919f6cb744772227ee89a860fcbd7"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "input",
+      "status": "ok",
+      "hash": "420ec5ad6fac77df4009502c63b0016159a84a9ee6b08f07694ecb7dd34dddea"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "lexicographic",
+      "status": "ok",
+      "hash": "ccc07acffe496b8468d9ea36ae7f3addec0f18f6f640f5fb8e8650074cdf37f7"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "morton",
+      "status": "ok",
+      "hash": "2d8e0f28566cd6851c60ed065c15dff6af750b936bdfa7db7e7537dd1e4cd1e8"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "isotropic_hilbert",
+      "status": "ok",
+      "hash": "935c6c14ae1872f0d5162e11ae2ac7130a54e7efa59f25c1dc0f8d016f2d1007"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "compact_hilbert_aabb",
+      "status": "ok",
+      "hash": "dd0c4e89704114f911ad21037470e9cbb16a52a47dda2a4e1cd204da99fdd880"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "pca_compact_hilbert",
+      "status": "ok",
+      "hash": "244d55c765848790354708858348de577ab0d670043242b1b33000ab6bfe1613"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "robust_frame_morton",
+      "status": "ok",
+      "hash": "ab9eadee57fc19a40f9d59358cf3b056ce8894d08c36f40cb782c1e19f7ddcb5"
+    },
+    {
+      "fixture": "contaminated_cluster.xyz",
+      "method": "rch",
+      "status": "ok",
+      "hash": "4faabee8306cf5804c42d8d756574df813c4641ce5114b79ba1da37e59c29802"
+    }
+  ]
+}

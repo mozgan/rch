@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+"""Deterministic `perf stat` shim for demo artifact checks.
+
+The demo pipeline prepends `tools/demo` to PATH before running
+experiments/runners/run_matrix.py. That runner expects the Linux `perf stat`
+shape used for M8 cache counters:
+
+    perf stat -x, -e cache-references,cache-misses [--] command ...
+
+This shim deliberately implements only that small contract. It runs the wrapped
+command when one is provided, fails with the command's return code on command
+failure, and otherwise emits stable comma-separated counters on stderr. The
+numbers are not hardware measurements; they are deterministic fixtures that let
+`make bench-demo` exercise the paper artifact path on machines without perf
+permissions.
+
+Reference:
+  - Linux man-pages project, perf-stat command documentation, 2026.
+"""
+
+from __future__ import annotations
+
+import subprocess
+import sys
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class PerfStatInvocation:
+    """Parsed subset of `perf stat` that the demo runner needs."""
+
+    events: set[str]
+    command: list[str]
+
+
+def parse_args(args: list[str]) -> PerfStatInvocation:
+    """Parse the supported `perf stat` subset and reject accidental misuse."""
+    if not args or args[0] != "stat":
+        raise ValueError("demo perf shim only supports `perf stat`")
+
+    events: set[str] = set()
+    command: list[str] = []
+    separator_seen = False
+    index = 1
+    while index < len(args):
+        token = args[index]
+        if token == "--":
+            command = args[index + 1 :]
+            break
+        if token == "-x," or token == "-x":
+            if token == "-x":
+                index += 1
+                if index >= len(args) or args[index] != ",":
+                    raise ValueError("demo perf shim supports only `-x,`")
+            separator_seen = True
+            index += 1
+            continue
+        if token.startswith("-x"):
+            if token != "-x,":
+                raise ValueError("demo perf shim supports only `-x,`")
+            separator_seen = True
+            index += 1
+            continue
+        if token == "-e":
+            index += 1
+            if index >= len(args):
+                raise ValueError("missing event list after -e")
+            events.update(item for item in args[index].split(",") if item)
+            index += 1
+            continue
+        if token.startswith("-"):
+            raise ValueError(f"unsupported perf option: {token}")
+        command = args[index:]
+        break
+
+    expected = {"cache-references", "cache-misses"}
+    if not separator_seen:
+        raise ValueError("demo perf shim requires `-x,`")
+    if events != expected:
+        raise ValueError(
+            "demo perf shim requires -e cache-references,cache-misses"
+        )
+    return PerfStatInvocation(events=events, command=command)
+
+
+def run_wrapped_command(command: list[str]) -> int:
+    """Run the measured command while keeping perf stderr parseable."""
+    if not command:
+        return 0
+    completed = subprocess.run(
+        command,
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if completed.returncode != 0 and completed.stderr:
+        sys.stderr.write(completed.stderr)
+    return int(completed.returncode)
+
+
+def main() -> int:
+    try:
+        invocation = parse_args(sys.argv[1:])
+    except ValueError as error:
+        sys.stderr.write(f"demo perf shim error: {error}\n")
+        return 2
+
+    command_status = run_wrapped_command(invocation.command)
+    if command_status != 0:
+        return command_status
+
+    # `parse_perf_stat()` reads the first and third CSV fields. The extra fields
+    # are present only to resemble `perf stat -x,` output.
+    sys.stderr.write("1000,,cache-references,1000000,100.00,,\n")
+    sys.stderr.write("100,,cache-misses,1000000,100.00,,\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

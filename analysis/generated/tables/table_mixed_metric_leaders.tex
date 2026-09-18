@@ -1,0 +1,21 @@
+\begin{table}
+\caption{Metric-specific leaders in the generated benchmark artifacts}
+\label{tab:mixed_metric_leaders}
+\begin{tabular}{llllllll}
+\toprule
+scope & metric & direction & algorithm\_id & bit\_rule & estimate & n & note \\
+\midrule
+synthetic clean & miad & lower & A5\_pca\_compact\_hilbert & C3\_frame\_core\_occupancy & 0.671284 & 70 & table\_3 D0 mean \\
+synthetic clean & m1\_l1\_locality & lower & A5b\_robust\_frame\_morton & C1\_monotone\_half & 143.067 & 70 & table\_3 D0 mean \\
+synthetic clean & m1\_l2\_locality & higher & A5b\_robust\_frame\_morton & C1\_monotone\_half & 0.000295705 & 70 & table\_3 D0 mean \\
+synthetic clean & recall\_8\_64 & higher & A5b\_robust\_frame\_morton & C1\_monotone\_half & 0.912179 & 70 & table\_3 D0 mean \\
+synthetic D1-D4 & kendall\_tau\_clean & higher & A7\_cgal\_spatial\_sort & C2\_occupancy\_floor1 & 0.813288 & 140 & frame/curve stability set; 3 tied \\
+synthetic runtime & sort\_seconds & lower & A0\_input & C0\_uniform & 2.63291e-05 & 105 & table\_5 D0 mean \\
+synthetic runtime & cache\_miss\_rate & lower & A6\_rch\_b3\_ogk & C3\_frame\_core\_occupancy & 0.226368 & 105 & table\_5 D0 mean \\
+real D0 & normalized\_miad & lower & A3\_isotropic\_hilbert & C0\_uniform & 0.00522789 & 10 & full-cloud exact rows; 6 tied \\
+real D0 & m1\_l1\_locality & lower & A6\_rch\_b3\_ogk & C3\_frame\_core\_occupancy & 94399.6 & 10 & full-cloud exact rows \\
+real D0 & m1\_l2\_locality & higher & A2\_morton & C0\_uniform & 3.49147e-11 & 10 & minimum-ratio diagnostic; 38 tied \\
+real D0 & recall\_8\_64 & higher & A3\_isotropic\_hilbert & C0\_uniform & 0.782188 & 10 & full-cloud exact rows; 6 tied \\
+\bottomrule
+\end{tabular}
+\end{table}

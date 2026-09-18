@@ -1,0 +1,6 @@
+claim,status,evidence
+H1 synthetic MIAD,Confirmed,p_adj=0.0029296875
+H2 synthetic MIAD,Confirmed,p_adj=0.0029296875
+H3 contamination stability,Confirmed,p=4.999750012499375e-05; median_delta=0.14482230392156858
+A7 CGAL baseline comparison,Confirmed,p_adj=0.0029296875; median_delta=-0.6946745278872353
+H1 real-data direction,Failed,comparisons=10; failed=10

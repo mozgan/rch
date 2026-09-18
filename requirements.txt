@@ -1,0 +1,9 @@
+# Repository Python tooling requires Python 3.10 or newer.
+# Runtime/experiment configuration and dataset manifests.
+PyYAML>=6.0
+# Numerical arrays used by analysis and paper-artifact generation.
+numpy>=1.24
+# Statistical tests, bootstrap summaries, and exact-neighbor support.
+scipy>=1.10
+# Non-interactive PDF/EPS paper figures.
+matplotlib>=3.7

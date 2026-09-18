@@ -1,0 +1,122 @@
+{
+  "schema": "rch.output_snapshot.v1",
+  "destination": "analysis/generated/outputs",
+  "trees": {
+    "synthetic_dataset": {
+      "source": "experiments/outputs/synthetic_dataset",
+      "destination": "analysis/generated/outputs/synthetic_dataset",
+      "status": "copied",
+      "file_count": 14,
+      "total_bytes": 28732086,
+      "files": [
+        {
+          "path": "off/table_3_locality.csv",
+          "bytes": 5014443
+        },
+        {
+          "path": "off/table_3_locality.manifest.json",
+          "bytes": 410
+        },
+        {
+          "path": "off/table_4_outlier.csv",
+          "bytes": 2272609
+        },
+        {
+          "path": "off/table_4_outlier.manifest.json",
+          "bytes": 408
+        },
+        {
+          "path": "off/table_5_runtime.csv",
+          "bytes": 7070205
+        },
+        {
+          "path": "off/table_5_runtime.manifest.json",
+          "bytes": 445
+        },
+        {
+          "path": "all/table_3_locality.csv",
+          "bytes": 5018595
+        },
+        {
+          "path": "all/table_3_locality.manifest.json",
+          "bytes": 410
+        },
+        {
+          "path": "all/table_4_outlier.csv",
+          "bytes": 2275764
+        },
+        {
+          "path": "all/table_4_outlier.manifest.json",
+          "bytes": 408
+        },
+        {
+          "path": "all/table_5_runtime.csv",
+          "bytes": 7077652
+        },
+        {
+          "path": "all/table_5_runtime.manifest.json",
+          "bytes": 445
+        },
+        {
+          "path": "off/perf_status.json",
+          "bytes": 146
+        },
+        {
+          "path": "all/perf_status.json",
+          "bytes": 146
+        }
+      ],
+      "missing_files": []
+    },
+    "real_dataset": {
+      "source": "experiments/outputs/real_dataset",
+      "destination": "analysis/generated/outputs/real_dataset",
+      "status": "copied",
+      "file_count": 4,
+      "total_bytes": 499197,
+      "files": [
+        {
+          "path": "off/table_2_dataset_summary.csv",
+          "bytes": 249151
+        },
+        {
+          "path": "off/table_2_dataset_summary.manifest.json",
+          "bytes": 342
+        },
+        {
+          "path": "all/table_2_dataset_summary.csv",
+          "bytes": 249362
+        },
+        {
+          "path": "all/table_2_dataset_summary.manifest.json",
+          "bytes": 342
+        }
+      ],
+      "missing_files": []
+    },
+    "a7_cgal_appendix": {
+      "source": "experiments/outputs/a7_cgal_appendix",
+      "destination": "analysis/generated/outputs/a7_cgal_appendix",
+      "status": "copied",
+      "file_count": 2,
+      "total_bytes": 1486,
+      "files": [
+        {
+          "path": "a7_cgal_spatial_sort.csv",
+          "bytes": 447
+        },
+        {
+          "path": "a7_cgal_spatial_sort.manifest.json",
+          "bytes": 1039
+        }
+      ],
+      "missing_files": []
+    }
+  },
+  "summary": {
+    "tree_count": 3,
+    "copied_tree_count": 3,
+    "file_count": 20,
+    "total_bytes": 29232769
+  }
+}

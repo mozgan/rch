@@ -1,0 +1,50 @@
+# clang-format-20 configuration for RCH (Robust Compact Hilbert)
+# Reference: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# Base: LLVM style with 100-column width and 4-space indentation.
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++20
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+AccessModifierOffset: -4
+NamespaceIndentation: None
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeBraces: Attach
+BreakConstructorInitializers: BeforeColon
+PackConstructorInitializers: NextLine
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^<gtest/.*>'
+    Priority: 4
+  - Regex: '^<.*\.h>'
+    Priority: 1
+  - Regex: '^<.*>'
+    Priority: 2
+  - Regex: '^"rch/.*"'
+    Priority: 3
+  - Regex: '.*'
+    Priority: 5
+FixNamespaceComments: true
+ShortNamespaceLines: 0
+SpaceAfterTemplateKeyword: true
+AlignAfterOpenBracket: BlockIndent
+AllowAllArgumentsOnNextLine: true
+BinPackArguments: false
+BinPackParameters: false
+Cpp11BracedListStyle: true
+---
+Language: Json
+IndentWidth: 2
+---
+Language: Proto
+IndentWidth: 2

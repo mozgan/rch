@@ -41,6 +41,7 @@
 
 # Build directories
 build/
+docker-build/
 Build/
 build-*/
 
@@ -48,7 +49,7 @@ build-*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
+# Makefile
 install_manifest.txt
 compile_commands.json
 
@@ -67,3 +68,33 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# data raw/processed/cache (manifest-driven; never committed)
+data/raw/*
+data/processed/*
+data/cache/*
+
+# experimental data
+experiments/logs/*
+experiments/outputs/*
+
+# paper LaTeX build
+paper/build/*
+
+# epstopdf on-the-fly conversion artifacts (intermediate, regenerated each build)
+analysis/generated/figures/*-eps-converted-to.pdf
+
+# demo
+analysis/generated/demo/*
+data/demo/*
+
+# temporaries
+tmp/
+paper/
+

@@ -1,0 +1,10 @@
+schema: rch.real_dataset_catalog.v1
+datasets:
+- id: rch_demo_bunny
+  family: RCH demo
+  status: measured
+  source_url: data/manifests/rch_demo.yml
+- id: rch_demo_armadillo
+  family: RCH demo
+  status: measured
+  source_url: data/manifests/rch_demo.yml

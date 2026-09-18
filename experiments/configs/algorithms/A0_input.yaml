@@ -1,0 +1,11 @@
+# A0 baseline.
+#
+# Input order applies no quantization, so its output is independent of the bit
+# rule and it participates in no paired gate; it runs a single representative
+# rule to avoid emitting identical duplicate rows.
+id: A0_input
+label: A0 Input order
+method: input
+supported_bit_rules:
+  - C0_uniform
+include_in_tables: true

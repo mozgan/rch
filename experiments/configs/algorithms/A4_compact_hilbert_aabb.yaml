@@ -1,0 +1,17 @@
+# A4 compact-Hilbert baseline.
+#
+# Axis-aligned AABB, no robust frame: the statistical-core rules C3/C4 reduce to
+# C2_occupancy_floor1 here, so they are excluded to avoid mislabeled duplicate
+# rows. A4 runs only the frame-independent bit rules it can express distinctly.
+#
+# References:
+#   - Craig Gotsman, Michael Lindenbaum, On the Metric Properties of Discrete
+#     Space-Filling Curves, 1996, DOI: 10.1109/83.499920.
+id: A4_compact_hilbert_aabb
+label: A4 Compact Hilbert AABB
+method: compact_hilbert_aabb
+supported_bit_rules:
+  - C0_uniform
+  - C1_monotone_half
+  - C2_occupancy_floor1
+include_in_tables: true

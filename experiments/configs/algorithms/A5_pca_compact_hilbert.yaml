@@ -1,0 +1,11 @@
+# A5 critical baseline.
+#
+# References:
+#   - Karl Pearson, On Lines and Planes of Closest Fit to Systems of Points in
+#     Space, 1901.
+#   - Craig Gotsman, Michael Lindenbaum, On the Metric Properties of Discrete
+#     Space-Filling Curves, 1996, DOI: 10.1109/83.499920.
+id: A5_pca_compact_hilbert
+label: A5 compact Hilbert (PCA frame)
+method: pca_compact_hilbert
+include_in_tables: true

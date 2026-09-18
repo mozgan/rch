@@ -1,0 +1,20 @@
+schema: rch.dataset_manifest.v1
+datasets:
+- id: rch_demo_bunny
+  label: RCH demo Bunny-scale cloud
+  url: data/demo/source/rch_demo_bunny.tar.gz
+  filename: rch_demo_bunny.tar.gz
+  sha256: 4edf7cd2b967bee97a15489145e85f5d55b3431572571ca62833f5cdb2f68738
+  archive_type: tar.gz
+  inner_path: rch_demo_bunny.ply
+  expected_vertices: 128
+  source_notes: Deterministic E3 demo cloud; not the Stanford Bunny dataset.
+- id: rch_demo_armadillo
+  label: RCH demo Armadillo-scale cloud
+  url: data/demo/source/rch_demo_armadillo.tar.gz
+  filename: rch_demo_armadillo.tar.gz
+  sha256: a4945918fbb719f09bd26dddaa5fe7dead565de3afcee795a64f2edd239b411f
+  archive_type: tar.gz
+  inner_path: rch_demo_armadillo.ply
+  expected_vertices: 128
+  source_notes: Deterministic E4 demo cloud; not the Stanford Armadillo dataset.

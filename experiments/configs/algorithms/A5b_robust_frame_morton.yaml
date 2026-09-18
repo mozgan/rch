@@ -1,0 +1,12 @@
+# A5b frame-only ablation.
+#
+# References:
+#   - Peter J. Rousseeuw, Katrien Van Driessen, A Fast Algorithm for the
+#     Minimum Covariance Determinant Estimator, 1999,
+#     DOI: 10.1080/00401706.1999.10485670.
+#   - Guy M. Morton, A Computer Oriented Geodetic Data Base and a New Technique
+#     in File Sequencing, 1966.
+id: A5b_robust_frame_morton
+label: A5b Morton (robust frame)
+method: robust_frame_morton
+include_in_tables: true

@@ -1,0 +1,9 @@
+# A3 baseline.
+#
+# References:
+#   - David Hilbert, Ueber die stetige Abbildung einer Linie auf ein
+#     Flaechenstueck, 1891.
+id: A3_isotropic_hilbert
+label: A3 Isotropic Hilbert
+method: isotropic_hilbert
+include_in_tables: true

@@ -1,0 +1,35 @@
+{
+  "schema": "rch.a7_cgal_appendix.v1",
+  "adapter": "build/cgal-adapter/adapters/cgal/rch_cgal_spatial_sort",
+  "fixture_points": "experiments/outputs/a7_cgal_appendix/a7_fixture_points.csv",
+  "rows": 2,
+  "policies": [
+    "median",
+    "middle"
+  ],
+  "cgal_metadata_by_policy": {
+    "median": {
+      "schema": "rch.cgal_adapter.metadata.v1",
+      "cgal_version": "6.1.1",
+      "cgal_version_nr": 1060111000,
+      "cgal_git_hash": "08b27d3db14039d926c3a89d12955aa28fd55171",
+      "spatial_sort_dimension": 3,
+      "spatial_sort_policy": "median",
+      "threshold_hilbert": 8,
+      "threshold_multiscale": 64,
+      "ratio": 0.125
+    },
+    "middle": {
+      "schema": "rch.cgal_adapter.metadata.v1",
+      "cgal_version": "6.1.1",
+      "cgal_version_nr": 1060111000,
+      "cgal_git_hash": "08b27d3db14039d926c3a89d12955aa28fd55171",
+      "spatial_sort_dimension": 3,
+      "spatial_sort_policy": "middle",
+      "threshold_hilbert": 8,
+      "threshold_multiscale": 64,
+      "ratio": 0.125
+    }
+  },
+  "status": "ok"
+}

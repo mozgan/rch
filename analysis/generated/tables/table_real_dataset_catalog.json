@@ -1,0 +1,37 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Real-dataset family scope and measurement status",
+  "label": "tab:real_dataset_catalog",
+  "columns": [
+    "dataset",
+    "family",
+    "status",
+    "source"
+  ],
+  "rows": [
+    {
+      "dataset": "stanford_bunny",
+      "family": "Stanford 3D Scanning Repository",
+      "status": "measured",
+      "source": "https://graphics.stanford.edu/data/3Dscanrep/"
+    },
+    {
+      "dataset": "stanford_armadillo",
+      "family": "Stanford 3D Scanning Repository",
+      "status": "measured",
+      "source": "https://graphics.stanford.edu/data/3Dscanrep/"
+    },
+    {
+      "dataset": "stanford_dragon",
+      "family": "Stanford 3D Scanning Repository",
+      "status": "ready_to_measure",
+      "source": "https://graphics.stanford.edu/data/3Dscanrep/"
+    },
+    {
+      "dataset": "stanford_lucy",
+      "family": "Stanford 3D Scanning Repository",
+      "status": "ready_to_measure",
+      "source": "https://graphics.stanford.edu/data/3Dscanrep/"
+    }
+  ]
+}

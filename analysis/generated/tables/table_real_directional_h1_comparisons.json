@@ -1,0 +1,128 @@
+{
+  "schema": "rch.generated_table.v1",
+  "caption": "Real directional H1 comparison cells",
+  "label": "tab:real_directional_h1",
+  "columns": [
+    "dataset_id",
+    "bit_rule",
+    "contamination_id",
+    "a6_miad",
+    "a3_miad",
+    "delta_a6_minus_a3",
+    "seed_count_a6",
+    "seed_count_a3",
+    "passed"
+  ],
+  "rows": [
+    {
+      "dataset_id": "stanford_armadillo",
+      "bit_rule": "C0_uniform",
+      "contamination_id": "D0",
+      "a6_miad": 0.7291426306484335,
+      "a3_miad": 0.6990836851730473,
+      "delta_a6_minus_a3": 0.030058945475386234,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_armadillo",
+      "bit_rule": "C1_monotone_half",
+      "contamination_id": "D0",
+      "a6_miad": 3.7978574641985383,
+      "a3_miad": 0.6990836851730473,
+      "delta_a6_minus_a3": 3.098773779025491,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_armadillo",
+      "bit_rule": "C2_occupancy_floor1",
+      "contamination_id": "D0",
+      "a6_miad": 0.8488603435520442,
+      "a3_miad": 0.6990836851730473,
+      "delta_a6_minus_a3": 0.1497766583789969,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_armadillo",
+      "bit_rule": "C3_frame_core_occupancy",
+      "contamination_id": "D0",
+      "a6_miad": 0.8459901153234526,
+      "a3_miad": 0.6990836851730473,
+      "delta_a6_minus_a3": 0.14690643015040528,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_armadillo",
+      "bit_rule": "C4_hybrid",
+      "contamination_id": "D0",
+      "a6_miad": 0.8488603435520442,
+      "a3_miad": 0.6990836851730473,
+      "delta_a6_minus_a3": 0.1497766583789969,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_bunny",
+      "bit_rule": "C0_uniform",
+      "contamination_id": "D0",
+      "a6_miad": 0.0019238764913510659,
+      "a3_miad": 0.001851919939506953,
+      "delta_a6_minus_a3": 7.195655184411291e-05,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_bunny",
+      "bit_rule": "C1_monotone_half",
+      "contamination_id": "D0",
+      "a6_miad": 0.012010009815234904,
+      "a3_miad": 0.001851919939506953,
+      "delta_a6_minus_a3": 0.01015808987572795,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_bunny",
+      "bit_rule": "C2_occupancy_floor1",
+      "contamination_id": "D0",
+      "a6_miad": 0.0022826595337081166,
+      "a3_miad": 0.001851919939506953,
+      "delta_a6_minus_a3": 0.0004307395942011636,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_bunny",
+      "bit_rule": "C3_frame_core_occupancy",
+      "contamination_id": "D0",
+      "a6_miad": 0.002358503306248943,
+      "a3_miad": 0.001851919939506953,
+      "delta_a6_minus_a3": 0.00050658336674199,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "stanford_bunny",
+      "bit_rule": "C4_hybrid",
+      "contamination_id": "D0",
+      "a6_miad": 0.0022826595337081166,
+      "a3_miad": 0.001851919939506953,
+      "delta_a6_minus_a3": 0.0004307395942011636,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    }
+  ]
+}

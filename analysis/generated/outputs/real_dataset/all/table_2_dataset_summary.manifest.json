@@ -1,0 +1,10 @@
+{
+  "schema": "rch.real.real_run.v1",
+  "runlist": "experiments/runlists/table_2_dataset_summary.yaml",
+  "rows": 430,
+  "rch_order": "build/bench/src/cli/rch_order",
+  "cgal_adapter": "build/cgal-adapter/adapters/cgal/rch_cgal_spatial_sort",
+  "external_baselines_excluded": false,
+  "refinement": "all",
+  "metric_coverage": "full_cloud"
+}

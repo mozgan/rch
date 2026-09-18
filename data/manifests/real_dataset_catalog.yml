@@ -1,0 +1,45 @@
+
+# References:
+#   - Stanford University Computer Graphics Laboratory, The Stanford 3D
+#     Scanning Repository, accessed 2026-07-27.
+schema: rch.real_dataset_catalog.v2
+datasets:
+  - id: stanford_bunny
+    family: Stanford 3D Scanning Repository
+    manifest_file: data/manifests/stanford_3d_scanning.yml
+    source_url: https://graphics.stanford.edu/data/3Dscanrep/
+    status: measured
+    opened_by_runlist: experiments/runlists/table_2_dataset_summary.yaml
+    gating_field: "dataset_ids: [stanford_bunny, ...]"
+    gating_reason: Stanford repository open-academic; pinned sha256; included in Real Dataset default.
+
+  - id: stanford_armadillo
+    family: Stanford 3D Scanning Repository
+    manifest_file: data/manifests/stanford_3d_scanning.yml
+    source_url: https://graphics.stanford.edu/data/3Dscanrep/
+    status: measured
+    opened_by_runlist: experiments/runlists/table_2_dataset_summary.yaml
+    gating_field: "dataset_ids: [..., stanford_armadillo]"
+    gating_reason: Stanford repository open-academic; pinned sha256; included in Real Dataset default.
+
+  - id: stanford_dragon
+    family: Stanford 3D Scanning Repository
+    manifest_file: data/manifests/stanford_3d_scanning.yml
+    source_url: https://graphics.stanford.edu/data/3Dscanrep/
+    status: ready_to_measure
+    geometry_id: E5
+    opened_by_runlist: experiments/runlists/table_2_dataset_summary.yaml
+    gating_field: "dataset_ids: [..., stanford_dragon]"
+    gating_reason: |
+      Stanford repository open-academic; SHA-256 = 74ac1d90989c9b1732edee82d57e9ce71452144cf4355f108d8c9c616d28d02f
+
+  - id: stanford_lucy
+    family: Stanford 3D Scanning Repository
+    manifest_file: data/manifests/stanford_3d_scanning.yml
+    source_url: https://graphics.stanford.edu/data/3Dscanrep/
+    status: ready_to_measure
+    geometry_id: E6
+    opened_by_runlist: experiments/runlists/table_2_dataset_summary.yaml
+    gating_field: "dataset_ids: [..., stanford_lucy]"
+    gating_reason: |
+      Stanford repository open-academic; SHA-256 = c4beb1f7bfa965643bbbf889bd1849a4b4b955e95c731941be61e6edac65616a

@@ -1,0 +1,19 @@
+\begin{table}
+\caption{Synthetic statistical analysis summary}
+\label{tab:synthetic_statistics}
+\begin{tabular}{llrrlrll}
+\toprule
+analysis & metric & n & estimate & ci95 & p & effect & effect_within \\
+\midrule
+H1 & miad & 30 & -0.243526 & [-0.3998910834455317, -0.1634188069127045] & 0.002930 & -0.600000 & -1.000000 \\
+H2 & miad & 30 & -0.128575 & [-0.16248367823335308, -0.08209133282054015] & 0.002930 & -0.426667 & -0.866667 \\
+H7_A7 & miad & 30 & -0.694675 & [-0.7862778677993085, -0.5582576290878315] & 0.002930 & -0.966667 & -1.000000 \\
+H3 & kendall_tau_clean & 420 & 0.144822 & [0.09892769607843135, 0.18462009803921575] & 0.000050 & 0.343050 & 0.361905 \\
+C0_uniform:E1_vs_E2 & Spearman rho (miad) & 8 & 0.976190 &  & 0.000033 & ok &  \\
+C1_monotone_half:E1_vs_E2 & Spearman rho (miad) & 6 & 0.028571 &  & 0.957155 & ok &  \\
+C2_occupancy_floor1:E1_vs_E2 & Spearman rho (miad) & 7 & 0.821429 &  & 0.023449 & ok &  \\
+C3_frame_core_occupancy:E1_vs_E2 & Spearman rho (miad) & 6 & 0.885714 &  & 0.018845 & ok &  \\
+C4_hybrid:E1_vs_E2 & Spearman rho (miad) & 6 & 0.942857 &  & 0.004805 & ok &  \\
+\bottomrule
+\end{tabular}
+\end{table}

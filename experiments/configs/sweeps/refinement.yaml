@@ -1,0 +1,12 @@
+# R-axis sweep (real-data local MIAD-refinement ablation).
+#
+# References:
+#   - Craig Gotsman, Michael Lindenbaum, On the Metric Properties of Discrete
+#     Space-Filling Curves, 1996, DOI: 10.1109/83.499920.
+schema: rch.sweep.refinement.v1
+default_mode: "off"
+modes:
+  - id: "off"
+    label: no method receives the local MIAD-refinement pass
+  - id: all
+    label: every non-input method receives the pass

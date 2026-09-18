@@ -1,0 +1,5 @@
+dataset,family,status,source
+stanford_bunny,Stanford 3D Scanning Repository,measured,https://graphics.stanford.edu/data/3Dscanrep/
+stanford_armadillo,Stanford 3D Scanning Repository,measured,https://graphics.stanford.edu/data/3Dscanrep/
+stanford_dragon,Stanford 3D Scanning Repository,ready_to_measure,https://graphics.stanford.edu/data/3Dscanrep/
+stanford_lucy,Stanford 3D Scanning Repository,ready_to_measure,https://graphics.stanford.edu/data/3Dscanrep/

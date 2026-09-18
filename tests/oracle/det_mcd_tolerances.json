@@ -1,0 +1,4 @@
+{
+  "tol_loc": 1e-06,
+  "tol_scatter_rel": 0.01
+}

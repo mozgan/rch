@@ -1,0 +1,22 @@
+\begin{table}
+\caption{Synthetic hypothesis tests stratified by bit rule}
+\label{tab:synthetic_statistics_by_bit_rule}
+\begin{tabular}{lllrrlrrrr}
+\toprule
+bit_rule & analysis & baseline & n & estimate & ci95 & p & effect & effect_within & passed \\
+\midrule
+C2_occupancy_floor1 & H1 & A3_isotropic_hilbert & 10 & -0.209353 & [-0.5671374119433108, -0.10585357976272936] & 0.002930 & -0.620000 & -1.000000 & True \\
+C2_occupancy_floor1 & H2 & A2_morton & 10 & -0.106816 & [-0.2911787044572549, -0.07625567561559232] & 0.002930 & -0.460000 & -1.000000 & True \\
+C2_occupancy_floor1 & H7_A7 & A7_cgal_spatial_sort & 10 & -0.652398 & [-1.052429894441706, -0.42948107558310067] & 0.002930 & -1.000000 & -1.000000 & True \\
+C2_occupancy_floor1 & H3 & A5_pca_compact_hilbert & 140 & 0.075337 & [0.01795343137254901, 0.12377450980392157] & 0.000550 & 0.260306 & 0.285714 & False \\
+C3_frame_core_occupancy & H1 & A3_isotropic_hilbert & 10 & -0.236173 & [-0.5213415786040634, -0.11387593139304863] & 0.002930 & -0.580000 & -1.000000 & True \\
+C3_frame_core_occupancy & H2 & A2_morton & 10 & -0.120322 & [-0.25462213606301676, -0.04496004911899942] & 0.002930 & -0.380000 & -0.800000 & True \\
+C3_frame_core_occupancy & H7_A7 & A7_cgal_spatial_sort & 10 & -0.694675 & [-1.0211342679451132, -0.44707981686559783] & 0.002930 & -0.940000 & -1.000000 & True \\
+C3_frame_core_occupancy & H3 & A5_pca_compact_hilbert & 140 & 0.366085 & [0.3166053921568627, 0.4325674019607843] & 0.000050 & 0.706276 & 0.742857 & True \\
+C4_hybrid & H1 & A3_isotropic_hilbert & 10 & -0.260594 & [-0.5323174335375531, -0.1581148894464811] & 0.002930 & -0.600000 & -1.000000 & True \\
+C4_hybrid & H2 & A2_morton & 10 & -0.158465 & [-0.3078470752297322, -0.07869533441670518] & 0.002930 & -0.440000 & -0.800000 & True \\
+C4_hybrid & H7_A7 & A7_cgal_spatial_sort & 10 & -0.712496 & [-1.052429894441706, -0.5091507835853148] & 0.002930 & -0.960000 & -1.000000 & True \\
+C4_hybrid & H3 & A5_pca_compact_hilbert & 140 & 0.014216 & [-0.04852941176470588, 0.07034313725490193] & 0.428579 & 0.049439 & 0.057143 & False \\
+\bottomrule
+\end{tabular}
+\end{table}
