@@ -1,7 +1,7 @@
 {
   "schema": "rch.synthetic.statistics.v1",
-  "pandas_to_latex_used": true,
-  "pandas_available": true,
+  "pandas_to_latex_used": false,
+  "pandas_available": false,
   "tables": {
     "table_synthetic_locality_summary.tex": {
       "tex": "analysis/generated/tables/table_synthetic_locality_summary.tex",
@@ -29,7 +29,7 @@
       "json": "analysis/generated/tables/table_synthetic_hypothesis_tests_by_bit_rule.json"
     }
   },
-  "definition_of_done_metric_scope": "H1/H2 significance gate uses MIAD as the primary locality metric; Exact M1 L1 locality and recall@8_64 remain reported in the synthetic locality summary table and are not hidden. H7_A7 reports A6/RCH against external CGAL spatial_sort as a baseline comparison, not as part of the A6 method. H3 is reported as a diagnostic B-axis stability gate and may fail without failing the H1/H2 locality gate.",
+  "definition_of_done_metric_scope": "Historical nominal H1/H2 MIAD gate; definition_of_done_passed is kept for numerical regression compatibility, not scientific confirmation. H3 is diagnostic. Descriptive legacy evidence only. Bit rules reuse clouds; E1/E2 share draws within seed, and surface seeds/contamination conditions can reuse points. Reported p-values and intervals do not account for all dependencies and are nominal, not calibrated evidence of general superiority.",
   "hypotheses": [
     {
       "hypothesis": "H1",
@@ -60,7 +60,10 @@
       "cliffs_delta": -0.6,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H2",
@@ -91,7 +94,10 @@
       "cliffs_delta": -0.4266666666666667,
       "cliffs_delta_within": -0.8666666666666667,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H7_A7",
@@ -122,7 +128,10 @@
       "cliffs_delta": -0.9666666666666667,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H3",
@@ -153,9 +162,52 @@
       "pooled_wilcoxon_p": 2.427035516646643e-14,
       "cliffs_delta": 0.3430498866213152,
       "cliffs_delta_within": 0.3619047619047619,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     }
   ],
+  "shared_seed_locality_sensitivity": {
+    "schema": "rch.shared_seed_locality_sensitivity.v1",
+    "block": "seed; E1/E2 and C2-C4 flip jointly",
+    "strata": "geometry and bit rule",
+    "inference_scope": "selected descriptive inputs; requires valid joint seed sign changes",
+    "status": "complete",
+    "n_seed_blocks": 5,
+    "comparisons": [
+      {
+        "baseline": "A3_isotropic_hilbert",
+        "n_pairs": 30,
+        "p": 0.03125,
+        "statistic": -90.0,
+        "n_blocks": 5,
+        "n_strata": 6,
+        "method": "exact whole-block sign flipping (32 rearrangements)",
+        "p_adj": 0.09375
+      },
+      {
+        "baseline": "A2_morton",
+        "n_pairs": 30,
+        "p": 0.03125,
+        "statistic": -86.0,
+        "n_blocks": 5,
+        "n_strata": 6,
+        "method": "exact whole-block sign flipping (32 rearrangements)",
+        "p_adj": 0.09375
+      },
+      {
+        "baseline": "A7_cgal_spatial_sort",
+        "n_pairs": 30,
+        "p": 0.03125,
+        "statistic": -90.0,
+        "n_blocks": 5,
+        "n_strata": 6,
+        "method": "exact whole-block sign flipping (32 rearrangements)",
+        "p_adj": 0.09375
+      }
+    ]
+  },
   "stratified_by_bit_rule": [
     {
       "hypothesis": "H1",
@@ -186,7 +238,10 @@
       "cliffs_delta": -0.62,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H2",
@@ -217,7 +272,10 @@
       "cliffs_delta": -0.46,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H7_A7",
@@ -248,7 +306,10 @@
       "cliffs_delta": -1.0,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H3",
@@ -279,7 +340,10 @@
       "pooled_wilcoxon_p": 0.0005185252108015296,
       "cliffs_delta": 0.2603061224489796,
       "cliffs_delta_within": 0.2857142857142857,
-      "passed": false
+      "passed": false,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H1",
@@ -310,7 +374,10 @@
       "cliffs_delta": -0.58,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H2",
@@ -341,7 +408,10 @@
       "cliffs_delta": -0.38,
       "cliffs_delta_within": -0.8,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H7_A7",
@@ -372,7 +442,10 @@
       "cliffs_delta": -0.94,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H3",
@@ -403,7 +476,10 @@
       "pooled_wilcoxon_p": 1.4327936651867853e-16,
       "cliffs_delta": 0.7062755102040816,
       "cliffs_delta_within": 0.7428571428571429,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H1",
@@ -434,7 +510,10 @@
       "cliffs_delta": -0.6,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H2",
@@ -465,7 +544,10 @@
       "cliffs_delta": -0.44,
       "cliffs_delta_within": -0.8,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H7_A7",
@@ -496,7 +578,10 @@
       "cliffs_delta": -0.96,
       "cliffs_delta_within": -1.0,
       "p_adj": 0.0029296875,
-      "passed": true
+      "passed": true,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     },
     {
       "hypothesis": "H3",
@@ -527,10 +612,13 @@
       "pooled_wilcoxon_p": 0.42901342965956135,
       "cliffs_delta": 0.049438775510204085,
       "cliffs_delta_within": 0.05714285714285714,
-      "passed": false
+      "passed": false,
+      "inference_status": "descriptive_legacy",
+      "p_value_scope": "nominal_under_incomplete_dependence_blocking",
+      "passed_scope": "historical_nominal_gate_only"
     }
   ],
-  "stratified_scope": "Same H1/H2/H7_A7 family evaluated separately inside each primary bit rule, where the 10 clouds (2 geometries x 5 seeds at the pinned gate size) are genuinely independent. Reported only: `definition_of_done_passed` still comes from the pooled `hypotheses` entries.",
+  "stratified_scope": "Per-rule summaries of the legacy design; removing repeated bit rules does not remove shared E1/E2 draws, overlapping surface samples or repeated contamination conditions. The 10 geometry-seed cells are not established as independent clouds. Historical passed flags are nominal regression gates only; use the separate independent-cloud analysis for inference.",
   "spearman_rank_consistency": [
     {
       "scope": "C0_uniform:E1_vs_E2",
@@ -577,7 +665,11 @@
     "confidence_level": 0.95,
     "resamples": 9999,
     "seed": 20260513,
-    "method": "scipy.stats.bootstrap percentile"
+    "method": "scipy.stats.bootstrap percentile",
+    "scope": "nominal legacy intervals; shared inputs not fully preserved"
   },
-  "definition_of_done_passed": true
+  "definition_of_done_passed": true,
+  "inference_status": "descriptive_legacy",
+  "inference_scope": "Descriptive legacy evidence only. Bit rules reuse clouds; E1/E2 share draws within seed, and surface seeds/contamination conditions can reuse points. Reported p-values and intervals do not account for all dependencies and are nominal, not calibrated evidence of general superiority.",
+  "definition_of_done_is_calibrated_inference": false
 }

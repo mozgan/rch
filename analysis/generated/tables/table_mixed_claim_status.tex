@@ -1,15 +1,15 @@
 \begin{table}
-\caption{Claim status summary}
+\caption{Legacy claim directions on recorded configurations. Synthetic p-values are nominal under shared inputs; statuses do not confirm hypotheses. Real-data status is a descriptive direction check on fixed datasets.}
 \label{tab:claim_status}
 \begin{tabular}{lll}
 \toprule
 claim & status & evidence \\
 \midrule
-H1 synthetic MIAD & Confirmed & p\_adj=0.0029296875 \\
-H2 synthetic MIAD & Confirmed & p\_adj=0.0029296875 \\
-H3 contamination stability & Confirmed & p=4.999750012499375e-05; median\_delta=0.14482230392156858 \\
-A7 CGAL baseline comparison & Confirmed & p\_adj=0.0029296875; median\_delta=-0.6946745278872353 \\
-H1 real-data direction & Failed & comparisons=10; failed=10 \\
+H1 synthetic MIAD & Favorable direction (descriptive) & nominal p\_adj=0.0029296875; median\_delta=-0.24352633067050333; shared inputs \\
+H2 synthetic MIAD & Favorable direction (descriptive) & nominal p\_adj=0.0029296875; median\_delta=-0.12857494612964593; shared inputs \\
+H3 contamination stability & Favorable direction (descriptive) & nominal p=4.999750012499375e-05; median\_delta=0.14482230392156858; shared inputs \\
+A7 CGAL baseline comparison & Favorable direction (descriptive) & nominal p\_adj=0.0029296875; median\_delta=-0.6946745278872353; shared inputs \\
+H1 real-data direction & Failed & comparisons=15; failed=13; fixed datasets only \\
 \bottomrule
 \end{tabular}
 \end{table}

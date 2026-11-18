@@ -1,0 +1,153 @@
+schema: rch.application_query_protocol
+protocol_id: application_window_query
+repository_root: .
+output_dir: experiments/outputs/application_query
+sources:
+  manifest: data/manifests/real_datasets.yml
+  datasets:
+  - id: stanford_bunny
+    expected_points: 35947
+    archive_sha256: a5720bd96d158df403d153381b8411a727a1d73cff2f33dc9b212d6f75455b84
+  - id: stanford_armadillo
+    expected_points: 172974
+    archive_sha256: 8b9b56cc36e66d54429b1e1e75bd89e833645bfe0dc7c1afd1205877a7356a3f
+  - id: stanford_dragon
+    expected_points: 437645
+    archive_sha256: 74ac1d90989c9b1732edee82d57e9ce71452144cf4355f108d8c9c616d28d02f
+    scope_note: reconstructed mesh; not a raw sensor/LiDAR scan
+  - id: usgs_cameron_peak
+    expected_points: 479622
+    archive_sha256: 3d760640dee4dfbc14714a16fa154d0f4b974297fe0dcdf0e1b35e246500883d
+    scope_note: complete airborne LiDAR tile; all records retained; US survey feet
+      converted to metres
+  - id: noaa_santiam_river
+    expected_points: 78196
+    archive_sha256: 3b86f4483e2204320b30a7c17a011adbff7a34d2502fa653d1bd5d616b33de33
+    scope_note: Complete NOAA-delivered COPC file; all classes and returns retained
+      in delivered COPC record order. NOAA packaging may reorder points relative to
+      acquisition order; no claim of original flight ordering. No crop, thinning,
+      filtering, recentering or deduplication. One fixed tile per independent geographic
+      project, not many independent scenes. Selection before ordering outcomes.
+  - id: noaa_long_island
+    expected_points: 144182
+    archive_sha256: 043f19dd8c03dd40d668757f8d8e2548351e3404aad6eb3765ceefb7e54a0a76
+    scope_note: Complete NOAA-delivered COPC file; all classes and returns retained
+      in delivered COPC record order. NOAA packaging may reorder points relative to
+      acquisition order; no claim of original flight ordering. No crop, thinning,
+      filtering, recentering or deduplication. One fixed tile per independent geographic
+      project, not many independent scenes. Selection before ordering outcomes.
+  - id: noaa_southwest_florida
+    expected_points: 761620
+    archive_sha256: 7bdde9dd76bbd3797dc4a46e4dbd47b163941239be365e4db2f8a0524832c374
+    scope_note: Complete NOAA-delivered COPC file; all classes and returns retained
+      in delivered COPC record order. NOAA packaging may reorder points relative to
+      acquisition order; no claim of original flight ordering. No crop, thinning,
+      filtering, recentering or deduplication. One fixed tile per independent geographic
+      project, not many independent scenes. Selection before ordering outcomes.
+  license_note: Stanford meshes retain their research-use terms; USGS 3DEP tile is
+    public domain. Source-specific manifests record terms and attribution.
+layouts:
+  ids:
+  - A0_input
+  - A0_full_scan
+  - A3_isotropic_hilbert
+  - A6_rch
+  - A6_rch_C2
+  - A6_rch_C3
+  - A6_rch_C4
+  bit_rule:
+    id: C0_uniform
+    uniform_bits_per_axis: 10
+    min_axis_bits: 1
+  domain: Native per-rule/per-frame domains; C0 reference retained. Record bounds/bits/clipping/collisions.
+    No matched-resolution or orientation-only interpretation.
+  refinement: disabled
+  seed: 0
+  rule_by_layout:
+    A0_input:
+      bit_rule: null
+      bit_allocator: null
+    A0_full_scan:
+      bit_rule: null
+      bit_allocator: null
+    A3_isotropic_hilbert:
+      bit_rule: C0_uniform
+      bit_allocator: uniform
+    A6_rch:
+      bit_rule: C0_uniform
+      bit_allocator: uniform
+    A6_rch_C2:
+      bit_rule: C2_occupancy_floor1
+      bit_allocator: occupancy_floor1
+    A6_rch_C3:
+      bit_rule: C3_frame_core_occupancy
+      bit_allocator: frame_core_occupancy
+    A6_rch_C4:
+      bit_rule: C4_hybrid
+      bit_allocator: hybrid_occupancy
+record_and_pages:
+  record: uint64_original_point_id + 3*float64_xyz
+  byte_order: little_endian
+  record_bytes: 32
+  page_bytes: 4096
+  records_per_page: 128
+  final_page: zero-padded; valid_record_count stored in directory
+  page_directory: per-page conservative axis-aligned bounds, byte offset, valid record
+    count
+query_workload:
+  count_per_dataset: 256
+  seed: 2026
+  shape: axis_aligned_cube_in_normalized_dataset_bbox
+  size_fractions_of_each_bbox_extent:
+  - fraction: 0.03125
+    query_count: 86
+  - fraction: 0.125
+    query_count: 85
+  - fraction: 0.5
+    query_count: 85
+  center_sampling: uniform over the valid center interval that keeps each cube inside
+    the bbox
+  boundary_predicate: inclusive_min_and_max
+  report_actual_selectivity: true
+  same_query_file_for_all_layouts: true
+  query_file_sha256: computed_and_saved_before_benchmark
+compression:
+  codec: zlib_wrapper_with_DEFLATE_payload
+  level: 6
+  scope: full_page_file_payload_excluding_container_header
+  benchmark_compressed_queries: false
+  record_zlib_runtime_version: true
+measurement:
+  warm_cache: one_warmup_then_5_measured_repeats_per_layout
+  ordering_repeats: 5
+  rss_scope: cumulative_process_peak_after_query_including_previous_layouts_and_oracle
+  cold_cache: optional_best_effort_file_scoped_advice_only; never_drop_global_system_caches
+  metrics:
+  - sort_and_phase_seconds
+  - page_file_write_flush_seconds
+  - page_directory_build_seconds
+  - end_to_end_preparation_seconds
+  - query_wall_and_cpu_seconds_per_query
+  - p50_p95_p99_query_latency
+  - candidate_and_read_pages
+  - logical_bytes_read
+  - process_io_counters_when_available
+  - data_index_and_compressed_bytes
+  - peak_rss
+  - exact_result_count_and_result_hash
+  cache_claim: report warm-cache behavior; describe OS counters as unavailable when
+    unavailable; logical read bytes are not physical device I/O
+  layout_order: one seeded permutation per dataset (seed 2026 + dataset index), recorded
+    in run manifest; not interleaved repeat blocks
+correctness:
+  oracle: independent_brute_force_over_original_point_ids
+  required_false_positives: 0
+  required_false_negatives: 0
+  compare_result_id_sets_for_every_query_and_layout: true
+  full_scan_control: disk_all_pages_A0_full_scan
+  in_memory_oracle: independent_result_ID_reference
+analysis_scope:
+  pairing_unit: query_id_within_dataset
+  queries_are_independent_datasets: false
+  no_general_database_or_tree_index_superiority_claim: true
+  no_raw_lidar_generalization_from_stanford_meshes: true

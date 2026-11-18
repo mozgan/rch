@@ -1,0 +1,19 @@
+{
+  "status": "validated_full_matrix",
+  "source_manifest_sha256": "354248309424b7b09e1d9b5be56a519615499dedbf8346dd06184cbe2d0f7042",
+  "generator_sha256": "300817d563701e4dc5843e294cee354b94a9de8aac53305ee86797946cbef5ed",
+  "artifacts": {
+    "tables/table_application_query.tex": "0b3c73ac5b44a91d987749d83aba4d33b3468ab69b805b613b328324b959932a",
+    "figures/fig_application_query_latency.pdf": "6d378d1eec7bc3b1eb4edee7b5407ef3be459dd3fd24d4ffab172e4c3d6a208f",
+    "outputs/application_query/evidence.md": "6e38e07f9ba3813437ca4bc3e7bea840275f9d8a86ee98385bc5aa686a3a136e",
+    "outputs/application_query/geometry.csv": "af669e23254dc3823825dcb675de7ccc31f6901d8ef2b91cba99bc1c026864b3",
+    "outputs/application_query/ordering_phases.csv": "8f1d7256150f095aebacc632d8fcc10a31f73895983e37e9c74bb0f60e51f432",
+    "outputs/application_query/paired_comparisons.csv": "d0eb89bc262624943e720cde9a04490bba42df00502adf8796393a7dea63554a",
+    "outputs/application_query/quantization_diagnostics.csv": "f81e610a6651cb4611d2cd527a8dd40b3ef6da26939fb42fad4c13f8fe597937",
+    "outputs/application_query/real_refinement_phase_summary.csv": "144b29f3781492c5e1d5a461bbd7d6e7b4d72d1a00acb0da535f9d3ada7777f8",
+    "outputs/application_query/real_refinement_phases.csv": "d83458bcdc63d89b98c8111705cd033d325f9d49a332942c891e8acd38bf6a5b",
+    "outputs/application_query/run_manifest.json": "354248309424b7b09e1d9b5be56a519615499dedbf8346dd06184cbe2d0f7042",
+    "outputs/application_query/summary.csv": "0017eb9c09c023ba4bcfee8682f520043b4c24fe8614b3aea77174a4f182c98f",
+    "outputs/application_query/summary.json": "d8792c04fdea2ca042dc69a8e74a626a33c0122a77dd7b22525afba09f799a4a"
+  }
+}

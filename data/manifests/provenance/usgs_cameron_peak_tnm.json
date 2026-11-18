@@ -1,0 +1,37 @@
+{
+  "query_url": "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=Lidar%20Point%20Cloud%20(LPC)&bbox=-105.59,40.36,-105.58,40.37&max=10&outputFormat=JSON",
+  "selected_item": {
+    "title": "USGS Lidar Point Cloud CO_CameronPeakWildfire_2021_D21 w2970n1375",
+    "moreInfo": "Lidar (Light detection and ranging) discrete-return point cloud data are available in the American Society for Photogrammetry and Remote Sensing (ASPRS) LAS format. The LAS format is a standardized binary format for storing 3-dimensional point cloud data and point attributes along with header information and variable length records specific to the data. Millions of data points are stored as a 3-dimensional data cloud as a series of x (longitude), y (latitude) and z (elevation) points. A few older projects in this collection are in ASCII format. Please refer to http://www.asprs.org/Committee-General/LASer-LAS-File-Format-Exchange-Activities.html for additional information. This data set is a LAZ (compressed LAS) format file containing [...]",
+    "sourceId": "636353a1d34ebe442506c1aa",
+    "sourceName": "ScienceBase",
+    "sourceOriginId": null,
+    "sourceOriginName": "gda",
+    "metaUrl": "https://www.sciencebase.gov/catalog/item/636353a1d34ebe442506c1aa",
+    "vendorMetaUrl": "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/metadata/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021",
+    "publicationDate": "2022-11-01",
+    "lastUpdated": "2022-11-02T23:37:40.713-06:00",
+    "dateCreated": "2022-11-02T23:37:37.668-06:00",
+    "sizeInBytes": 4103128,
+    "extent": "Varies",
+    "format": "LAZ",
+    "downloadURL": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021/LAZ/USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.laz",
+    "downloadURLRaster": null,
+    "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/LPC/Projects/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021/browse/USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.jpg",
+    "downloadLazURL": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021/LAZ/USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.laz",
+    "urls": {
+      "LAZ": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021/LAZ/USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.laz"
+    },
+    "datasets": [],
+    "boundingBox": {
+      "minX": -105.59111629584312,
+      "maxX": -105.58972233798882,
+      "minY": 40.36905748817756,
+      "maxY": 40.376466820247465
+    },
+    "bestFitIndex": 0.0,
+    "body": "Lidar (Light detection and ranging) discrete-return point cloud data are available in the American Society for Photogrammetry and Remote Sensing (ASPRS) LAS format. The LAS format is a standardized binary format for storing 3-dimensional point cloud data and point attributes along with header information and variable length records specific to the data. Millions of data points are stored as a 3-dimensional data cloud as a series of x (longitude), y (latitude) and z (elevation) points. A few older projects in this collection are in ASCII format. Please refer to http://www.asprs.org/Committee-General/LASer-LAS-File-Format-Exchange-Activities.html for additional information. This data set is a LAZ (compressed LAS) format file containing lidar point cloud data. Compression to an LAZ file was done with the LAStools 'laszip' program and can be unzipped with the same free program (laszip.org).",
+    "processingUrl": "processingUrl",
+    "modificationInfo": "2022-11-03"
+  }
+}

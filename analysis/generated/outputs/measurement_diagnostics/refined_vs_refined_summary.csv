@@ -1,0 +1,9 @@
+refinement,baseline,configuration_rows,distinct_geometry_seed_clouds,median_delta_miad,rch_lower,ties,scope
+off,A3_isotropic_hilbert,30,10,-0.24352633067050333,30,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+off,A2_morton,30,10,-0.33772017059617,30,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+off,A2_morton:C3_frame_core_occupancy,30,10,-0.12857494612964593,28,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+off,A5b_robust_frame_morton,30,10,-0.13903082406300626,30,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+all,A3_isotropic_hilbert,30,10,-0.09396104417028622,30,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+all,A2_morton,30,10,-0.09368990629629825,27,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+all,A2_morton:C3_frame_core_occupancy,30,10,0.0010572198681165212,14,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds
+all,A5b_robust_frame_morton,30,10,0.004715367005896365,12,0,descriptive legacy primary configurations; rules share inputs; not 30 independent clouds

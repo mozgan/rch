@@ -1,0 +1,60 @@
+# Natural 2x3 frame/rule factorial, plus frozen-resolution replay on the same inputs.
+schema: rch.runlist.v1
+name: frame_ablation_bit_rules
+algorithm_ids: [A5_pca_compact_hilbert, A6_rch]
+bit_rules:
+  - id: C2_occupancy_floor1
+    label: C2 occupancy floor1
+    bit_allocator: occupancy_floor1
+    allocation_model: covering_occupancy_floor1
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C3_frame_core_occupancy
+    label: C3 frame-core occupancy
+    bit_allocator: frame_core_occupancy
+    allocation_model: robust_core_occupancy
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+  - id: C4_hybrid
+    label: C4 hybrid
+    bit_allocator: hybrid_occupancy
+    allocation_model: robust_core_delta_covering_occupancy
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+contamination_ids: [D0, D1, D2, D3, D4]
+geometry_ids: [E0, E1, E2, E5, E6, E7, E8, E9, E10, E11, E12]
+point_counts: [256]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+metrics: [miad, kendall_tau_clean, frame_angle_rad]
+independent_sampling: true
+stability_control:
+  schema: rch.frame_stability_control.v1
+  # Paired clean depths: coordinatewise maximum of A5/A6 for each rule.
+  # One common physical cell-width vector over all six arms and D0..D4.
+  depth_reference: paired_clean_max
+  resolution_refinements: [0, 1, 3, 5, 8]
+  grid_shifts_cells: [0.0, 0.5]
+  expected_contaminations: [D0, D1, D2, D3, D4]
+  interpret_as: frozen_quantizer_intervention_not_native_adaptive_policy
+additional_geometries:
+  - id: E9
+    label: prolate Gaussian 3:1:1
+    generator: gaussian_ellipsoid
+    geometry: plate_5to1
+    axes: [3.0, 1.0, 1.0]
+  - id: E10
+    label: prolate Gaussian 7:1:1
+    generator: gaussian_ellipsoid
+    geometry: rod_10to1
+    axes: [7.0, 1.0, 1.0]
+  - id: E11
+    label: thin torus R=1 r=0.1
+    generator: torus
+    family: thin
+  - id: E12
+    label: tall cylinder H/2r=10
+    generator: cylinder
+    family: tall

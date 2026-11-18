@@ -1,12 +1,12 @@
 # Linux Performance Counters
 
-RCH uses Linux `perf stat` only for optional cache measurements around the
+RCH uses Linux `perf-stat(1)` for optional cache measurements around the
 deterministic block-read probe. Ordering and correctness tests do not require
 hardware counters.
 
 ## Preflight
 
-Check that `perf` exists and that the selected generic events are available:
+Check that `perf(1)` is installed and that the selected generic events are available:
 
 ```bash
 perf --version
@@ -49,4 +49,4 @@ The reported miss rate belongs to `rch_block_read_probe`, not directly to the
 ordering call. It depends on CPU microarchitecture, kernel, event mapping,
 system load, memory placement, and the probe workload. Compare counters only
 under a recorded and controlled environment, and report the exact event names
-and `perf` status.
+and the recorded counter status.

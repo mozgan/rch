@@ -11,7 +11,9 @@ The basic library path requires:
 - a C++23 compiler;
 - Ninja, Make, or another CMake build tool.
 
-Python is not needed to call the header-only library, but Python 3.10 or newer
+The compiler must also provide a C++23 standard library with `std::expected`.
+The debug preset uses `clang++`; check that this command selects the intended
+toolchain. Python is not needed to call the header-only library, but Python 3.11 or newer
 and `requirements.txt` are required by tests, experiment runners, and analysis.
 
 ```bash
@@ -31,8 +33,11 @@ From the repository root:
 make example-basic
 ```
 
-The target configures `build/examples` with tests disabled, builds
-`rch_basic_order`, and runs three cases: default RCH, RCH with the hybrid bit
+If the checkout was moved from another path, use a fresh build directory;
+CMake caches contain the original absolute paths.
+
+The target configures `build/examples` with tests disabled and builds
+`rch_basic_order`. The `example-basic` target then runs three cases: default RCH, RCH with the hybrid bit
 rule, and PCA compact Hilbert with local refinement.
 
 Run the executable directly when experimenting:
@@ -104,8 +109,8 @@ make test
 ```
 
 `make test` covers unit, property, oracle, regression, and Python checks that do
-not require the full stored experiment matrix. CLI and artifact-bound checks are
-separate targets; see [reproducibility.md](reproducibility.md).
+not require the full stored experiment matrix. It also runs the CLI checks;
+artifact-bound checks have a separate target; see [reproducibility.md](reproducibility.md).
 
 ## 5. Know What Success Means
 

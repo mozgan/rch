@@ -45,9 +45,15 @@ mutate it.
 | `min_axis_bits` | 1 | requested minimum for occupancy allocation |
 | `refinement` | `Off` | optional local MIAD search |
 | `tau_quant_squared` | 4.0 | squared scatter-radius multiplier; gives core half-extents `2 sqrt(lambda_j)` |
+| `fixed_frame_domain_half_extent` | 0 | optional shared cubic domain for frame controls |
+| `fixed_frame_quantizer` | unset | optional fixed half-extents, depths, and origin shift |
 
 The encoder enforces its own supported caps even if a larger numeric value is
 provided. Prefer defaults unless an experiment has a reason to vary them.
+Fixed-grid controls are experimental interventions, not automatic grid policies.
+`fixed_frame_quantizer` requires PCA or RCH, positive finite extents, 1–32 bits
+per axis, a valid total budget, an origin shift within one cell, and no
+simultaneous cubic-domain override.
 
 ### Ordering methods
 
@@ -91,6 +97,17 @@ On success, `OrderingResult` contains:
 | `robust_fallback_used` | requested robust estimate was replaced by sample moments |
 | `finite_only_passed` | accepted input passed finite validation |
 | `output_hash` | SHA-256 of the documented integer output payload |
+| `quantization_diagnostics` | clipping, saturation, boundary-code, and shared-key counts |
+| `fitted_frame_diagnostics` | optional fitted frame for frame-based methods |
+| `timing` | phase timings when timing collection is requested |
+
+For timing collection, pass a `SharedTimingBreakdown` as the optional third
+argument to `order_point_cloud`. Start with a fresh object for each measured
+call. Pilot/start/concentration times are nested within estimator time.
+
+Shared-key counts include every point in a group of size greater than one,
+not only excess records. Estimator and axis fallback are separate events; see
+[Algorithm](algorithm.md#stage-3-construct-the-principal-frame).
 
 Apply the permutation to any parallel application array:
 
@@ -118,7 +135,7 @@ be monotone along `permutation`.
 `OrderingErrorCode` separates four categories:
 
 - `invalid_shape`: coordinate count is not divisible by three;
-- `invalid_input`: at least one coordinate is not finite;
+- `invalid_input`: a coordinate is not finite or a fixed-grid control is invalid;
 - `unsupported_method`: the requested enum is not implemented;
 - `key_encoding_failed`: a quantized point cannot be encoded.
 

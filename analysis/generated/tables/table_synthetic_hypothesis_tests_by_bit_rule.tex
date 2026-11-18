@@ -1,22 +1,22 @@
 \begin{table}
-\caption{Synthetic hypothesis tests stratified by bit rule}
-\label{tab:synthetic_statistics_by_bit_rule}
-\begin{tabular}{lllrrlrrrr}
+\caption{Legacy per-rule summaries: nominal p-values; shared inputs remain dependent}
+\label{tab:synthetic\_statistics\_by\_bit\_rule}
+\begin{tabular}{llllllllll}
 \toprule
-bit_rule & analysis & baseline & n & estimate & ci95 & p & effect & effect_within & passed \\
+bit\_rule & analysis & baseline & n & estimate & ci95 & p & effect & effect\_within & passed \\
 \midrule
-C2_occupancy_floor1 & H1 & A3_isotropic_hilbert & 10 & -0.209353 & [-0.5671374119433108, -0.10585357976272936] & 0.002930 & -0.620000 & -1.000000 & True \\
-C2_occupancy_floor1 & H2 & A2_morton & 10 & -0.106816 & [-0.2911787044572549, -0.07625567561559232] & 0.002930 & -0.460000 & -1.000000 & True \\
-C2_occupancy_floor1 & H7_A7 & A7_cgal_spatial_sort & 10 & -0.652398 & [-1.052429894441706, -0.42948107558310067] & 0.002930 & -1.000000 & -1.000000 & True \\
-C2_occupancy_floor1 & H3 & A5_pca_compact_hilbert & 140 & 0.075337 & [0.01795343137254901, 0.12377450980392157] & 0.000550 & 0.260306 & 0.285714 & False \\
-C3_frame_core_occupancy & H1 & A3_isotropic_hilbert & 10 & -0.236173 & [-0.5213415786040634, -0.11387593139304863] & 0.002930 & -0.580000 & -1.000000 & True \\
-C3_frame_core_occupancy & H2 & A2_morton & 10 & -0.120322 & [-0.25462213606301676, -0.04496004911899942] & 0.002930 & -0.380000 & -0.800000 & True \\
-C3_frame_core_occupancy & H7_A7 & A7_cgal_spatial_sort & 10 & -0.694675 & [-1.0211342679451132, -0.44707981686559783] & 0.002930 & -0.940000 & -1.000000 & True \\
-C3_frame_core_occupancy & H3 & A5_pca_compact_hilbert & 140 & 0.366085 & [0.3166053921568627, 0.4325674019607843] & 0.000050 & 0.706276 & 0.742857 & True \\
-C4_hybrid & H1 & A3_isotropic_hilbert & 10 & -0.260594 & [-0.5323174335375531, -0.1581148894464811] & 0.002930 & -0.600000 & -1.000000 & True \\
-C4_hybrid & H2 & A2_morton & 10 & -0.158465 & [-0.3078470752297322, -0.07869533441670518] & 0.002930 & -0.440000 & -0.800000 & True \\
-C4_hybrid & H7_A7 & A7_cgal_spatial_sort & 10 & -0.712496 & [-1.052429894441706, -0.5091507835853148] & 0.002930 & -0.960000 & -1.000000 & True \\
-C4_hybrid & H3 & A5_pca_compact_hilbert & 140 & 0.014216 & [-0.04852941176470588, 0.07034313725490193] & 0.428579 & 0.049439 & 0.057143 & False \\
+C2\_occupancy\_floor1 & H1 & A3\_isotropic\_hilbert & 10 & -0.2093529834950345 & [-0.5671374119433108, -0.10585357976272936] & 0.0029296875 & -0.62 & -1.0 & True \\
+C2\_occupancy\_floor1 & H2 & A2\_morton & 10 & -0.10681558707485228 & [-0.2911787044572549, -0.07625567561559232] & 0.0029296875 & -0.46 & -1.0 & True \\
+C2\_occupancy\_floor1 & H7\_A7 & A7\_cgal\_spatial\_sort & 10 & -0.6523979399967434 & [-1.052429894441706, -0.42948107558310067] & 0.0029296875 & -1.0 & -1.0 & True \\
+C2\_occupancy\_floor1 & H3 & A5\_pca\_compact\_hilbert & 140 & 0.07533700980392156 & [0.01795343137254901, 0.12377450980392157] & 0.0005499725013749313 & 0.2603061224489796 & 0.2857142857142857 & False \\
+C3\_frame\_core\_occupancy & H1 & A3\_isotropic\_hilbert & 10 & -0.23617275841219376 & [-0.5213415786040634, -0.11387593139304863] & 0.0029296875 & -0.58 & -1.0 & True \\
+C3\_frame\_core\_occupancy & H2 & A2\_morton & 10 & -0.12032195180995997 & [-0.25462213606301676, -0.04496004911899942] & 0.0029296875 & -0.38 & -0.8 & True \\
+C3\_frame\_core\_occupancy & H7\_A7 & A7\_cgal\_spatial\_sort & 10 & -0.6946745278872353 & [-1.0211342679451132, -0.44707981686559783] & 0.0029296875 & -0.94 & -1.0 & True \\
+C3\_frame\_core\_occupancy & H3 & A5\_pca\_compact\_hilbert & 140 & 0.3660845588235294 & [0.3166053921568627, 0.4325674019607843] & 4.999750012499375e-05 & 0.7062755102040816 & 0.7428571428571429 & True \\
+C4\_hybrid & H1 & A3\_isotropic\_hilbert & 10 & -0.2605940000151854 & [-0.5323174335375531, -0.1581148894464811] & 0.0029296875 & -0.6 & -1.0 & True \\
+C4\_hybrid & H2 & A2\_morton & 10 & -0.1584652568720838 & [-0.3078470752297322, -0.07869533441670518] & 0.0029296875 & -0.44 & -0.8 & True \\
+C4\_hybrid & H7\_A7 & A7\_cgal\_spatial\_sort & 10 & -0.7124964264756202 & [-1.052429894441706, -0.5091507835853148] & 0.0029296875 & -0.96 & -1.0 & True \\
+C4\_hybrid & H3 & A5\_pca\_compact\_hilbert & 140 & 0.014215686274509809 & [-0.04852941176470588, 0.07034313725490193] & 0.4285785710714464 & 0.049438775510204085 & 0.05714285714285714 & False \\
 \bottomrule
 \end{tabular}
 \end{table}

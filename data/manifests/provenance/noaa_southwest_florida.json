@@ -1,0 +1,53 @@
+{
+  "id": "noaa_southwest_florida",
+  "noaa_collection_id": 529,
+  "listing_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/?prefix=laz%2Fgeoid18%2F529%2F&max-keys=1000",
+  "listing_truncated": "true",
+  "url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/529/20070717_079283_w_ld_p31.copc.laz",
+  "index_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/529/index.html",
+  "header": {
+    "point_count": 761620,
+    "crs_wkt": "COMPOUNDCRS[\"NAD83(NSRS2007) / UTM zone 17N + NAVD88 height\",PROJCRS[\"NAD83(NSRS2007) / UTM zone 17N\",BASEGEOGCRS[\"NAD83(NSRS2007)\",DATUM[\"NAD83 (National Spatial Reference System 2007)\",ELLIPSOID[\"GRS 1980\",6378137,298.257222101,LENGTHUNIT[\"metre\",1]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433]],ID[\"EPSG\",4759]],CONVERSION[\"UTM zone 17N\",METHOD[\"Transverse Mercator\",ID[\"EPSG\",9807]],PARAMETER[\"Latitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8801]],PARAMETER[\"Longitude of natural origin\",-81,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"Scale factor at natural origin\",0.9996,SCALEUNIT[\"unity\",1],ID[\"EPSG\",8805]],PARAMETER[\"False easting\",500000,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",3724]],VERTCRS[\"NAVD88 height\",VDATUM[\"North American Vertical Datum 1988\"],CS[vertical,1],AXIS[\"gravity-related height\",up,LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",5703]]]",
+    "horizontal_epsg": 3724,
+    "vertical_epsg": 5703,
+    "axis_units": [
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      }
+    ],
+    "system_identifier": "NIIRS10",
+    "generating_software": "LIDAR1 tiled",
+    "creation_date": "2009-04-13",
+    "mins": [
+      326265.11168754805,
+      3050145.171286108,
+      -21.648006230973742
+    ],
+    "maxs": [
+      327785.3886510582,
+      3051679.1163357496,
+      108.69547325519437
+    ]
+  },
+  "archive_sha256": "7bdde9dd76bbd3797dc4a46e4dbd47b163941239be365e4db2f8a0524832c374",
+  "archive_bytes": 2793794,
+  "selection_attempts": [
+    {
+      "key": "laz/geoid18/529/20070717_079283_w_ld_p31.copc.laz",
+      "points": 761620,
+      "crs": "COMPD_CS[\"NAD83(NSRS2007) / UTM zone 17N + NAVD88 height\",PROJCS[\"NAD83(NSRS2007) / UTM zone 17N\",GEOGCS[\"NAD83(NSRS2007)\",DATUM[\"NAD83_National_Spatial_Reference_System_2007\",SPHEROID[\"GRS 1980\",6378137,298.257222101],AUTHORITY[\"EPSG\",\"6759\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4759\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",-81],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"3724\"]],VERT_CS[\"NAVD88 height\",VERT_DATUM[\"North American Vertical Datum 1988\",2005],UNIT[\"metre\",1],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5703\"]]]",
+      "compound": true
+    }
+  ],
+  "selection_rule": "first NOAA COPC file sorted by size,key among first <=1000 listing entries; 0.5..12 MB, 65536..1000000 points; projected metre CRS; no ordering outcomes used",
+  "vertical_units_evidence": "NOAA geoid18 collection index states NAVD88 in metres; preserved in source index/metadata snapshot"
+}

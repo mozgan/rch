@@ -1,0 +1,165 @@
+# Frozen exploratory design; no learned choice thresholds or unseen-site claims.
+schema: rch.runlist.v1
+name: regime_map
+algorithm_ids:
+- A3_isotropic_hilbert
+- A5_pca_compact_hilbert
+- A6_rch
+bit_rules:
+- id: C0_uniform
+  label: C0 uniform 10 bits per axis
+  bit_allocator: uniform
+  uniform_bits: 10
+  min_axis_bits: 1
+- id: C2_occupancy_floor1
+  label: C2 occupancy floor1
+  bit_allocator: occupancy_floor1
+  allocation_model: covering_occupancy_floor1
+  budget_projection: minimax_worst_cell_edge
+  uniform_bits: 10
+  min_axis_bits: 1
+- id: C3_frame_core_occupancy
+  label: C3 frame-core occupancy
+  bit_allocator: frame_core_occupancy
+  allocation_model: robust_core_occupancy
+  budget_projection: minimax_worst_cell_edge
+  uniform_bits: 10
+  min_axis_bits: 1
+- id: C4_hybrid
+  label: C4 hybrid
+  bit_allocator: hybrid_occupancy
+  allocation_model: robust_core_delta_covering_occupancy
+  budget_projection: minimax_worst_cell_edge
+  uniform_bits: 10
+  min_axis_bits: 1
+contamination_ids:
+- D0
+- D1
+- D2
+- D3
+- D4
+geometry_ids:
+- R_volume_isotropic
+- R_volume_oblate
+- R_volume_prolate
+- R_volume_triaxial
+- R_surface_isotropic
+- R_surface_oblate
+- R_surface_prolate
+- R_surface_triaxial
+- R_curve_isotropic
+- R_curve_oblate
+- R_curve_prolate
+- R_curve_triaxial
+- R_clustered_isotropic
+- R_clustered_oblate
+- R_clustered_prolate
+- R_clustered_triaxial
+point_counts:
+- 1024
+seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+metrics:
+- miad
+- kendall_tau_clean
+independent_sampling: true
+additional_geometries:
+- id: R_volume_isotropic
+  label: volume; affine isotropic
+  generator: regime_family
+  family: volume
+  shape: isotropic
+- id: R_volume_oblate
+  label: volume; affine oblate
+  generator: regime_family
+  family: volume
+  shape: oblate
+- id: R_volume_prolate
+  label: volume; affine prolate
+  generator: regime_family
+  family: volume
+  shape: prolate
+- id: R_volume_triaxial
+  label: volume; affine triaxial
+  generator: regime_family
+  family: volume
+  shape: triaxial
+- id: R_surface_isotropic
+  label: surface; affine isotropic
+  generator: regime_family
+  family: surface
+  shape: isotropic
+- id: R_surface_oblate
+  label: surface; affine oblate
+  generator: regime_family
+  family: surface
+  shape: oblate
+- id: R_surface_prolate
+  label: surface; affine prolate
+  generator: regime_family
+  family: surface
+  shape: prolate
+- id: R_surface_triaxial
+  label: surface; affine triaxial
+  generator: regime_family
+  family: surface
+  shape: triaxial
+- id: R_curve_isotropic
+  label: curve; affine isotropic
+  generator: regime_family
+  family: curve
+  shape: isotropic
+- id: R_curve_oblate
+  label: curve; affine oblate
+  generator: regime_family
+  family: curve
+  shape: oblate
+- id: R_curve_prolate
+  label: curve; affine prolate
+  generator: regime_family
+  family: curve
+  shape: prolate
+- id: R_curve_triaxial
+  label: curve; affine triaxial
+  generator: regime_family
+  family: curve
+  shape: triaxial
+- id: R_clustered_isotropic
+  label: clustered; affine isotropic
+  generator: regime_family
+  family: clustered
+  shape: isotropic
+- id: R_clustered_oblate
+  label: clustered; affine oblate
+  generator: regime_family
+  family: clustered
+  shape: oblate
+- id: R_clustered_prolate
+  label: clustered; affine prolate
+  generator: regime_family
+  family: clustered
+  shape: prolate
+- id: R_clustered_triaxial
+  label: clustered; affine triaxial
+  generator: regime_family
+  family: clustered
+  shape: triaxial

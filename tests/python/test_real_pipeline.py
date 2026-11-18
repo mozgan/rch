@@ -139,7 +139,7 @@ class RealConvertTest(unittest.TestCase):
     """PLY parsing and archive conversion edge cases."""
 
     def test_ascii_ply_with_extra_properties(self) -> None:
-        """ASCII PLY keeps \(x,y,z\) and ignores additional vertex properties."""
+        """ASCII PLY keeps (x,y,z) and ignores additional vertex properties."""
         data = (
             b"ply\nformat ascii 1.0\n"
             b"element vertex 2\n"
@@ -363,7 +363,7 @@ class RealConvertEdgeTest(unittest.TestCase):
             parse_ply_header(b"ply\nformat ascii 1.0\nelement vertex 1\n")
 
     def test_parse_ply_header_rejects_missing_xyz(self) -> None:
-        """Vertex element must contain \(x,y,z\) scalar properties."""
+        """Vertex element must contain (x,y,z) scalar properties."""
         bad = (
             b"ply\nformat ascii 1.0\n"
             b"element vertex 1\n"
@@ -386,7 +386,7 @@ class RealConvertEdgeTest(unittest.TestCase):
             parse_ply_header(bad)
 
     def test_binary_little_endian_ply_round_trip(self) -> None:
-        """Binary little-endian PLY parses with the same \(x,y,z\) contract."""
+        """Binary little-endian PLY parses with the same (x,y,z) contract."""
         header = (
             b"ply\nformat binary_little_endian 1.0\n"
             b"element vertex 1\n"
@@ -564,9 +564,7 @@ class RealRealRunnerEdgeTest(unittest.TestCase):
 
             manifest = root / "manifest.yml"
             manifest.write_text(
-                "datasets:\n"
-                "  - id: fixture\n"
-                "  - id: fixture\n",
+                "datasets:\n  - id: fixture\n  - id: fixture\n",
                 encoding="utf-8",
             )
             with self.assertRaisesRegex(ValueError, "duplicate manifest dataset id"):
@@ -732,7 +730,9 @@ class RealRealRunnerEdgeTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            with self.assertRaisesRegex(ValueError, "real runlists must use only clean D0"):
+            with self.assertRaisesRegex(
+                ValueError, "real runlists must use only clean D0"
+            ):
                 run_real_datasets(
                     Namespace(
                         runlist=runlist,
@@ -751,47 +751,29 @@ class RealRealRunnerEdgeTest(unittest.TestCase):
         repo = Path(__file__).resolve().parents[2]
         makefile = (repo / "Makefile").read_text(encoding="utf-8")
         start = makefile.index("bench-real:")
-        end = makefile.index("\ndemo-data:", start)
+        end = makefile.index("\nbench-independent:", start)
         bench_real = makefile[start:end]
 
         self.assertIn("--cgal-adapter-bin $(CGAL_ADAPTER_BIN)", bench_real)
         self.assertNotIn("--sampled-metric-size", bench_real)
         self.assertNotIn("--exclude-external-baselines", bench_real)
 
-    def test_make_bench_demo_routes_a7_through_cgal_adapter(self) -> None:
-        """bench-demo uses the real CGAL adapter path for synthetic, real, and appendix."""
-        repo = Path(__file__).resolve().parents[2]
-        makefile = (repo / "Makefile").read_text(encoding="utf-8")
-        synthetic_start = makefile.index("bench-demo-synthetic:")
-        real_start = makefile.index("\nbench-demo-real:", synthetic_start)
-        appendix_start = makefile.index("\ncgal-demo-appendix:", real_start)
-        paper_start = makefile.index("\npaper-artifacts-demo:", appendix_start)
-        synthetic_block = makefile[synthetic_start:real_start]
-        real_block = makefile[real_start:appendix_start]
-        appendix_block = makefile[appendix_start:paper_start]
-
-        self.assertIn(
-            "bench-demo-synthetic: bench-cpp cgal-adapter-bin demo-data",
-            synthetic_block,
-        )
-        self.assertIn(
-            "bench-demo-real: bench-cpp cgal-adapter-bin demo-data",
-            real_block,
-        )
-        self.assertIn(
-            "cgal-demo-appendix: cgal-adapter-bin demo-data",
-            appendix_block,
-        )
-        self.assertIn("--cgal-adapter-bin $(CGAL_ADAPTER_BIN)", synthetic_block)
-        self.assertIn("--cgal-adapter-bin $(CGAL_ADAPTER_BIN)", real_block)
-        self.assertNotIn("--sampled-metric-size", real_block)
-        self.assertNotIn("--exclude-external-baselines", real_block)
-        self.assertIn("--dataset-catalog $(DEMO_REAL_CATALOG)", makefile)
-        self.assertIn("demo-determinism-log", makefile)
-        self.assertIn(
-            "paper-artifacts-demo: bench-demo-synthetic bench-demo-real cgal-demo-appendix",
-            makefile,
-        )
+    def test_production_benchmarks_keep_the_cgal_baseline(self) -> None:
+        """Every ordering matrix retains its external baseline after consolidation."""
+        makefile = (Path(__file__).resolve().parents[2] / "Makefile").read_text()
+        for target, following in (
+            ("bench-synthetic", "bench-real"),
+            ("bench-real", "bench-independent"),
+            ("bench-independent", "bench-cgal"),
+        ):
+            start = makefile.index(target + ":")
+            end = makefile.index("\n" + following + ":", start)
+            block = makefile[start:end]
+            self.assertIn("cgal-build", block)
+            self.assertIn("--cgal-adapter-bin $(CGAL_ADAPTER_BIN)", block)
+        start = makefile.index("bench-cgal:")
+        end = makefile.index("\nbench-micro:", start)
+        self.assertIn("--adapter-bin $(CGAL_ADAPTER_BIN)", makefile[start:end])
 
     def test_run_real_datasets_routes_a7_through_cgal_adapter_for_ply_clean_case(
         self,
@@ -931,7 +913,9 @@ class RealRealRunnerEdgeTest(unittest.TestCase):
             seed=3,
         )
         stem = case_stem(case)
-        self.assertEqual(stem, "stanford_bunny__A6_rch__C3_frame_core_occupancy__D1__s3")
+        self.assertEqual(
+            stem, "stanford_bunny__A6_rch__C3_frame_core_occupancy__D1__s3"
+        )
         self.assertNotIn("/", stem)
         self.assertNotIn(" ", stem)
 
@@ -1097,13 +1081,9 @@ class RealRealRunnerEdgeTest(unittest.TestCase):
         )
 
         self.assertEqual(row["m1_l1_status"], "deterministic_sampled_proxy")
-        self.assertEqual(
-            row["m1_l1_sampled_status"], "deterministic_sampled_proxy"
-        )
+        self.assertEqual(row["m1_l1_sampled_status"], "deterministic_sampled_proxy")
         self.assertEqual(row["m1_l2_status"], "deterministic_sampled_proxy")
-        self.assertEqual(
-            row["m1_l2_sampled_status"], "deterministic_sampled_proxy"
-        )
+        self.assertEqual(row["m1_l2_sampled_status"], "deterministic_sampled_proxy")
         self.assertEqual(row["recall_8_64_status"], "deterministic_sampled_proxy")
         self.assertEqual(
             row["recall_8_64_sampled_status"], "deterministic_sampled_proxy"
@@ -1310,6 +1290,100 @@ class RealAnalysisEdgeTest(unittest.TestCase):
         ]
         formatted = table_rows(rows)
         self.assertEqual([row["dataset_id"] for row in formatted], ["a", "z"])
+
+
+class UsgsLazTest(unittest.TestCase):
+    """Exercise source provenance, unit conversion and point-order preservation."""
+
+    def setUp(self):
+        import laspy
+        import numpy as np
+        from pyproj import CRS
+        from scripts.convert_dataset import load_manifest as read_manifest
+
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.dataset = dict(
+            read_manifest(
+                Path(__file__).resolve().parents[2] / "data/manifests/usgs_3dep.yml"
+            )["datasets"][0]
+        )
+        self.dataset["filename"] = "fixture.laz"
+        header = laspy.LasHeader(point_format=6, version="1.4")
+        header.add_crs(CRS.from_user_input("EPSG:6430+6360"))
+        cloud = laspy.LasData(header)
+        cloud.x = np.array([3.0, 1.0, 3.0])
+        cloud.y = np.array([4.0, 2.0, 4.0])
+        cloud.z = np.array([5.0, 3.0, 5.0])
+        cloud.write(self.root / "fixture.laz")
+        raw = (self.root / "fixture.laz").read_bytes()
+        self.dataset.update(
+            sha256=sha256(raw), expected_bytes=len(raw), expected_vertices=3
+        )
+
+    def test_laz_round_trip_preserves_all_records_and_units(self):
+        from scripts.prepare_usgs_dataset import convert_laz
+        from scripts.convert_dataset import read_ply_points
+
+        path = convert_laz(self.dataset, self.root, self.root / "processed")
+        points, _ = read_ply_points(path.read_bytes())
+        self.assertEqual(len(points), 3)
+        self.assertEqual(points[0], points[2])
+        for actual, expected in zip(points[1], (1, 2, 3)):
+            self.assertAlmostEqual(actual, expected * 1200 / 3937)
+        before = path.stat().st_mtime_ns
+        convert_laz(self.dataset, self.root, self.root / "processed")
+        self.assertEqual(path.stat().st_mtime_ns, before)
+
+    def test_laz_rejects_bad_provenance_or_crs(self):
+        from scripts.prepare_usgs_dataset import convert_laz
+
+        for change in (
+            {"sha256": "0" * 64},
+            {"expected_vertices": 4},
+            {"horizontal_epsg": 4326},
+            {"coordinate_scale_to_metre": 1.0},
+        ):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                convert_laz(
+                    {**self.dataset, **change}, self.root, self.root / "processed"
+                )
+
+    def test_metre_crs_preserves_scaled_coordinates(self):
+        import laspy
+        import numpy as np
+        from pyproj import CRS
+        from scripts.prepare_usgs_dataset import convert_laz
+        from scripts.convert_dataset import read_ply_points
+        header = laspy.LasHeader(point_format=6, version="1.4")
+        header.add_crs(CRS.from_user_input("EPSG:6339+5703"))
+        cloud = laspy.LasData(header)
+        cloud.x = np.array([3., 1., 3.]); cloud.y = np.array([4., 2., 4.]); cloud.z = np.array([5., 3., 5.])
+        cloud.write(self.root / "fixture.laz")
+        raw = (self.root / "fixture.laz").read_bytes()
+        dataset = {**self.dataset, "sha256": sha256(raw), "expected_bytes": len(raw), "horizontal_epsg": 6339, "vertical_epsg": 5703, "source_units": "metre", "coordinate_scale_to_metre": 1.0}
+        points, _ = read_ply_points(convert_laz(dataset, self.root, self.root / "metres").read_bytes())
+        self.assertEqual(points[1], (1., 2., 3.))
+        self.assertEqual(points[0], points[2])
+
+    def test_manifest_collection_and_cycles(self):
+        from scripts.convert_dataset import load_manifest as read_manifest
+
+        manifest = read_manifest(
+            Path(__file__).resolve().parents[2] / "data/manifests/real_datasets.yml"
+        )
+        datasets = {d["id"]: d for d in manifest["datasets"]}
+        self.assertIn("stanford_bunny", datasets)
+        self.assertEqual(
+            datasets["usgs_cameron_peak"]["processed_dir"], "data/processed/usgs_3dep"
+        )
+        loop = self.root / "loop.yml"
+        loop.write_text(
+            "includes: [{manifest: loop.yml, raw_dir: raw, processed_dir: processed}]\n"
+        )
+        with self.assertRaisesRegex(ValueError, "cyclic"):
+            read_manifest(loop)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,35 @@
+{
+  "schema": "rch.c1_failure_diagnostics.v1",
+  "sources_sha256": {
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/table_2_dataset_summary.csv": "26c4b8e2f0515f0062a48daad21a9145fb84f5e8170e9af88ac434cde141dd09",
+    "/home/mozgan/mozgan/rch/data/processed/stanford_3d_scanning/stanford_bunny.ply": "7a19f4c1867047fe933edcc2c6019a871a6aea5d8154d426df9456dc34151d80",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_bunny__A3_isotropic_hilbert__C0_uniform__D0__s0.manifest.json": "a6ed34aaa77125e7b254edbf93ddfff41ffd98ea042db204c5cf258498a63ea1",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_bunny__A3_isotropic_hilbert__C0_uniform__D0__s0.order.csv": "b8cb0d1f61ac0ced40a5b96c1e0a169e13718ef82d2b691308a7485dfddf56ed",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_bunny__A5_pca_compact_hilbert__C0_uniform__D0__s0.manifest.json": "55e2b152db0ab4e0f93fe205378aef84207206a2bee4a39c635dcf158ca439a5",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_bunny__A5_pca_compact_hilbert__C0_uniform__D0__s0.order.csv": "a84c14c5f0fd973f31abe772466b57f1bc1eec2919af821eedbdbd0cab168c37",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_bunny__A5_pca_compact_hilbert__C1_monotone_half__D0__s0.manifest.json": "2438aa112afc79592ef04d23ddc5bdb041707104b22dee86e51f999435c052ef",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_bunny__A5_pca_compact_hilbert__C1_monotone_half__D0__s0.order.csv": "a616bc147d589dca82545c3b75c618ba78251004ed134b9b7c79f3b7b21961b7",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_bunny__A6_rch__C0_uniform__D0__s0.manifest.json": "77fbd2a229aa4a5bc6c392c2c668939968cf102170e73931f58b36f5589cd788",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_bunny__A6_rch__C0_uniform__D0__s0.order.csv": "52de3a2dc5c059cd4a045a0c5ee83eface7e47d37b460c517104a9e105221f0b",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_bunny__A6_rch__C1_monotone_half__D0__s0.manifest.json": "e20b1188956d9a3bec517240df22a433d8fce4d64dcb8abce965f24671cc4401",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_bunny__A6_rch__C1_monotone_half__D0__s0.order.csv": "b814e207973539ff7e28b03646a0a68cbe9d5b2769f96b3addaafedcd724a46d",
+    "/home/mozgan/mozgan/rch/data/processed/stanford_3d_scanning/stanford_armadillo.ply": "2b34d427659ff6d8203b1731057e9f8996b170f1f884d0bba5021e17e5a4603c",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_armadillo__A3_isotropic_hilbert__C0_uniform__D0__s0.manifest.json": "920d09a77a7f561e666d433115b33c0b31ee3fbadc006c767ce52b50b3eb49a4",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_armadillo__A3_isotropic_hilbert__C0_uniform__D0__s0.order.csv": "edbe94ace8a200e589cced764c9167ec83471aa5c01f3ea60c75efd6415ad121",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_armadillo__A5_pca_compact_hilbert__C0_uniform__D0__s0.manifest.json": "b06ba83f5318cf7f10737c31cff1fe9cb4b40ec898a921dd0ec39dfbc343274a",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_armadillo__A5_pca_compact_hilbert__C0_uniform__D0__s0.order.csv": "0cd1bcdcef216f3045834c3186251e59cb0a29f8e55cde04794caf840c7305f8",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_armadillo__A5_pca_compact_hilbert__C1_monotone_half__D0__s0.manifest.json": "8e0e55dd5888cb01ea0b1739ec8be916cedbb662986d73d2f1d124d7149d505d",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_armadillo__A5_pca_compact_hilbert__C1_monotone_half__D0__s0.order.csv": "67c8dffa4951d4ee9f9e1f9085b1dff301c2300abf4dc8384604e2556bce2535",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_armadillo__A6_rch__C0_uniform__D0__s0.manifest.json": "990aea191ab06751ebcd1a803f26f7e16cad2ededac9b2b37d1fae55d68d7a3d",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_armadillo__A6_rch__C0_uniform__D0__s0.order.csv": "5c9ccc8da31783388c517a24e4d49ed804aee146aedc6208eb04f96a643af6f6",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/manifests/stanford_armadillo__A6_rch__C1_monotone_half__D0__s0.manifest.json": "1fd7d49e70d8a254a79ee5311dc4e1aba2b12da7ee46e39e181cfa498a0e8d4b",
+    "/home/mozgan/mozgan/rch/experiments/outputs/real_dataset/off/orders/stanford_armadillo__A6_rch__C1_monotone_half__D0__s0.order.csv": "aaa5c96afbd1e55ef57dbda613a73534799c06e50f620ab2084aaf8e4c822049"
+  },
+  "analyzer_sha256": "37961f13a84d018e542489ab6988abe62f24bd14b734db3fbcbf4c3a1e8de2d4",
+  "outputs_sha256": {
+    "contrasts.csv": "39c29274aacf178e170c339389e54887e082d03f67b8d6cb837a6942b5759dad",
+    "scope.md": "89ef83baf0b84be1d90060655e55e732bcac921f8fdad04b2d4ceb5f5410faa1",
+    "interpretation.md": "eaaa8017926d069100d2074b1ebedaed2e296d66edabaff03da2516c40802d01",
+    "diagnostics.csv": "297264f921ce4687ae41623bbcdded26bed1c913195aa2c25e17bd87fcc9b6ea"
+  }
+}

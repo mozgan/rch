@@ -1,0 +1,42 @@
+# Controlled frame comparison: sample-covariance PCA versus DetMCD/RCH.
+# Both use the same clean cloud, a shared cubic domain derived from its raw
+# AABB diagonal, and the same 8-bit uniform depth on all axes.
+schema: rch.runlist.v1
+name: frame_ablation_fixed_domain
+algorithm_ids:
+  - A5_pca_compact_hilbert
+  - A6_rch
+bit_rules:
+  - id: C0_uniform
+    label: C0 uniform, 8 bits per axis
+    bit_allocator: uniform
+    allocation_model: fixed_equal_depth
+    budget_projection: equal_depth_axis_cap
+    uniform_bits: 8
+    min_axis_bits: 1
+contamination_ids: [D0]
+geometry_ids: [E0, E1, E2, E5, E6, E7, E8, E9, E10, E11, E12]
+point_counts: [256]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+metrics: [miad]
+independent_sampling: true
+frame_domain_policy: shared_bbox_diagonal
+additional_geometries:
+  - id: E9
+    label: prolate Gaussian 3:1:1
+    generator: gaussian_ellipsoid
+    geometry: plate_5to1
+    axes: [3.0, 1.0, 1.0]
+  - id: E10
+    label: prolate Gaussian 7:1:1
+    generator: gaussian_ellipsoid
+    geometry: rod_10to1
+    axes: [7.0, 1.0, 1.0]
+  - id: E11
+    label: thin torus R=1 r=0.1
+    generator: torus
+    family: thin
+  - id: E12
+    label: tall cylinder H/2r=10
+    generator: cylinder
+    family: tall

@@ -9,10 +9,12 @@
   ],
   "cgal_metadata_by_policy": {
     "median": {
+      "peak_rss_kb": 3968,
+      "peak_rss_source": "linux_proc_self_status_VmHWM",
       "schema": "rch.cgal_adapter.metadata.v1",
-      "cgal_version": "6.1.1",
-      "cgal_version_nr": 1060111000,
-      "cgal_git_hash": "08b27d3db14039d926c3a89d12955aa28fd55171",
+      "cgal_version": "5.4",
+      "cgal_version_nr": 1050401000,
+      "cgal_git_hash": "c58ac97e93c838ebfb1e8adaf23ff4fd185dc8e4",
       "spatial_sort_dimension": 3,
       "spatial_sort_policy": "median",
       "threshold_hilbert": 8,
@@ -20,10 +22,12 @@
       "ratio": 0.125
     },
     "middle": {
+      "peak_rss_kb": 4012,
+      "peak_rss_source": "linux_proc_self_status_VmHWM",
       "schema": "rch.cgal_adapter.metadata.v1",
-      "cgal_version": "6.1.1",
-      "cgal_version_nr": 1060111000,
-      "cgal_git_hash": "08b27d3db14039d926c3a89d12955aa28fd55171",
+      "cgal_version": "5.4",
+      "cgal_version_nr": 1050401000,
+      "cgal_git_hash": "c58ac97e93c838ebfb1e8adaf23ff4fd185dc8e4",
       "spatial_sort_dimension": 3,
       "spatial_sort_policy": "middle",
       "threshold_hilbert": 8,

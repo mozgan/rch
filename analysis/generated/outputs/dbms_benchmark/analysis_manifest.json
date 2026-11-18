@@ -1,0 +1,16 @@
+{
+  "status": "validated_dbms_matrix",
+  "source_manifest_sha256": "989facb151c2c3e8c38f43d1a54d4efe4ac1e6e2b55fa0c078ddf81a361643bb",
+  "artifacts": {
+    "summary.csv": "de3f1c1e4d3152142794c6339a8c24c263e6dadf7997199b2141ef5c7f203aa2",
+    "fig_dbms_query_latency.pdf": "380807cee0f5488b72059cb3e4b837f6b78a6bf091bc2d0693ca4244f5afd955",
+    "paired_comparisons.csv": "e7aede6450ffad0f7a79881609590d7ee97b4487fffaea6cab7de62219925fb0",
+    "table_dbms_query.tex": "ce8aba203d93714140f7e1d84a0755ed9e61bc7565ec792a512493d2dcd52606",
+    "plan_metrics.csv": "fc972556d64842fbb0cca6f55628f7f63184733b38c87f8b2ca71dff482c101b",
+    "evidence.md": "8bd44039bdf1af9002c660b8cba0cd1547c0235862019fe935f4ac7bd324051f"
+  },
+  "published_artifacts": {
+    "figures/fig_dbms_query_latency.pdf": "380807cee0f5488b72059cb3e4b837f6b78a6bf091bc2d0693ca4244f5afd955",
+    "tables/table_dbms_query.tex": "ce8aba203d93714140f7e1d84a0755ed9e61bc7565ec792a512493d2dcd52606"
+  }
+}

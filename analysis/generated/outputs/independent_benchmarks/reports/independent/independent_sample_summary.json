@@ -1,0 +1,145 @@
+{
+  "schema": "rch.independent_sample_analysis.v1",
+  "sampling": "geometry-specific SHA-256 seed derivation; IID point sampling for surface parameterizations",
+  "replicates_per_geometry": 20,
+  "locality": [
+    {
+      "comparison": "RCH MIAD - isotropic_hilbert MIAD",
+      "unit": "one independently generated cloud; repeated bit rules/contamination averaged within cloud",
+      "n_clouds": 80,
+      "n_geometries": 4,
+      "clouds_per_geometry": {
+        "E1": 20,
+        "E10": 20,
+        "E2": 20,
+        "E9": 20
+      },
+      "median_delta_by_geometry": {
+        "E1": -0.20064965538538176,
+        "E10": -0.33720783603291915,
+        "E2": -0.5229461421329681,
+        "E9": -0.031639802155731575
+      },
+      "median_cloud_mean_delta": -0.21968792150430158,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        -0.2699294328388083,
+        -0.16421171636742093
+      ],
+      "positive_clouds": 3,
+      "negative_clouds": 77,
+      "tied_clouds": 0,
+      "one_sided_exact_sign_test_p": 7.064205149264112e-20,
+      "sign_test_alternative": "RCH lower",
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261103,
+      "holm_adjusted_sign_test_p": 1.4128410298528223e-19
+    },
+    {
+      "comparison": "RCH MIAD - morton MIAD",
+      "unit": "one independently generated cloud; repeated bit rules/contamination averaged within cloud",
+      "n_clouds": 80,
+      "n_geometries": 4,
+      "clouds_per_geometry": {
+        "E1": 20,
+        "E10": 20,
+        "E2": 20,
+        "E9": 20
+      },
+      "median_delta_by_geometry": {
+        "E1": -0.12495132650711346,
+        "E10": -0.1561809463956309,
+        "E2": -0.16438998464148707,
+        "E9": -0.10837799189005864
+      },
+      "median_cloud_mean_delta": -0.12453949895931103,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        -0.15722529987737496,
+        -0.10120290815090975
+      ],
+      "positive_clouds": 5,
+      "negative_clouds": 75,
+      "tied_clouds": 0,
+      "one_sided_exact_sign_test_p": 2.1264329525358845e-17,
+      "sign_test_alternative": "RCH lower",
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261104,
+      "holm_adjusted_sign_test_p": 2.1264329525358845e-17
+    },
+    {
+      "comparison": "RCH MIAD - external_cgal_spatial_sort MIAD",
+      "unit": "one independently generated cloud; repeated bit rules/contamination averaged within cloud",
+      "n_clouds": 80,
+      "n_geometries": 4,
+      "clouds_per_geometry": {
+        "E1": 20,
+        "E10": 20,
+        "E2": 20,
+        "E9": 20
+      },
+      "median_delta_by_geometry": {
+        "E1": -0.603757257601752,
+        "E10": -0.7377306460513915,
+        "E2": -0.9944971278577099,
+        "E9": -0.4060422903524812
+      },
+      "median_cloud_mean_delta": -0.6577740824698608,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        -0.7017535704894152,
+        -0.5763243281473431
+      ],
+      "positive_clouds": 0,
+      "negative_clouds": 80,
+      "tied_clouds": 0,
+      "one_sided_exact_sign_test_p": 8.271806125530277e-25,
+      "sign_test_alternative": "RCH lower",
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261105,
+      "holm_adjusted_sign_test_p": 2.481541837659083e-24
+    }
+  ],
+  "stability": {
+    "comparison": "RCH Kendall tau - sample-covariance frame Kendall tau",
+    "unit": "one independently generated cloud; repeated bit rules/contamination averaged within cloud",
+    "n_clouds": 220,
+    "n_geometries": 11,
+    "clouds_per_geometry": {
+      "E0": 20,
+      "E1": 20,
+      "E10": 20,
+      "E11": 20,
+      "E12": 20,
+      "E2": 20,
+      "E5": 20,
+      "E6": 20,
+      "E7": 20,
+      "E8": 20,
+      "E9": 20
+    },
+    "median_delta_by_geometry": {
+      "E0": 0.33304993872549016,
+      "E1": 0.08505412581699348,
+      "E10": 0.10864736519607843,
+      "E11": 0.16494587418300655,
+      "E12": 0.014080371732026142,
+      "E2": 0.14647160947712423,
+      "E5": 0.2624387254901961,
+      "E6": 0.2987260008169934,
+      "E7": 0.1168326184640523,
+      "E8": 0.42057291666666674,
+      "E9": 0.13175040849673206
+    },
+    "median_cloud_mean_delta": 0.14985702614379087,
+    "stratified_cloud_bootstrap_95_percentile_ci": [
+      0.11838235294117647,
+      0.17349877450980394
+    ],
+    "positive_clouds": 182,
+    "negative_clouds": 38,
+    "tied_clouds": 0,
+    "one_sided_exact_sign_test_p": 4.9316396163652215e-24,
+    "sign_test_alternative": "RCH greater",
+    "bootstrap_resamples": 20000,
+    "bootstrap_seed": 20261110
+  },
+  "interpretation": "Inference uses independently generated cloud as the unit. Bit rules and contamination levels are within-cloud repeated measures, not independent observations."
+}

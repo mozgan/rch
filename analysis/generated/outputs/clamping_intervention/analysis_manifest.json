@@ -1,0 +1,9 @@
+{
+  "source_manifest_sha256": "75dba02ea01ad48d96b1da76204cf4aa22a0f15feaf42b4a26f863adedb1747a",
+  "artifacts": {
+    "fig_clamping_intervention.pdf": "a4a03f3382e155137097ef4a5fc8d6b748261d4df9c9a52d8b9722abfa21d2fb",
+    "paired_effects.csv": "a4709ca8ee1ce32cd602ce65fb93d26cef005c0a21064bb33984f72dfd0721f1",
+    "summary.csv": "7e894bb464ae3fcb7bf31229b498381b0003e44afd7a739b3dd57cb9480b44a3",
+    "scope.md": "b269700f0f73edc4091af51fba392c0e9281686f458de27102ce7d1be66706ce"
+  }
+}

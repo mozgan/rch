@@ -1,0 +1,96 @@
+schema: rch.dataset_manifest.v1
+source:
+  id: noaa_digital_coast
+  name: NOAA Digital Coast coastal lidar collection
+  homepage: https://coast.noaa.gov/digitalcoast/data/coastallidar.html
+  license_summary: NOAA-hosted governmental lidar; project metadata records no access
+    restrictions. Retain NOAA and USGS/FDEM project credit and consult the preserved
+    project use constraints.
+  license_url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/index.html
+  citation: NOAA Office for Coastal Management, Digital Coast; original USGS/FDEM
+    project identified per dataset; accessed 2026-11-09.
+datasets:
+- id: noaa_santiam_river
+  label: NOAA/USGS Santiam River Topobathy 2023
+  url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/10238/20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz
+  filename: 20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz
+  sha256: 3b86f4483e2204320b30a7c17a011adbff7a34d2502fa653d1bd5d616b33de33
+  archive_type: laz
+  canonical_format: laz
+  inner_path: ''
+  expected_vertices: 78196
+  expected_bytes: 519873
+  horizontal_epsg: 6339
+  vertical_epsg: 5703
+  source_units: metre
+  coordinate_scale_to_metre: 1.0
+  metadata_url: https://www.fisheries.noaa.gov/inport/item/74249
+  metadata_snapshot: data/manifests/provenance/noaa_10238_metadata.xml
+  metadata_sha256: 1c4aeb94de268236888fffe3bbfe242be007654dacf26c49e906336be69b5dae
+  index_snapshot: data/manifests/provenance/noaa_10238_index.html
+  index_sha256: 7845c8a9bd36abd4c88f1519bb2f2a57dd6bd17194fb07b4a2c162954ae195f7
+  provenance_snapshot: data/manifests/provenance/noaa_santiam_river.json
+  sensor_model: Riegl VQ-880GII-IR
+  sensor_scope: project metadata; serial number of this selected tile is not established
+  acquisition_project: NOAA/USGS Santiam River Topobathy 2023
+  source_note: Complete NOAA-delivered COPC file; all classes and returns retained
+    in delivered COPC record order. NOAA packaging may reorder points relative to
+    acquisition order; no claim of original flight ordering. No crop, thinning, filtering,
+    recentering or deduplication. One fixed tile per independent geographic project,
+    not many independent scenes. Selection before ordering outcomes.
+- id: noaa_long_island
+  label: NOAA/USGS Long Island Post Sandy 2014
+  url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/4938/20140403_usgs_ny_li_18TXL585375.copc.laz
+  filename: 20140403_usgs_ny_li_18TXL585375.copc.laz
+  sha256: 043f19dd8c03dd40d668757f8d8e2548351e3404aad6eb3765ceefb7e54a0a76
+  archive_type: laz
+  canonical_format: laz
+  inner_path: ''
+  expected_vertices: 144182
+  expected_bytes: 603625
+  horizontal_epsg: 6347
+  vertical_epsg: 5703
+  source_units: metre
+  coordinate_scale_to_metre: 1.0
+  metadata_url: https://www.fisheries.noaa.gov/inport/item/49890
+  metadata_snapshot: data/manifests/provenance/noaa_4938_metadata.xml
+  metadata_sha256: 47d7dc57ea7664649486546d8a9f8c686fa27448f3e329561efe64ae1f1aedff
+  index_snapshot: data/manifests/provenance/noaa_4938_index.html
+  index_sha256: 5b2accd5974255b7ec8d478d6f2fa65abf38b2df9eea4861ceaee9bacf457b46
+  provenance_snapshot: data/manifests/provenance/noaa_long_island.json
+  sensor_model: Leica ALS70
+  sensor_scope: project metadata; serial number of this selected tile is not established
+  acquisition_project: NOAA/USGS Long Island Post Sandy 2014
+  source_note: Complete NOAA-delivered COPC file; all classes and returns retained
+    in delivered COPC record order. NOAA packaging may reorder points relative to
+    acquisition order; no claim of original flight ordering. No crop, thinning, filtering,
+    recentering or deduplication. One fixed tile per independent geographic project,
+    not many independent scenes. Selection before ordering outcomes.
+- id: noaa_southwest_florida
+  label: NOAA/FDEM Southwest Florida 2007
+  url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/529/20070717_079283_w_ld_p31.copc.laz
+  filename: 20070717_079283_w_ld_p31.copc.laz
+  sha256: 7bdde9dd76bbd3797dc4a46e4dbd47b163941239be365e4db2f8a0524832c374
+  archive_type: laz
+  canonical_format: laz
+  inner_path: ''
+  expected_vertices: 761620
+  expected_bytes: 2793794
+  horizontal_epsg: 3724
+  vertical_epsg: 5703
+  source_units: metre
+  coordinate_scale_to_metre: 1.0
+  metadata_url: https://www.fisheries.noaa.gov/inport/item/49677
+  metadata_snapshot: data/manifests/provenance/noaa_529_metadata.xml
+  metadata_sha256: a5cacea0bbe819a72edea511af895cb702818058337dead6dfd5097ad9c6e7be
+  index_snapshot: data/manifests/provenance/noaa_529_index.html
+  index_sha256: ef6d086ccf543f8f033f96909dfebf6d5eeaf011781e6e3ec8671156b31b890c
+  provenance_snapshot: data/manifests/provenance/noaa_southwest_florida.json
+  sensor_model: Leica ALS50
+  sensor_scope: project metadata; serial number of this selected tile is not established
+  acquisition_project: NOAA/FDEM Southwest Florida 2007
+  source_note: Complete NOAA-delivered COPC file; all classes and returns retained
+    in delivered COPC record order. NOAA packaging may reorder points relative to
+    acquisition order; no claim of original flight ordering. No crop, thinning, filtering,
+    recentering or deduplication. One fixed tile per independent geographic project,
+    not many independent scenes. Selection before ordering outcomes.

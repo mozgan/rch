@@ -21,7 +21,7 @@ import argparse
 import math
 from pathlib import Path
 
-from data.synthetic.generators.common import Point, write_xyz_csv
+from data.synthetic.generators.common import Point, SplitMix64, write_xyz_csv
 
 TORUS_RADII: dict[str, tuple[float, float]] = {
     # (R_major, r_minor) — must satisfy 0 < r < R for an embedded torus.
@@ -33,7 +33,8 @@ TORUS_RADII: dict[str, tuple[float, float]] = {
 # Halton bases 2 and 3 — same construction as surface_patch.py.
 _HALTON_BASE_U = 2
 _HALTON_BASE_V = 3
-# Coprime offset prime so two distinct seeds index disjoint Halton sub-stripes.
+# Before the modulo wrap, consecutive seeds use adjacent Halton offsets, so
+# fixed-size windows overlap by count - 1 points.
 _SEED_OFFSET_PRIME = 1_000_003
 
 
@@ -62,7 +63,9 @@ def torus_xyz(u: float, v: float, R: float, r: float) -> Point:
     return (radius * cos_u, radius * sin_u, r * sin_v)
 
 
-def torus_points(count: int, family: str, seed: int) -> list[Point]:
+def torus_points(
+    count: int, family: str, seed: int, sampling: str = "halton"
+) -> list[Point]:
     """Return `count` deterministic torus surface points.
 
     Behaviour:
@@ -78,6 +81,8 @@ def torus_points(count: int, family: str, seed: int) -> list[Point]:
         raise ValueError("count must be non-negative")
     if family not in TORUS_RADII:
         raise ValueError(f"unknown torus family: {family}")
+    if sampling not in {"halton", "iid"}:
+        raise ValueError("sampling must be 'halton' or 'iid'")
     R, r = TORUS_RADII[family]
     if (
         (not math.isfinite(R))
@@ -90,12 +95,17 @@ def torus_points(count: int, family: str, seed: int) -> list[Point]:
             f"torus radii must be finite and satisfy 0 < r < R; got R={R}, r={r}"
         )
     offset = (seed % _SEED_OFFSET_PRIME) + 1  # avoid index 0 (Halton singularity)
+    rng = SplitMix64(seed ^ 0x7F4A_7C15_9E37_79B9)
     two_pi = 2.0 * math.pi
     points: list[Point] = []
     for i in range(count):
-        idx = offset + i
-        u = two_pi * _radical_inverse(idx, _HALTON_BASE_U)
-        v = two_pi * _radical_inverse(idx, _HALTON_BASE_V)
+        if sampling == "halton":
+            idx = offset + i
+            u = two_pi * _radical_inverse(idx, _HALTON_BASE_U)
+            v = two_pi * _radical_inverse(idx, _HALTON_BASE_V)
+        else:
+            u = two_pi * rng.uniform01()
+            v = two_pi * rng.uniform01()
         points.append(torus_xyz(u, v, R, r))
     return points
 

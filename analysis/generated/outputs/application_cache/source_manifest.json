@@ -1,0 +1,1368 @@
+{
+  "schema": "rch.application_cache",
+  "status": "completed",
+  "identity": {
+    "application_manifest_sha256": "354248309424b7b09e1d9b5be56a519615499dedbf8346dd06184cbe2d0f7042",
+    "application_root": "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark",
+    "repeats": 5,
+    "seed": 2026,
+    "datasets": [
+      "stanford_bunny",
+      "stanford_armadillo",
+      "stanford_dragon",
+      "usgs_cameron_peak",
+      "noaa_santiam_river",
+      "noaa_long_island",
+      "noaa_southwest_florida"
+    ],
+    "binary": "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+    "binary_sha256": "a5bba9469b235eec3be1f9a9e00c032427e81931d5d28889d2cde43299f6fd7c",
+    "source_sha256": {
+      "experiments/runners/run_application_cache.py": "e41105e6f586ccf074ee1680454309657977f61f64bf318c6d03caabe866d053",
+      "src/cli/rch_application_cache_probe.cpp": "a2429e950166a380876f6fe34ce9308b851baacd812bc711e1136abd8de630cc",
+      "include/rch/application/page_file.hpp": "1dcf52f7f8e9fc3f3071fb4b559adab490d9742b6e4c9ac869632621931495b9",
+      "include/rch/application/page_directory.hpp": "42c0bd395cb7ca33f20e4a89fbfde9102844d377823537e7043ee5525e8a39ae",
+      "include/rch/application/window_query.hpp": "d7e1eb876a0eccdf3f1b0a06ccaa891f7743a167c77baa937129253964d035ab",
+      "include/rch/core/sha256.hpp": "f8b419e6aea80e1d102d786f68076b5798c4768ecf24fe027feb199a571bc418"
+    },
+    "cache_protocol": "per_query_verified_page_cache_cold_vs_full_file_warm",
+    "timing_scope": "page-file open/header, page pruning, reads, exact filter, ID sort, close; resident directory",
+    "modes": [
+      "cold_page_cache",
+      "warm_page_cache"
+    ]
+  },
+  "environment": {
+    "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.35",
+    "python": "3.11.18 (main, Oct 26 2026, 15:28:54) [GCC 11.4.0]",
+    "mountinfo": "25 30 0:23 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw\n26 30 0:24 / /proc rw,nosuid,nodev,noexec,relatime shared:13 - proc proc rw\n27 30 0:5 / /dev rw,nosuid,relatime shared:2 - devtmpfs udev rw,size=32776788k,nr_inodes=8194197,mode=755,inode64\n28 27 0:25 / /dev/pts rw,nosuid,noexec,relatime shared:3 - devpts devpts rw,gid=5,mode=620,ptmxmode=000\n29 30 0:26 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=6574696k,mode=755,inode64\n30 1 259:2 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n31 25 0:6 / /sys/kernel/security rw,nosuid,nodev,noexec,relatime shared:8 - securityfs securityfs rw\n32 27 0:27 / /dev/shm rw,nosuid,nodev shared:4 - tmpfs tmpfs rw,inode64\n33 29 0:28 / /run/lock rw,nosuid,nodev,noexec,relatime shared:6 - tmpfs tmpfs rw,size=5120k,inode64\n34 25 0:29 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:9 - cgroup2 cgroup2 rw,nsdelegate,memory_recursiveprot\n35 25 0:30 / /sys/fs/pstore rw,nosuid,nodev,noexec,relatime shared:10 - pstore pstore rw\n36 25 0:31 / /sys/firmware/efi/efivars rw,nosuid,nodev,noexec,relatime shared:11 - efivarfs efivarfs rw\n37 25 0:32 / /sys/fs/bpf rw,nosuid,nodev,noexec,relatime shared:12 - bpf bpf rw,mode=700\n38 26 0:33 / /proc/sys/fs/binfmt_misc rw,relatime shared:14 - autofs systemd-1 rw,fd=29,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=30050\n39 27 0:20 / /dev/mqueue rw,nosuid,nodev,noexec,relatime shared:15 - mqueue mqueue rw\n40 27 0:34 / /dev/hugepages rw,relatime shared:16 - hugetlbfs hugetlbfs rw,pagesize=2M\n41 25 0:7 / /sys/kernel/debug rw,nosuid,nodev,noexec,relatime shared:17 - debugfs debugfs rw\n42 25 0:12 / /sys/kernel/tracing rw,nosuid,nodev,noexec,relatime shared:18 - tracefs tracefs rw\n43 25 0:35 / /sys/fs/fuse/connections rw,nosuid,nodev,noexec,relatime shared:19 - fusectl fusectl rw\n44 25 0:21 / /sys/kernel/config rw,nosuid,nodev,noexec,relatime shared:20 - configfs configfs rw\n67 29 0:36 / /run/credentials/systemd-sysusers.service ro,nosuid,nodev,noexec,relatime shared:21 - ramfs ramfs rw,mode=700\n45 30 7:0 / /snap/bare/5 ro,nodev,relatime shared:22 - squashfs /dev/loop0 ro,errors=continue,threads=single\n46 30 7:1 / /snap/chromium/3569 ro,nodev,relatime shared:23 - squashfs /dev/loop1 ro,errors=continue,threads=single\n47 30 7:2 / /snap/chromium/3580 ro,nodev,relatime shared:24 - squashfs /dev/loop2 ro,errors=continue,threads=single\n48 30 7:3 / /snap/core18/2999 ro,nodev,relatime shared:25 - squashfs /dev/loop3 ro,errors=continue,threads=single\n49 30 7:4 / /snap/core18/3084 ro,nodev,relatime shared:26 - squashfs /dev/loop4 ro,errors=continue,threads=single\n50 26 0:37 / /proc/fs/nfsd rw,relatime shared:27 - nfsd nfsd rw\n51 30 7:5 / /snap/core20/2866 ro,nodev,relatime shared:28 - squashfs /dev/loop5 ro,errors=continue,threads=single\n52 30 7:6 / /snap/core20/2922 ro,nodev,relatime shared:29 - squashfs /dev/loop6 ro,errors=continue,threads=single\n53 30 7:7 / /snap/core22/2955 ro,nodev,relatime shared:30 - squashfs /dev/loop7 ro,errors=continue,threads=single\n54 30 7:8 / /snap/core22/2987 ro,nodev,relatime shared:31 - squashfs /dev/loop8 ro,errors=continue,threads=single\n55 30 7:9 / /snap/core24/1643 ro,nodev,relatime shared:32 - squashfs /dev/loop9 ro,errors=continue,threads=single\n56 30 7:10 / /snap/core24/2124 ro,nodev,relatime shared:33 - squashfs /dev/loop10 ro,errors=continue,threads=single\n57 30 7:11 / /snap/core26/646 ro,nodev,relatime shared:34 - squashfs /dev/loop11 ro,errors=continue,threads=single\n58 30 7:12 / /snap/core26/750 ro,nodev,relatime shared:35 - squashfs /dev/loop12 ro,errors=continue,threads=single\n59 30 7:13 / /snap/cups/1272 ro,nodev,relatime shared:36 - squashfs /dev/loop13 ro,errors=continue,threads=single\n60 30 7:14 / /snap/cups/1277 ro,nodev,relatime shared:37 - squashfs /dev/loop14 ro,errors=continue,threads=single\n61 30 7:15 / /snap/firefox/9113 ro,nodev,relatime shared:38 - squashfs /dev/loop15 ro,errors=continue,threads=single\n62 30 7:16 / /snap/firefox/9171 ro,nodev,relatime shared:39 - squashfs /dev/loop16 ro,errors=continue,threads=single\n63 30 7:17 / /snap/gnome-3-28-1804/198 ro,nodev,relatime shared:40 - squashfs /dev/loop17 ro,errors=continue,threads=single\n64 30 7:18 / /snap/gnome-3-38-2004/119 ro,nodev,relatime shared:41 - squashfs /dev/loop18 ro,errors=continue,threads=single\n65 30 7:20 / /snap/gnome-42-2204/247 ro,nodev,relatime shared:42 - squashfs /dev/loop20 ro,errors=continue,threads=single\n66 30 7:21 / /snap/gnome-42-2204/263 ro,nodev,relatime shared:43 - squashfs /dev/loop21 ro,errors=continue,threads=single\n68 30 7:19 / /snap/gnome-3-38-2004/143 ro,nodev,relatime shared:44 - squashfs /dev/loop19 ro,errors=continue,threads=single\n69 30 7:22 / /snap/gnome-46-2404/153 ro,nodev,relatime shared:45 - squashfs /dev/loop22 ro,errors=continue,threads=single\n70 30 7:23 / /snap/gnome-46-2404/164 ro,nodev,relatime shared:46 - squashfs /dev/loop23 ro,errors=continue,threads=single\n71 30 7:24 / /snap/gtk-common-themes/1535 ro,nodev,relatime shared:47 - squashfs /dev/loop24 ro,errors=continue,threads=single\n72 30 7:25 / /snap/mesa-2404/1165 ro,nodev,relatime shared:48 - squashfs /dev/loop25 ro,errors=continue,threads=single\n73 30 7:26 / /snap/mesa-2404/1839 ro,nodev,relatime shared:49 - squashfs /dev/loop26 ro,errors=continue,threads=single\n74 30 7:27 / /snap/snapd/28254 ro,nodev,relatime shared:50 - squashfs /dev/loop27 ro,errors=continue,threads=single\n75 30 259:2 /usr/share/hunspell /var/snap/firefox/common/host-hunspell ro,noexec,noatime shared:1 - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n76 30 7:28 / /snap/snapd/28332 ro,nodev,relatime shared:51 - squashfs /dev/loop28 ro,errors=continue,threads=single\n185 30 259:4 / /mnt/backup rw,nosuid,nodev,relatime shared:61 - ext4 /dev/nvme1n1p1 rw\n188 30 259:1 / /boot/efi rw,relatime shared:108 - vfat /dev/nvme0n1p1 rw,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro\n191 38 0:38 / /proc/sys/fs/binfmt_misc rw,nosuid,nodev,noexec,relatime shared:110 - binfmt_misc binfmt_misc rw\n194 29 0:39 / /run/rpc_pipefs rw,relatime shared:112 - rpc_pipefs sunrpc rw\n1338 29 0:26 /snapd/ns /run/snapd/ns rw,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=6574696k,mode=755,inode64\n1373 1338 0:4 mnt:[4026533366] /run/snapd/ns/cups.mnt rw - nsfs nsfs rw\n846 29 0:48 / /run/user/1000 rw,nosuid,nodev,relatime shared:668 - tmpfs tmpfs rw,size=6574692k,nr_inodes=1643673,mode=700,uid=1000,gid=1000,inode64\n944 846 0:59 / /run/user/1000/gvfs rw,nosuid,nodev,relatime shared:681 - fuse.gvfsd-fuse gvfsd-fuse rw,user_id=1000,group_id=1000\n1213 846 0:60 / /run/user/1000/doc rw,nosuid,nodev,relatime shared:693 - fuse.portal portal rw,user_id=1000,group_id=1000\n"
+  },
+  "created_utc": "2026-11-13T23:14:54.745197+00:00",
+  "tasks": {
+    "stanford_bunny__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C3.attempt1.csv",
+        "0",
+        "2026"
+      ],
+      "metrics": "stanford_bunny__A6_rch_C3.attempt1.csv",
+      "page_sha256": "9cb9f034ff6205cd892a1e45ae8d84153ddcee751f3785855f4a6a12680921aa",
+      "index_sha256": "902f3e40e1a1987b059b5688ef38fbb2b3a83932acf455bf23a698cbbf0de00a",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "a81b0de0c495f41b5538b54e67a60407034ed819dd55312315ab917bb486a8a5"
+    },
+    "stanford_bunny__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A0_full_scan.attempt1.csv",
+        "1",
+        "2027"
+      ],
+      "metrics": "stanford_bunny__A0_full_scan.attempt1.csv",
+      "page_sha256": "056f95c27922c2cfa96284298779d2d04fb9e131b5cdb2ec144adad173527d1c",
+      "index_sha256": "4b2842bdfa530fb7ff49db653395f794788aca703c04866b34a149f092211196",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "b1216a01174c876cc271c5377351d4d23b8c72363b1809718a0a0e83bdbc0d2b"
+    },
+    "stanford_bunny__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch.attempt1.csv",
+        "0",
+        "2028"
+      ],
+      "metrics": "stanford_bunny__A6_rch.attempt1.csv",
+      "page_sha256": "03d221dc8f1f7420a7382cd35f59f132f974dd6097781e8d6ee37aa7c0d93003",
+      "index_sha256": "eab02792127e731300329a08457a47dfbc2dc8cbbd73d7fed008b4865da3922f",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "280dfc86db902d453ecb17cf327d5920a62e134d2f8af95fe9a1e06d7f741158"
+    },
+    "stanford_bunny__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C4.attempt1.csv",
+        "0",
+        "2029"
+      ],
+      "metrics": "stanford_bunny__A6_rch_C4.attempt1.csv",
+      "page_sha256": "f0ea9859dddeb8bed270c7d66035d1c115f8b1ba5fc9ddbd1e014a857bb7d53b",
+      "index_sha256": "a908f24bf3ff2ff6256112402f9daa2f757655b9b898e8b96e521185b8bcf6cb",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "7cc1ad409840a5128ee1ee335f1c64e31aa0ad8dfa48c55260d450616244d3de"
+    },
+    "stanford_bunny__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A6_rch_C2.attempt1.csv",
+        "0",
+        "2030"
+      ],
+      "metrics": "stanford_bunny__A6_rch_C2.attempt1.csv",
+      "page_sha256": "0c53fbfdabc5797ecfb2b3853c3b0cd28eafe134d3732d5d077052a440d9c5c0",
+      "index_sha256": "a908f24bf3ff2ff6256112402f9daa2f757655b9b898e8b96e521185b8bcf6cb",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f92b3f65ac7592d60c018bc45ed9579dfa84f263725be9bb7c78edb8c8c026f7"
+    },
+    "stanford_bunny__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2031"
+      ],
+      "metrics": "stanford_bunny__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "82d9ca4e52050e2747740252aedb99cf00337b27dd73088e9112d9473b1074f4",
+      "index_sha256": "9a134d3f053eb77d549b2e500949369fc53b5f25852adf4d94026ecfb29fa336",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "abdf02001656da930d2095f5e01c2e773716358821b97593a525fc739541d4a5"
+    },
+    "stanford_bunny__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_bunny/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_bunny__A0_input.attempt1.csv",
+        "0",
+        "2032"
+      ],
+      "metrics": "stanford_bunny__A0_input.attempt1.csv",
+      "page_sha256": "056f95c27922c2cfa96284298779d2d04fb9e131b5cdb2ec144adad173527d1c",
+      "index_sha256": "4b2842bdfa530fb7ff49db653395f794788aca703c04866b34a149f092211196",
+      "oracle_sha256": "1a839ad8a4e58df719e6f03facfb78c796dcfcb09fe732fdfb567cebffa82965",
+      "query_sha256": "ea79c41a148fd69637f3e83ba51da5312c609b6322ce446045791bbc2a7e0f3c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_bunny__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "41dd16f687096a78fb5f02f63b7f215347479187b10648277c554c2320bd20a8"
+    },
+    "stanford_armadillo__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C3.attempt1.csv",
+        "0",
+        "2033"
+      ],
+      "metrics": "stanford_armadillo__A6_rch_C3.attempt1.csv",
+      "page_sha256": "8b323fb304d731e913769689b07b2dff45d78ad20c38c2629830b5793afed8be",
+      "index_sha256": "5a977307e944c2fadbe922d775f787d5c0f18c4b27fa8c41cdbbcee7f76ec338",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "6992f136c79d89d4cd7f2b476c727e77f1137f40d2964779e6ffc141ae9ea943"
+    },
+    "stanford_armadillo__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A0_full_scan.attempt1.csv",
+        "1",
+        "2034"
+      ],
+      "metrics": "stanford_armadillo__A0_full_scan.attempt1.csv",
+      "page_sha256": "457ae0aab4cbd7062028533ba06ed98523012dfb095a84b952dd329efeec2683",
+      "index_sha256": "6b9a180f79562507a30d2270d06af3634dd6a82a8ac4e8140ad2ee67dca21b7b",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "0cdae868aff4dd4c4e0ac7ce477622b70efa48705b67f0c236c8e0bb95f0db84"
+    },
+    "stanford_armadillo__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2035"
+      ],
+      "metrics": "stanford_armadillo__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "eb71f044086703ef688524bc91fc1b26a8d295b3739bc37eea3e021b9f9f5b9b",
+      "index_sha256": "0b166cb27792d4172ef9ab690c80cbfae4d30e5a2e02d337922f88c20bb1c36c",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "fbdedbf2b49df945ce0f3091e360dff88512da6bdcbfcfa2ba18c1af40b13e3c"
+    },
+    "stanford_armadillo__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C2.attempt1.csv",
+        "0",
+        "2036"
+      ],
+      "metrics": "stanford_armadillo__A6_rch_C2.attempt1.csv",
+      "page_sha256": "f64c4b1b7d7359e16df50895a680b4614d6f835b311d393e79aaca5779c67193",
+      "index_sha256": "10d3992f69e8806b4841f7bfee57f79b1404fb0b201a541ac4fab2fa57323957",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "35585262ca3bd125ae84776b5dd44f71a9897191a1e766b64368a35a84755518"
+    },
+    "stanford_armadillo__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch_C4.attempt1.csv",
+        "0",
+        "2037"
+      ],
+      "metrics": "stanford_armadillo__A6_rch_C4.attempt1.csv",
+      "page_sha256": "bff7b0af9cd176206679158d2d8bd88591176b9813422a169173324815c2166f",
+      "index_sha256": "10d3992f69e8806b4841f7bfee57f79b1404fb0b201a541ac4fab2fa57323957",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f3fe43daf943709d9a93a0c6bdc6fb6cc6d8a9a1a8434c8bf108318d4dc37c53"
+    },
+    "stanford_armadillo__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A6_rch.attempt1.csv",
+        "0",
+        "2038"
+      ],
+      "metrics": "stanford_armadillo__A6_rch.attempt1.csv",
+      "page_sha256": "fb9ea5cd9725c4babeb3ebe6bdb9117d3186c4807d3b6cbd4a022549eed83077",
+      "index_sha256": "04d2cea5f61098d0f9c7d0f44ee55225008ca83663880130f172e43e966762f5",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "0d3886e48ecba254a9c1ecf23e94a7ebb1e490480a330e18d7ea61ffdf3d0539"
+    },
+    "stanford_armadillo__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_armadillo/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_armadillo__A0_input.attempt1.csv",
+        "0",
+        "2039"
+      ],
+      "metrics": "stanford_armadillo__A0_input.attempt1.csv",
+      "page_sha256": "457ae0aab4cbd7062028533ba06ed98523012dfb095a84b952dd329efeec2683",
+      "index_sha256": "6b9a180f79562507a30d2270d06af3634dd6a82a8ac4e8140ad2ee67dca21b7b",
+      "oracle_sha256": "914b3497cfa0c11144d45bcb111605bcd76aee2b84c531de9c90f19771a86d94",
+      "query_sha256": "afe5fb79e6e3990fcd16f356c3041a8345dfd1db97080d19b47ea9b6e278ad13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_armadillo__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "4f16edf45f5217da4b76937134b83a1cae79ae88fe966d5003ecae3e7369f67d"
+    },
+    "stanford_dragon__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C2.attempt1.csv",
+        "0",
+        "2040"
+      ],
+      "metrics": "stanford_dragon__A6_rch_C2.attempt1.csv",
+      "page_sha256": "56b5be6569b1f530452f92590a62e1d60d1124aafcbf8f011c5c109020da75f1",
+      "index_sha256": "00d7e4dcf448bda5ad4396833ed96ff88d37ce769ba9700dbcab768746a6c822",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "88de0294df2e2d8f8ac249c8288f3cae707fa388a6a2604d3490e052f348ed19"
+    },
+    "stanford_dragon__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch.attempt1.csv",
+        "0",
+        "2041"
+      ],
+      "metrics": "stanford_dragon__A6_rch.attempt1.csv",
+      "page_sha256": "0ad9fcb5d54b9fde14c4e177c461b8c18f7959f95f93454d894eb319563b40f2",
+      "index_sha256": "2dced65d554dc350286e21270e2cadb722a1c1e50c4f81091ed76297d5a66be3",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "347d90cd101420c341e172968b9d5307877050cf320604d2507709fcc4dfce8d"
+    },
+    "stanford_dragon__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C3.attempt1.csv",
+        "0",
+        "2042"
+      ],
+      "metrics": "stanford_dragon__A6_rch_C3.attempt1.csv",
+      "page_sha256": "1695b06ce72ff28a63d5a45d807487d09cefe1f0f954ba451123d6a8ce4e9b28",
+      "index_sha256": "2dd90feba7471d1357595e00d6e31744b0104d6e852042464a71d4ec86fd3ca6",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "261d7d19947cb2cdacac67bda429d2a27db06e0c2cb5df46b396d51d7b459096"
+    },
+    "stanford_dragon__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A6_rch_C4.attempt1.csv",
+        "0",
+        "2043"
+      ],
+      "metrics": "stanford_dragon__A6_rch_C4.attempt1.csv",
+      "page_sha256": "e7726e35c8397c92efa3d6508d9f4415339c6288955513448227bbf9eccdca38",
+      "index_sha256": "1c6918efb45780eb7e5b525eceb02e99e7b1c5bf8e211b5e4990d2f51d23c3e6",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "339c91fbb4e420d529c0aceec146de4bf83bcbd5606dc5d021ce2404e74cbedb"
+    },
+    "stanford_dragon__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A0_input.attempt1.csv",
+        "0",
+        "2044"
+      ],
+      "metrics": "stanford_dragon__A0_input.attempt1.csv",
+      "page_sha256": "870ddcb53324415ee42389e208d3776609f84a8e4b4009940a69e58f991f93dc",
+      "index_sha256": "4fb31d6f906c30e512c12af6a07da35fdab7caef76bfa3121eecc08e82454ce4",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "ac09d543d31bf99449887aede7c151804010e5721fc74229d6ab5460a2681737"
+    },
+    "stanford_dragon__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A0_full_scan.attempt1.csv",
+        "1",
+        "2045"
+      ],
+      "metrics": "stanford_dragon__A0_full_scan.attempt1.csv",
+      "page_sha256": "870ddcb53324415ee42389e208d3776609f84a8e4b4009940a69e58f991f93dc",
+      "index_sha256": "4fb31d6f906c30e512c12af6a07da35fdab7caef76bfa3121eecc08e82454ce4",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "63f86cda55be51a38796fa9da2822460cc9d3c7906c9969c3a3eae782664b6bd"
+    },
+    "stanford_dragon__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/stanford_dragon/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/stanford_dragon__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2046"
+      ],
+      "metrics": "stanford_dragon__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "48a994622b71db32dd9ad32326a7116a8b7600aeae160df9c8063b97df909fcf",
+      "index_sha256": "2e12f2209bf6a040f3f549831d25f3ccc1ad361cc7b990f6664f3285e02780d7",
+      "oracle_sha256": "368e04ea0164ca5cafd49e1108a9d6f1748a02e486c527f9038db5620c4edf38",
+      "query_sha256": "ba412e6123aacd2f84e2e094721e3dee2b14b15d77e80456f2723a0d4c4ab8c2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "stanford_dragon__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "454cdd0c31c5226109b49556697adada0d4540ba72f7cc0e9f79eddaf2fb90ce"
+    },
+    "usgs_cameron_peak__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C2.attempt1.csv",
+        "0",
+        "2047"
+      ],
+      "metrics": "usgs_cameron_peak__A6_rch_C2.attempt1.csv",
+      "page_sha256": "365f6e8e05a7cf5bc7e5933112d0c43cb5287bef14908b1bbddd97ccd7161eca",
+      "index_sha256": "f103115ae5a937675dfcb0ea493354c2d06e46ebbe050709d93ddffab3f3aeee",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "be2ad197d7a42211ca1f9c5bc07a8ed0ae945453732e273a753ffcdcfec04919"
+    },
+    "usgs_cameron_peak__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A0_input.attempt1.csv",
+        "0",
+        "2048"
+      ],
+      "metrics": "usgs_cameron_peak__A0_input.attempt1.csv",
+      "page_sha256": "a45babe8401be5688dd2ea8083393c687c4ead717f78a07a5d97630654fa770d",
+      "index_sha256": "9d11cc2ea6161cc391dc00e12bf9a77fb5a628fc5e0e965d75fdd4366d191b16",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "9d185f4b6b8abba3a4a32d2b1f85462c67700a99114e7047c1129c3a52867f88"
+    },
+    "usgs_cameron_peak__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2049"
+      ],
+      "metrics": "usgs_cameron_peak__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "490db4d415233aa078f527699c8bc06bb01eb7089b08c39b3e832a798aab5073",
+      "index_sha256": "b31b04437def61642e99c636d2f1d212fb3dc3bb743b11327afafd391d73d91f",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "5164127facf25eda0720f75a4ae87a5adf6f4364a29c70aaaee553c2f055ab7c"
+    },
+    "usgs_cameron_peak__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A0_full_scan.attempt1.csv",
+        "1",
+        "2050"
+      ],
+      "metrics": "usgs_cameron_peak__A0_full_scan.attempt1.csv",
+      "page_sha256": "a45babe8401be5688dd2ea8083393c687c4ead717f78a07a5d97630654fa770d",
+      "index_sha256": "9d11cc2ea6161cc391dc00e12bf9a77fb5a628fc5e0e965d75fdd4366d191b16",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "d20fea95adac08578f921392957c8b4885fc4dfdf82b92ae6fcb6f47769e770d"
+    },
+    "usgs_cameron_peak__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C4.attempt1.csv",
+        "0",
+        "2051"
+      ],
+      "metrics": "usgs_cameron_peak__A6_rch_C4.attempt1.csv",
+      "page_sha256": "30d167ced58a7edd2e4537c047dff3a4e3e8ea88c3cb217e0c0737cc5c091a7e",
+      "index_sha256": "bb1324de65d7032ca991fa02111097b91c136824dca69af8cdc41a5c91e1ac1f",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "3a73fe41630922161f0b601d11feca0aa981210c121111e8d8ea4b5e9aafead3"
+    },
+    "usgs_cameron_peak__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch.attempt1.csv",
+        "0",
+        "2052"
+      ],
+      "metrics": "usgs_cameron_peak__A6_rch.attempt1.csv",
+      "page_sha256": "6e475424df8d211c7d7a7f3c7ce8dbb196647f720dd86ebdf40061d2d9d27816",
+      "index_sha256": "a0c7b3969302086b02efd25ab2e220173a50e02ba79949418ebaf9e80833ae09",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "a56b4481de6a2905c9a483271aecf896a2e9737c340544f008db49ee9db02da4"
+    },
+    "usgs_cameron_peak__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/usgs_cameron_peak/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/usgs_cameron_peak__A6_rch_C3.attempt1.csv",
+        "0",
+        "2053"
+      ],
+      "metrics": "usgs_cameron_peak__A6_rch_C3.attempt1.csv",
+      "page_sha256": "189df2bd0b856f2d91c0e3794f97d78a4da0476ec102904e9bc815450b0cd84f",
+      "index_sha256": "93276269e1872b949deee7207d585fd29391a0e5cce61eff0abd67a96b21b29b",
+      "oracle_sha256": "d3e903503d7f7cd0542b273ca5499f111684a4ab44de82d156d0278f258aa83d",
+      "query_sha256": "4eceb8d09dae1db6be2ad8961946e8bdb89e4ac0f4dbd2c60805de2de8f3d07c",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "usgs_cameron_peak__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f7bc26fa760b0c3152d1e8ce3030f837fd3c29c1840551cec4ef71f2b9a15cc9"
+    },
+    "noaa_santiam_river__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C3.attempt1.csv",
+        "0",
+        "2054"
+      ],
+      "metrics": "noaa_santiam_river__A6_rch_C3.attempt1.csv",
+      "page_sha256": "4bf042ce1fc12388db5702d7ae89e83124c6c4c1ae3c2a0b804b6fb1e699ba62",
+      "index_sha256": "d5a297081c5a2a5f3741bd148d038cdc30c3aa54e5e04b6ae3f1bcba852cf0be",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "cfffd1006caa5f5c32e2bc878b4933777efa5327283dad9ecece4f0024fbfecd"
+    },
+    "noaa_santiam_river__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C2.attempt1.csv",
+        "0",
+        "2055"
+      ],
+      "metrics": "noaa_santiam_river__A6_rch_C2.attempt1.csv",
+      "page_sha256": "96dacd3196aafebf72e913c9427af75be2a5f6382b6a8463de3483451669a5d8",
+      "index_sha256": "f9f89e631180468d4931170ea62276d6f733bf80f7b0f372a19743af3ffc90c8",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "8653ee0f7d6adffa063cb54d20a13bebc4ab84134ee8fa5a6670cc3a052cab3f"
+    },
+    "noaa_santiam_river__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A0_full_scan.attempt1.csv",
+        "1",
+        "2056"
+      ],
+      "metrics": "noaa_santiam_river__A0_full_scan.attempt1.csv",
+      "page_sha256": "8999310168dde266f3c636f0e4a210a685e5396cc277057d053273d9e73a710a",
+      "index_sha256": "23e5085d05b3867a0679fb32037aa1fe7f9c65f70df949013bf4b2f24b1bb960",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "e8b5a7deff07eef45b2ea4691da561f9eaf5a43acdf2424f1e32b24a1227bfbd"
+    },
+    "noaa_santiam_river__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A0_input.attempt1.csv",
+        "0",
+        "2057"
+      ],
+      "metrics": "noaa_santiam_river__A0_input.attempt1.csv",
+      "page_sha256": "8999310168dde266f3c636f0e4a210a685e5396cc277057d053273d9e73a710a",
+      "index_sha256": "23e5085d05b3867a0679fb32037aa1fe7f9c65f70df949013bf4b2f24b1bb960",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "a61fb5ed64041983db36521bb888755b2f4042acfffe2b6f600df69b5ee8a4da"
+    },
+    "noaa_santiam_river__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch_C4.attempt1.csv",
+        "0",
+        "2058"
+      ],
+      "metrics": "noaa_santiam_river__A6_rch_C4.attempt1.csv",
+      "page_sha256": "8ca6e39a8d7c1aa67890bec40cf2a5bf23cf9b2cf861e008b69ee59cc426a6b3",
+      "index_sha256": "62360f23467e469eef7403f824e0c26180e360bb5a42d673f165811a8a9b0311",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "7da141e577fbd3591159b70d2472e85ece42a1a0fc08496dcd5ea9af606de9da"
+    },
+    "noaa_santiam_river__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A6_rch.attempt1.csv",
+        "0",
+        "2059"
+      ],
+      "metrics": "noaa_santiam_river__A6_rch.attempt1.csv",
+      "page_sha256": "7e74f5576d661e4e7fc2ae75c17ac0f8e47d5b593f1f79ccde2c340273aa0e3b",
+      "index_sha256": "15cf4f142c1f5cc386a791e8eeeeec971b2cfecc2d52393ec702a0b755f86c16",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "000e9ccb8c5decfb7a9306379424f23a7d27c9c5fc4f24235a5ef83e49894370"
+    },
+    "noaa_santiam_river__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_santiam_river/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_santiam_river__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2060"
+      ],
+      "metrics": "noaa_santiam_river__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "66db41d7e74cab74ff6f0fdb707b3876fadced55a1f6a780389e5a23818a41c5",
+      "index_sha256": "1b889cba1d08651a9d18c4c8104a821c007be3ea2642ff85cd06fa4e30653381",
+      "oracle_sha256": "c0a594195213ca365f1c5138281c6009b5facdb4977ee0b32cdc0462a733efcd",
+      "query_sha256": "eada7ab6dfea8df49be641ed8ad16994e581cf7ed2aa28404e06e0c509f30c7d",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_santiam_river__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "01d4c01f4790735dd09e6abdc0f18c046465f850a95f1fb18b2ae3c945a9283e"
+    },
+    "noaa_long_island__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A0_input.attempt1.csv",
+        "0",
+        "2061"
+      ],
+      "metrics": "noaa_long_island__A0_input.attempt1.csv",
+      "page_sha256": "3aa1cc1912e2c4b2f91486200c1c573cd56ec3d0828b752e9ae107a7cd077269",
+      "index_sha256": "11499b6aa446d9bfae0078ba8784e40c5c79fc699dbfab5667ad30a05ee92963",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "b8572ae15093f3b91b4610623ced9fb978d3aa2593ac60e16fe5fd1cd4d8b037"
+    },
+    "noaa_long_island__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch.attempt1.csv",
+        "0",
+        "2062"
+      ],
+      "metrics": "noaa_long_island__A6_rch.attempt1.csv",
+      "page_sha256": "affef244611d75217027aa558041db0e1c2604b75bfd53229d9b7df582cea165",
+      "index_sha256": "efa8be6ce44f41712b46b7df3d857877c6f7a1e3fd13b8b365093d73f95170ec",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f141dce1a591ce1a17ba39f0bc32186e8fc66edf1141d1d6dcde02bbad61f34b"
+    },
+    "noaa_long_island__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C4.attempt1.csv",
+        "0",
+        "2063"
+      ],
+      "metrics": "noaa_long_island__A6_rch_C4.attempt1.csv",
+      "page_sha256": "c2c57ad1ee102cba11888a91d535328502d4cc2788190461a666a22cc2d325ca",
+      "index_sha256": "0f46123058b936d3ebbacf3fd33902cb6040fcd443c7fd76db08d80bc438e948",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f7554fb13121bcc6816dbcc8736241f520068542bd3e74ea25387e4b6ac9df36"
+    },
+    "noaa_long_island__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C2.attempt1.csv",
+        "0",
+        "2064"
+      ],
+      "metrics": "noaa_long_island__A6_rch_C2.attempt1.csv",
+      "page_sha256": "a5f8036c7242fe7da36df06f42b3f8ed58ef6bcf181775853ecea9a84fabce8f",
+      "index_sha256": "0091ad5df9e12908862fc93347d6f33115c9eef09261281d37396173e96a6f46",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "d18d0ac244fb4f3cff7d69e2f5f20adcf69ea71229cb25b22a38b536451552c2"
+    },
+    "noaa_long_island__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2065"
+      ],
+      "metrics": "noaa_long_island__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "409a85e4857b8cef0ebf889222b3d6ec5f97ef85a7976a67f8d4482117034c2c",
+      "index_sha256": "21c538e48926954ffcac0c5932995d7e77a7c22bce28346678b91150f9a9df85",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "c3e62105390c08ac9432cd329dfd1de94bc6418e9b554861ce635a4d35ab21fd"
+    },
+    "noaa_long_island__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A0_full_scan.attempt1.csv",
+        "1",
+        "2066"
+      ],
+      "metrics": "noaa_long_island__A0_full_scan.attempt1.csv",
+      "page_sha256": "3aa1cc1912e2c4b2f91486200c1c573cd56ec3d0828b752e9ae107a7cd077269",
+      "index_sha256": "11499b6aa446d9bfae0078ba8784e40c5c79fc699dbfab5667ad30a05ee92963",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "0520383cbb3fe949eae3ae866189638db11f1dad8f2ec443e4bbc2dd7c8fa21e"
+    },
+    "noaa_long_island__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_long_island/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_long_island__A6_rch_C3.attempt1.csv",
+        "0",
+        "2067"
+      ],
+      "metrics": "noaa_long_island__A6_rch_C3.attempt1.csv",
+      "page_sha256": "0292fb46bf0b4dc4ec33f14ef36aca47a612c1e7cc8fb9e3aaefbebc7ad7769d",
+      "index_sha256": "798620ae643af9951bdcc2b2b7fb95b9a3d5eeb7e0bc827d93725a89949b5bf1",
+      "oracle_sha256": "b9cc428b9be022bf7667cf8bf9d0e9f99a9718444e7b3d2a6b3b831f7e5ab86b",
+      "query_sha256": "034085b42659563fdf5d05362e2c2e73ef407a663405bb938e0e006a3afb63a7",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_long_island__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "799465294eabd78459aca92ef4b311482216c05f806d1dbfbe0aa59e8f98c2fa"
+    },
+    "noaa_southwest_florida__A3_isotropic_hilbert": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A3_isotropic_hilbert.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A3_isotropic_hilbert.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A3_isotropic_hilbert.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A3_isotropic_hilbert.attempt1.csv",
+        "0",
+        "2068"
+      ],
+      "metrics": "noaa_southwest_florida__A3_isotropic_hilbert.attempt1.csv",
+      "page_sha256": "13083dffcbc856b87905c66cf5aef68c0c9e98a0ba39b90dbb9fa9a7da88ad2b",
+      "index_sha256": "82212146399700ed53f5fa0d649e35d1e05af048dd3363f040dd43dbb3f8d8ec",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A3_isotropic_hilbert.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "272745e794c8e2bb1b4414cffaf3923edabadd7be7b716825130efb99c881332"
+    },
+    "noaa_southwest_florida__A0_full_scan": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A0_full_scan.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A0_full_scan.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A0_full_scan.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A0_full_scan.attempt1.csv",
+        "1",
+        "2069"
+      ],
+      "metrics": "noaa_southwest_florida__A0_full_scan.attempt1.csv",
+      "page_sha256": "f0246e421cfee4aadfff9d00bf4c34a386e5dd215852a5f2af2df09b3d978feb",
+      "index_sha256": "60449446378c0c019a917b132abc6e3a2d541c9381b75b1d1250a507ed27c71c",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A0_full_scan.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "762c3d832bbc271a289f6ee8a65f39bef91b8979de1fb8218f3af2ea9ece6338"
+    },
+    "noaa_southwest_florida__A6_rch_C3": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C3.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C3.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C3.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C3.attempt1.csv",
+        "0",
+        "2070"
+      ],
+      "metrics": "noaa_southwest_florida__A6_rch_C3.attempt1.csv",
+      "page_sha256": "4d7b7d378d99a0f34691ab60a870ff393553d0743b2117aa19f3e6d24e9e9c33",
+      "index_sha256": "4b57268f721bdb9685e5c27fc1f2c66d503d055978cfc705c7025719359b56d0",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A6_rch_C3.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "f4655fce4c6bd321b140a6b21f57b774ab4d1c225159703af62367fa43480481"
+    },
+    "noaa_southwest_florida__A6_rch": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch.attempt1.csv",
+        "0",
+        "2071"
+      ],
+      "metrics": "noaa_southwest_florida__A6_rch.attempt1.csv",
+      "page_sha256": "2772ca6bae70799cb2c69d8c498441c0639ce15aee668f8f6ddd83d312cd6a17",
+      "index_sha256": "2a29422b841307596c689b1d2ab544c2774cb651e81f0346fe4e6ebefde405c9",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A6_rch.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "b6ff9d79374d128ab090c3d7ee5f92ae03959f31b8bd8378c433c0e5a0d3f62c"
+    },
+    "noaa_southwest_florida__A6_rch_C2": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C2.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C2.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C2.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C2.attempt1.csv",
+        "0",
+        "2072"
+      ],
+      "metrics": "noaa_southwest_florida__A6_rch_C2.attempt1.csv",
+      "page_sha256": "b14be23c0b9008dcaf5cb02a4928d10a53a880055e192a0e5f5dadc67e7c8927",
+      "index_sha256": "ea4f09dbdf4d75b1ec8d40a40444960358bf6a5164a3d9e653bd5e9392d7c379",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A6_rch_C2.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "1e6bb7be45d695e0d16d4c91ca6f7d9368f35f4013533edd3c8ce12ba715421e"
+    },
+    "noaa_southwest_florida__A0_input": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A0_input.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A0_input.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A0_input.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A0_input.attempt1.csv",
+        "0",
+        "2073"
+      ],
+      "metrics": "noaa_southwest_florida__A0_input.attempt1.csv",
+      "page_sha256": "f0246e421cfee4aadfff9d00bf4c34a386e5dd215852a5f2af2df09b3d978feb",
+      "index_sha256": "60449446378c0c019a917b132abc6e3a2d541c9381b75b1d1250a507ed27c71c",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A0_input.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "2538ca6b53297fe3fec6e689539edb135193f12299fe5404768caeb7ad932954"
+    },
+    "noaa_southwest_florida__A6_rch_C4": {
+      "status": "passed",
+      "attempt": 1,
+      "command": [
+        "/home/mozgan/mozgan/rch/build/bench/src/cli/rch_application_cache_probe",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C4.page",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_query/full_benchmark/results/noaa_southwest_florida/A6_rch_C4.index",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C4.oracle.tsv",
+        "5",
+        "/home/mozgan/mozgan/rch/experiments/outputs/application_cache/full_benchmark/noaa_southwest_florida__A6_rch_C4.attempt1.csv",
+        "0",
+        "2074"
+      ],
+      "metrics": "noaa_southwest_florida__A6_rch_C4.attempt1.csv",
+      "page_sha256": "2133149194bddd1032d3ba3dda79cbd6b2b8ae946089e22614568ea255529079",
+      "index_sha256": "a5865ab9e0729335b86cea481a0a898c1fa9c3ad971837c5c9a5d3061efef375",
+      "oracle_sha256": "945960f9091a0f32123ea3fb664d4597587417e05aa6330590212aa5f05adba7",
+      "query_sha256": "53fcf615126f84e83ec8665cf2aac3364aada8e43c0f6b8dd3d0faccb73f7b86",
+      "attempts": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "log": "noaa_southwest_florida__A6_rch_C4.attempt1.log"
+        }
+      ],
+      "metrics_sha256": "2aeb1f9a55a6e6f26264486dd4811d77b7f61310c904f7eb70f32bf452667220"
+    }
+  },
+  "application_source_snapshot_sha256": "354248309424b7b09e1d9b5be56a519615499dedbf8346dd06184cbe2d0f7042",
+  "summary_sha256": "1565849e50f9df935fb0d0009e594245e5c173aaa9966e5ec87f409e8e0a52b0"
+}

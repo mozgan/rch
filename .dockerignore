@@ -25,3 +25,4 @@ paper/build/*
 analysis/generated/figures/*-eps-converted-to.pdf
 
 tmp/
+backups/

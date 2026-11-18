@@ -41,6 +41,7 @@ from data.synthetic.generators.common import write_xyz_csv  # noqa: E402
 from experiments.runners.run_matrix import (  # noqa: E402
     PerfCounters,
     block_read_locality,
+    display_path,
     effective_refinement_for_method,
     exact_knn_indices,
     frame_angle_rad,
@@ -56,13 +57,12 @@ from experiments.runners.run_matrix import (  # noqa: E402
     read_order_csv,
     recall_at_k_window,
     recall_at_k_window_from_knn,
-    resolve_cgal_adapter,
     resolve_block_read_probe,
-    safe_path_component,
-    display_path,
+    resolve_cgal_adapter,
     run_cgal_ordering,
+    safe_path_component,
 )
-from scripts.convert_dataset import Point, read_ply_points  # noqa: E402
+from scripts.convert_dataset import Point, load_manifest, read_ply_points  # noqa: E402
 
 
 @dataclass(frozen=True)
@@ -130,7 +130,7 @@ def load_algorithm_configs(config_dir: Path) -> dict[str, dict[str, Any]]:
 
 def load_manifest_datasets(path: Path) -> dict[str, dict[str, Any]]:
     """Load dataset metadata from the Real manifest."""
-    manifest = load_yaml(path)
+    manifest = load_manifest(path)
     datasets = manifest.get("datasets")
     if not isinstance(datasets, list):
         raise ValueError(f"manifest has no dataset list: {path}")
@@ -550,10 +550,10 @@ def output_row(
     row["recall_8_64_status"] = recall_status if wants_recall else ""
     row["recall_8_64_sampled"] = recall_value if wants_recall_sampled else ""
     row["recall_8_64_sample_size"] = recall_count if wants_recall_sampled else ""
-    row["recall_8_64_sampled_status"] = (
-        recall_status if wants_recall_sampled else ""
-    )
+    row["recall_8_64_sampled_status"] = recall_status if wants_recall_sampled else ""
 
+    row["peak_rss_source"] = manifest.get("peak_rss_source", "legacy_unspecified")
+    row["peak_rss_scope"] = manifest.get("peak_rss_scope", "unknown; do not compare as isolated method memory")
     peak_rss = manifest.get("peak_rss_kb")
     row["peak_rss_kb"] = (
         float(peak_rss)
@@ -649,6 +649,8 @@ def write_results_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "recall_8_64_sample_size",
         "recall_8_64_sampled_status",
         "peak_rss_kb",
+        "peak_rss_source",
+        "peak_rss_scope",
         "block_read_mean",
         "block_read_p95",
         "cache_references",
@@ -732,10 +734,11 @@ def run_real_datasets(args: argparse.Namespace) -> Path:
         contamination_id = safe_path_component(
             case.contamination["id"], "contamination id"
         )
-        clean_path = processed_dir / f"{dataset_id}.ply"
-        clean_points = point_cache.setdefault(
-            dataset_id, read_processed_points(clean_path)
-        )
+        dataset_processed_dir = Path(case.dataset.get("processed_dir", processed_dir))
+        clean_path = dataset_processed_dir / f"{dataset_id}.ply"
+        if dataset_id not in point_cache:
+            point_cache[dataset_id] = read_processed_points(clean_path)
+        clean_points = point_cache[dataset_id]
         point_key = (dataset_id, contamination_id, case.seed)
         cached_points = case_point_cache.get(point_key)
         if cached_points is None:
@@ -781,8 +784,7 @@ def run_real_datasets(args: argparse.Namespace) -> Path:
             probe_points_path = points_path
             if probe_points_path.suffix.lower() != ".csv":
                 probe_points_path = (
-                    data_dir
-                    / f"{dataset_id}__{contamination_id}__s{case.seed}.csv"
+                    data_dir / f"{dataset_id}__{contamination_id}__s{case.seed}.csv"
                 )
                 if not probe_points_path.exists():
                     write_xyz_csv(probe_points_path, points)

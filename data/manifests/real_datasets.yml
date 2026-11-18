@@ -1,0 +1,11 @@
+schema: rch.dataset_manifest_collection.v1
+includes:
+- manifest: stanford_3d_scanning.yml
+  raw_dir: data/raw/stanford_3d_scanning
+  processed_dir: data/processed/stanford_3d_scanning
+- manifest: usgs_3dep.yml
+  raw_dir: data/raw/usgs_3dep
+  processed_dir: data/processed/usgs_3dep
+- manifest: noaa_lidar.yml
+  raw_dir: data/raw/noaa_lidar
+  processed_dir: data/processed/noaa_lidar

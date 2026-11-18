@@ -4,8 +4,9 @@
 Public API: `make_paper_artifacts(args)`.
 
 Outputs (named `fig_<scope>_<test>_<metric>` / `table_<scope>_<content>`,
-scope in {synthetic, real, mixed, cgal, meta}; the two `schema` diagrams are
-hand-managed TikZ sources in paper/figures/*.tex and are not generated here):
+scope in {schema, synthetic, real, mixed, cgal, meta}; the two `schema` diagrams
+share the visual style of paper/manuscript.tex; the method overview shows six
+stages, while the implementation flow shows code decisions and return paths):
   * analysis/generated/figures/fig_schema_method_pipeline.pdf
   * analysis/generated/figures/fig_schema_rch_implementation_flow.pdf
   * analysis/generated/figures/fig_synthetic_clean_l1_locality_vs_n.pdf
@@ -37,7 +38,6 @@ import csv
 import json
 import math
 import shutil
-import textwrap
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -48,8 +48,14 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
 import numpy as np
 import yaml
+
+if __package__:
+    from .legacy_claims import CLAIM_CAPTION, claim_status_rows
+else:
+    from legacy_claims import CLAIM_CAPTION, claim_status_rows
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -88,6 +94,7 @@ GEOMETRY_LABELS = {
     "E6": "E6 torus",
     "E7": "E7 cylinder",
     "E8": "E8 mixed-density",
+    "E13": "E13 USGS LiDAR",
 }
 GEOMETRY_ORDER = tuple(GEOMETRY_LABELS)
 
@@ -355,7 +362,9 @@ def parse_finite_numeric_cell(value: Any, field: str, path: Path) -> float | Non
     try:
         parsed = float(value)
     except (TypeError, ValueError) as exc:
-        raise ValueError(f"invalid numeric field {field!r} in {path}: {value!r}") from exc
+        raise ValueError(
+            f"invalid numeric field {field!r} in {path}: {value!r}"
+        ) from exc
     if not math.isfinite(parsed):
         raise ValueError(f"non-finite numeric field {field!r} in {path}: {value!r}")
     return parsed
@@ -515,7 +524,9 @@ def mean_count_by(
         if value is None:
             continue
         buckets[tuple(row.get(key) for key in keys)].append(value)
-    return {key: (mean(values), len(values)) for key, values in buckets.items() if values}
+    return {
+        key: (mean(values), len(values)) for key, values in buckets.items() if values
+    }
 
 
 def short_float(value: float | None) -> str:
@@ -871,135 +882,196 @@ def save_text_figure(
     return {"path": display_path(output), "status": status}
 
 
+def save_rch_stage_figure(
+    output: Path, stages: list[tuple[str, str]]
+) -> dict[str, Any]:
+    """Draw six stages in the manuscript's three-column, two-row snake layout."""
+    output.parent.mkdir(parents=True, exist_ok=True)
+    # Coordinates in inches keep box sizes, padding and arrow gaps consistent.
+    width, height = 2.25, 1.20
+    positions = [(0.10, 1.85), (2.62, 1.85), (5.14, 1.85),
+                 (5.14, 0.10), (2.62, 0.10), (0.10, 0.10)]
+    with plt.rc_context({"font.family": "serif", "mathtext.fontset": "cm"}):
+        fig = plt.figure(figsize=(7.50, 3.15))
+        ax = fig.add_axes((0, 0, 1, 1))
+        ax.set(xlim=(0, 7.50), ylim=(0, 3.15), aspect="equal")
+        ax.axis("off")
+        for (x, y), (title, detail) in zip(positions, stages):
+            ax.add_patch(FancyBboxPatch(
+                (x, y), width, height,
+                boxstyle="round,pad=0,rounding_size=0.06",
+                facecolor="#f5f5ff", edgecolor="black", linewidth=0.65,
+            ))
+            ax.text(x + 0.10, y + height - 0.12, title,
+                    ha="left", va="top", fontsize=10, fontweight="bold")
+            ax.text(x + 0.10, y + height - 0.37, detail,
+                    ha="left", va="top", fontsize=9.5, linespacing=1.3)
+        for i, ((x, y), (next_x, next_y)) in enumerate(
+            zip(positions, positions[1:])
+        ):
+            if i == 2:
+                start, end = (x + width / 2, y), (next_x + width / 2, next_y + height)
+            elif i < 2:
+                start, end = (x + width, y + height / 2), (next_x, next_y + height / 2)
+            else:
+                start, end = (x, y + height / 2), (next_x + width, next_y + height / 2)
+            ax.annotate("", xy=end, xytext=start, arrowprops={
+                "arrowstyle": "-|>", "lw": 0.8, "color": "black",
+                "shrinkA": 2, "shrinkB": 2, "mutation_scale": 10,
+            })
+        fig.savefig(output, bbox_inches="tight", pad_inches=0.03)
+        plt.close(fig)
+    return {"path": display_path(output), "status": "generated_conceptual"}
+
+
 def render_schema_method_pipeline(
     ctx: PaperArtifactContext, output: Path
 ) -> dict[str, Any]:
-    """Render the RCH method-pipeline schema from `include/rch/orderings/orderer.hpp`."""
-    steps = [
-        (r"$N \times 3$ input", "row-major span"),
-        ("Validate", "shape + finite"),
-        ("Frame model", "DetMCD/MRCD/OGK\nor sample fallback"),
-        ("Project + domain", r"$y_i = R^{T}(x_i - c)$" + "\n" + r"$[-a_j, +a_j]$"),
-        ("Allocate\nbits", "C0-C4 bit rules\n" + r"$\sum_j m_j \leq 63$"),
-        ("Encode key", "compact Hilbert\nor Morton"),
-        (
-            "Sort/refine + hash",
-            r"$\mathrm{CurveKey}$ order" + "\noptional local MIAD" + "\nSHA-256",
-        ),
-    ]
-    fig, ax = plt.subplots(figsize=(14.8, 3.25))
-    ax.axis("off")
-    left = 0.030
-    box_width = 0.125
-    gap = (1.0 - (2.0 * left) - (len(steps) * box_width)) / (len(steps) - 1)
-    xs = [left + (box_width / 2.0) + i * (box_width + gap) for i in range(len(steps))]
-    y = 0.52
-    for i, (x, (title, subtitle)) in enumerate(zip(xs, steps)):
-        ax.text(
-            x,
-            y,
-            f"{title}\n{subtitle}",
-            ha="center",
-            va="center",
-            fontsize=9.6,
-            linespacing=1.24,
-            bbox={
-                "boxstyle": "round,pad=0.55",
-                "facecolor": "#eef4fb",
-                "edgecolor": "#2f5f8f",
-            },
-        )
-        if i < len(xs) - 1:
-            start_x = x + (box_width / 2.0)
-            end_x = xs[i + 1] - (box_width / 2.0)
-            ax.annotate(
-                "",
-                xy=(end_x, y),
-                xytext=(start_x, y),
-                arrowprops={"arrowstyle": "->", "lw": 1.2, "color": "#2f5f8f"},
-            )
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 1.0)
-    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.96))
-    fig.savefig(output, bbox_inches="tight", pad_inches=0.15)
-    plt.close(fig)
-    return {"path": display_path(output), "status": "generated_conceptual"}
+    """Render the six RCH stages shown in paper/manuscript.tex."""
+    return save_rch_stage_figure(output, [
+        ("1. Validate", "Finite coordinates;\nretain indices;\nnormalize signed zero"),
+        ("2. Estimate", r"Robust center $\mu$ and scatter $S$," + "\nor fallback"),
+        ("3. Build the frame", r"Axes $Q$, projected points $y$," + "\ncore and covering boxes"),
+        ("4. Assign bits", "Choose domain and support;\n" + r"set depths $m_x,m_y,m_z$"),
+        ("5. Encode and sort", "Quantize; form Hilbert keys;\nresolve ties by a total key"),
+        ("6. Finalize", "Optional local refinement;\nhash the integer output"),
+    ])
 
 
 def render_schema_rch_implementation_flow(
     ctx: PaperArtifactContext, output: Path
 ) -> dict[str, Any]:
-    """Render an implementation-oriented RCH flow diagram."""
-    nodes = [
-        ("1. dispatch + validation", "method selected; size%3==0; finite-only gate"),
-        (
-            "2. prepare frame",
-            "RCH: robust scatter via DetMCD/MRCD/OGK; A5: sample covariance",
-        ),
-        (
-            "3. fallback semantics",
-            "tiny/rank-deficient robust model -> sample frame + telemetry",
-        ),
-        (
-            "4. project to frame",
-            r"$y_i = R^{T}(x_i - c)$; AABB methods skip this branch",
-        ),
-        (
-            "5. domain + bit allocation",
-            "half-extents [-a_j,+a_j]; C0-C4; sum_j m_j <= 63",
-        ),
-        (
-            "6. quantize + encode",
-            "per-axis quantization; compact Hilbert or Morton key",
-        ),
-        (
-            "7. total-order sort + optional refinement",
-            r"$\mathrm{CurveKey}\{h, y_x, y_y, y_z, \mathrm{raw\_idx}\}$"
-            + "; local MIAD pass when enabled",
-        ),
-        (
-            "8. reproducibility digest",
-            r"$\mathrm{SHA256}(\mathrm{method},\mathrm{bits},\mathrm{fallback},P,K)$",
-        ),
-    ]
-    fig, ax = plt.subplots(figsize=(12.6, 9.2))
-    ax.axis("off")
-    x = 0.5
-    top_y = 0.89
-    step = 0.110
-    box_height = 0.088
-    for i, (title, subtitle) in enumerate(nodes):
-        y = top_y - i * step
-        readable_subtitle = "\n".join(
-            textwrap.wrap(subtitle, width=76, break_long_words=False)
-        )
-        ax.text(
-            x,
-            y,
-            f"{title}\n{readable_subtitle}",
-            ha="center",
-            va="center",
-            fontsize=10.5,
-            linespacing=1.24,
-            bbox={
-                "boxstyle": "round,pad=0.62",
-                "facecolor": "#f6f3e8",
-                "edgecolor": "#826b2f",
-            },
-        )
-        if i < len(nodes) - 1:
-            next_y = top_y - (i + 1) * step
-            ax.annotate(
-                "",
-                xy=(x, next_y + box_height / 2.0),
-                xytext=(x, y - box_height / 2.0),
-                arrowprops={"arrowstyle": "->", "lw": 1.15, "color": "#826b2f"},
-            )
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 1.0)
-    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.97))
-    fig.savefig(output, bbox_inches="tight", pad_inches=0.15)
-    plt.close(fig)
+    """Render RCH control flow, checked against orderer.hpp and frame guards.
+
+    Unlike the conceptual method diagram, this follows error returns, the two
+    independent fallback decisions, and the dispatcher's post-sort refinement.
+    Configuration overrides are grouped with domain/bit selection.
+    """
+    from matplotlib.patches import Polygon
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with plt.rc_context({"font.family": "serif", "mathtext.fontset": "cm"}):
+        fig = plt.figure(figsize=(10.0, 11.35))
+        ax = fig.add_axes((0, 0, 1, 1))
+        ax.set(xlim=(0, 10.0), ylim=(0, 11.35), aspect="equal")
+        ax.axis("off")
+        nodes = {}
+
+        def box(name, x, y, w, h, title, detail="", *, decision=False, fill="#f5f5ff"):
+            nodes[name] = (x, y, w, h)
+            if decision:
+                shape = Polygon([(x, y + h / 2), (x + w / 2, y + h),
+                                 (x + w, y + h / 2), (x + w / 2, y)],
+                                facecolor=fill, edgecolor="black", linewidth=0.7)
+                ax.text(x + w / 2, y + h / 2, title, ha="center", va="center",
+                        fontsize=10.5, linespacing=1.1)
+            else:
+                shape = FancyBboxPatch((x, y), w, h,
+                                      boxstyle="round,pad=0,rounding_size=0.06",
+                                      facecolor=fill, edgecolor="black", linewidth=0.7)
+                if detail:
+                    ax.text(x + w / 2, y + h - 0.09, title, ha="center", va="top",
+                            fontsize=11, fontweight="bold")
+                    ax.text(x + w / 2, y + h - 0.32, detail, ha="center", va="top",
+                            fontsize=10.2, linespacing=1.2)
+                else:
+                    ax.text(x + w / 2, y + h / 2, title, ha="center", va="center",
+                            fontsize=10.5, linespacing=1.2)
+            ax.add_patch(shape)
+
+        def port(name, side):
+            x, y, w, h = nodes[name]
+            return {"top": (x + w / 2, y + h), "bottom": (x + w / 2, y),
+                    "left": (x, y + h / 2), "right": (x + w, y + h / 2)}[side]
+
+        def arrow(source, target, label="", *, start="bottom", end="top", via=()):
+            points = [port(source, start), *via, port(target, end)]
+            if len(points) > 2:
+                ax.plot(*zip(*points[:-1]), color="black", lw=0.8)
+            ax.annotate("", xy=points[-1], xytext=points[-2], arrowprops={
+                "arrowstyle": "-|>", "color": "black", "lw": 0.8,
+                "shrinkA": 1.5, "shrinkB": 1.5, "mutation_scale": 10,
+            })
+            if label:
+                a, b = points[:2]
+                horizontal = start in {"left", "right"}
+                ax.text((a[0] + b[0]) / 2 + (0 if horizontal else 0.06),
+                        (a[1] + b[1]) / 2 + 0.04,
+                        label, fontsize=9.5, ha="center" if horizontal else "left",
+                        va="bottom",
+                        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.6})
+
+        # Main spine: RCH branch of order_point_cloud, not the baseline dispatcher.
+        box("input", 3.0, 10.65, 3.65, 0.55,
+            "order_point_cloud", "Input coordinates + RCH configuration")
+        box("valid", 3.0, 9.55, 3.65, 0.80,
+            "Shape, finite-input and\nconfiguration checks pass?", decision=True)
+        box("invalid", 7.2, 9.60, 2.60, 0.65,
+            "Return input error", fill="#fff5f5")
+        box("fit", 3.0, 8.60, 3.65, 0.65,
+            "prepare_frame", "Selected estimator; DetMCD-style default")
+        box("fit_ok", 3.0, 7.55, 3.65, 0.80,
+            "Estimator policy accepted\nand scatter finite?", decision=True)
+        box("sample", 7.2, 7.50, 2.60, 0.90,
+            "Sample fallback", "Sample mean + covariance;\nrobust_fallback_used = true")
+        box("eigen", 3.0, 6.55, 3.65, 0.65,
+            "make_robust_principal_frame", "Jacobi eigenvalues, axes and gap guards")
+        box("axis_ok", 3.0, 5.50, 3.65, 0.80,
+            "Eigensolver converged,\nfinite spectrum, gaps pass?", decision=True)
+        box("canonical", 7.2, 5.50, 2.60, 0.85,
+            "Canonical axes", r"$Q=I$; extents from $S_{jj}$" + "\nEstimator flag is unchanged")
+        box("domain", 3.0, 4.30, 3.65, 0.95,
+            "frame_domain + bit allocation",
+            "Project points; core / covering boxes;\nC0-C4 select domain, support and depths;\napply configured fixed-grid overrides")
+        box("encode", 3.0, 3.25, 3.65, 0.75,
+            "Quantize + compact Hilbert",
+            "Build keys with raw-coordinate tie-breaks;\nstore primary keys by original input index")
+        box("key_error", 7.2, 3.30, 2.60, 0.65,
+            "Return encoding error", fill="#fff5f5")
+        box("sort", 3.0, 2.20, 3.65, 0.75,
+            "sort_with_keys",
+            "Sort permutation by total key; initial SHA-256;\nattach frame / quantization diagnostics")
+        box("refine", 3.0, 1.20, 3.65, 0.75,
+            "Refinement enabled?", decision=True)
+        box("miad", 7.2, 0.95, 2.60, 1.05,
+            "apply_miad_refinement",
+            "Local MIAD moves; rehash\nonly if permutation changes;\nprimary keys stay unchanged")
+        box("output", 3.0, 0.15, 3.65, 0.75,
+            "Return OrderingResult",
+            "Permutation, primary keys, bit depths,\nframe, flags, diagnostics and digest")
+
+        arrow("input", "valid")
+        arrow("valid", "invalid", "No", start="right", end="left")
+        arrow("valid", "fit", "Yes")
+        arrow("fit", "fit_ok")
+        arrow("fit_ok", "sample", "No", start="right", end="left")
+        arrow("fit_ok", "eigen", "Yes")
+        arrow("sample", "eigen", start="bottom", end="right",
+              via=((8.50, 6.875),))
+        arrow("eigen", "axis_ok")
+        arrow("axis_ok", "canonical", "No", start="right", end="left")
+        arrow("axis_ok", "domain", "Yes")
+        arrow("canonical", "domain", start="bottom", end="right",
+              via=((8.50, 4.775),))
+        arrow("domain", "encode")
+        arrow("encode", "key_error", "Failure", start="right", end="left")
+        arrow("encode", "sort", "Success")
+        arrow("sort", "refine")
+        arrow("refine", "miad", "Yes", start="right", end="left")
+        arrow("refine", "output", "No")
+        arrow("miad", "output", start="bottom", end="right",
+              via=((8.50, 0.525),))
+
+        # Function names locate the steps without cluttering the method overview.
+        ax.text(0.15, 7.96, "Estimator fallback\nchanges the fitted\ncenter and scatter.",
+                fontsize=10.5, va="center", linespacing=1.3)
+        ax.text(0.15, 5.90, "Axis fallback\nchanges the basis;\nit is a separate guard.",
+                fontsize=10.5, va="center", linespacing=1.3)
+        ax.text(0.15, 2.58, "Total sort key:\n" + r"$(H_i,T(p_{ix}),T(p_{iy}),$"
+                + "\n" + r"$T(p_{iz}),i)$" + "\n(raw coordinates)",
+                fontsize=10.5, va="center", linespacing=1.3)
+        fig.savefig(output, bbox_inches="tight", pad_inches=0.03)
+        plt.close(fig)
     return {"path": display_path(output), "status": "generated_conceptual"}
 
 
@@ -1550,13 +1622,15 @@ def render_synthetic_block_read_cache_miss(
         rows, ("algorithm_id", "bit_rule", "point_count"), "cache_miss_rate"
     )
     if not cache_grouped:
-        raise RuntimeError(
-            "The block-read cache figure requires finite M8 cache-miss-rate measurements from "
-            "table_5_runtime (D0, primary occupancy rules). None were found. Run "
-            "`make bench-synthetic` in an environment with `perf stat -e "
-            "cache-references,cache-misses` access (Linux perf, "
-            "kernel.perf_event_paranoid <= 1) and re-run paper-artifacts. "
-            "No M9 fallback is permitted."
+        return save_text_figure(
+            output,
+            "CPU cache counters unavailable",
+            [
+                "No finite M8 cache-miss measurements were recorded.",
+                "No substitute metric or cache advantage is inferred.",
+                "Page-query logical I/O is reported separately.",
+            ],
+            status="unavailable_perf_counters",
         )
     series = [
         key
@@ -1755,8 +1829,8 @@ def render_real_refinement_ablation_miad(
 ) -> dict[str, Any]:
     """Render the real-data refinement-axis ablation as MIAD crossing lines.
 
-    For each Stanford model, the mean raw-coordinate MIAD (primary occupancy
-    rules, averaged over D0--D4 and the five seeds) of four orderings under the
+    For each fixed real dataset, the mean raw-coordinate MIAD (primary occupancy
+    rules, averaged over the recorded contamination conditions and seeds) of four orderings under the
     two equal-treatment refinement modes off / all. Lower is better. The figure
     makes the mechanism explicit: under `off` the refinement pass is removed
     from every method, while under `all` every non-input in-repo method receives
@@ -1831,7 +1905,8 @@ def render_real_refinement_ablation_miad(
         if index == 0:
             # Each line is one (method, bit rule) pair, so the label must name a
             # single rule; "primary rules" wrongly implied pooling over all four.
-            ax.set_ylabel("mean MIAD (per bit rule, D0-D4)")
+            conditions = ", ".join(sorted({str(row["contamination_id"]) for row in rows}))
+            ax.set_ylabel(f"mean MIAD (per bit rule, {conditions})")
     place_legend_below(
         fig,
         list(legend_items.values()),
@@ -1963,66 +2038,11 @@ def table_real_dataset_catalog(ctx: PaperArtifactContext) -> str:
 
 def table_mixed_claim_status(ctx: PaperArtifactContext) -> str:
     """Create claim-status table from Synthetic/Real stats and Synthetic contamination rows."""
-    synthetic_hypotheses = {
-        item.get("hypothesis"): item
-        for item in ctx.synthetic_stats.get("hypotheses", [])
-    }
-    real_hypotheses = {
-        item.get("hypothesis"): item for item in ctx.real_stats.get("hypotheses", [])
-    }
-    h1 = synthetic_hypotheses.get("H1", {})
-    h2 = synthetic_hypotheses.get("H2", {})
-    h3 = synthetic_hypotheses.get("H3", {})
-    h7 = synthetic_hypotheses.get("H7_A7", {})
-    h1_real = real_hypotheses.get("H1_real_directional", {})
-    h1_real_outcome = h1_real.get(
-        "outcome", "confirmed" if h1_real.get("passed") else "insufficient_data"
-    )
-    h1_real_status = {
-        "confirmed": "Confirmed",
-        "failed": "Failed",
-        "insufficient_data": "Not verified",
-    }.get(str(h1_real_outcome), "Not verified")
-    failed_real = sum(
-        1 for item in h1_real.get("comparisons", []) if not item.get("passed")
-    )
-    rows = [
-        {
-            "claim": "H1 synthetic MIAD",
-            "status": "Confirmed" if h1.get("passed") else "Not verified",
-            "evidence": f"p_adj={h1.get('p_adj', 'NA')}",
-        },
-        {
-            "claim": "H2 synthetic MIAD",
-            "status": "Confirmed" if h2.get("passed") else "Not verified",
-            "evidence": f"p_adj={h2.get('p_adj', 'NA')}",
-        },
-        {
-            "claim": "H3 contamination stability",
-            "status": "Confirmed" if h3.get("passed") else "Not verified",
-            "evidence": (
-                f"p={h3.get('p', 'NA')}; "
-                f"median_delta={h3.get('median_delta_rch_minus_baseline', 'NA')}"
-            ),
-        },
-        {
-            "claim": "A7 CGAL baseline comparison",
-            "status": "Confirmed" if h7.get("passed") else "Not verified",
-            "evidence": (
-                f"p_adj={h7.get('p_adj', 'NA')}; "
-                f"median_delta={h7.get('median_delta_rch_minus_baseline', 'NA')}"
-            ),
-        },
-        {
-            "claim": "H1 real-data direction",
-            "status": h1_real_status,
-            "evidence": f"comparisons={h1_real.get('comparison_count', 'NA')}; failed={failed_real}",
-        },
-    ]
+    rows = claim_status_rows(ctx.synthetic_stats, ctx.real_stats)
     return latex_table(
         rows,
         ["claim", "status", "evidence"],
-        "Claim status summary",
+        CLAIM_CAPTION,
         "tab:claim_status",
     )
 
@@ -2117,62 +2137,7 @@ def table_artifact_specs(
             }
         ]
 
-    synthetic_hypotheses = {
-        item.get("hypothesis"): item
-        for item in ctx.synthetic_stats.get("hypotheses", [])
-    }
-    real_hypotheses = {
-        item.get("hypothesis"): item for item in ctx.real_stats.get("hypotheses", [])
-    }
-    h1 = synthetic_hypotheses.get("H1", {})
-    h2 = synthetic_hypotheses.get("H2", {})
-    h3 = synthetic_hypotheses.get("H3", {})
-    h7 = synthetic_hypotheses.get("H7_A7", {})
-    h1_real = real_hypotheses.get("H1_real_directional", {})
-    h1_real_outcome = h1_real.get(
-        "outcome", "confirmed" if h1_real.get("passed") else "insufficient_data"
-    )
-    h1_real_status = {
-        "confirmed": "Confirmed",
-        "failed": "Failed",
-        "insufficient_data": "Not verified",
-    }.get(str(h1_real_outcome), "Not verified")
-    failed_real = sum(
-        1 for item in h1_real.get("comparisons", []) if not item.get("passed")
-    )
-    claim_rows = [
-        {
-            "claim": "H1 synthetic MIAD",
-            "status": "Confirmed" if h1.get("passed") else "Not verified",
-            "evidence": f"p_adj={h1.get('p_adj', 'NA')}",
-        },
-        {
-            "claim": "H2 synthetic MIAD",
-            "status": "Confirmed" if h2.get("passed") else "Not verified",
-            "evidence": f"p_adj={h2.get('p_adj', 'NA')}",
-        },
-        {
-            "claim": "H3 contamination stability",
-            "status": "Confirmed" if h3.get("passed") else "Not verified",
-            "evidence": (
-                f"p={h3.get('p', 'NA')}; "
-                f"median_delta={h3.get('median_delta_rch_minus_baseline', 'NA')}"
-            ),
-        },
-        {
-            "claim": "A7 CGAL baseline comparison",
-            "status": "Confirmed" if h7.get("passed") else "Not verified",
-            "evidence": (
-                f"p_adj={h7.get('p_adj', 'NA')}; "
-                f"median_delta={h7.get('median_delta_rch_minus_baseline', 'NA')}"
-            ),
-        },
-        {
-            "claim": "H1 real-data direction",
-            "status": h1_real_status,
-            "evidence": f"comparisons={h1_real.get('comparison_count', 'NA')}; failed={failed_real}",
-        },
-    ]
+    claim_rows = claim_status_rows(ctx.synthetic_stats, ctx.real_stats)
 
     return [
         (
@@ -2186,7 +2151,7 @@ def table_artifact_specs(
             "table_mixed_claim_status.tex",
             claim_rows,
             ["claim", "status", "evidence"],
-            "Claim status summary",
+            CLAIM_CAPTION,
             "tab:claim_status",
         ),
         (
@@ -2663,9 +2628,9 @@ def make_paper_artifacts(args: argparse.Namespace) -> dict[str, Any]:
             "real_statistics_present": bool(ctx.real_stats),
         },
         "scope_notes": [
-            "fig_synthetic_block_read_cache_miss requires finite M8 cache-miss-rate measurements; the generator fails closed (RuntimeError) when no perf counters are present — no M9 fallback.",
+            "fig_synthetic_block_read_cache_miss uses finite M8 counters when available; otherwise an explicitly unavailable figure is produced, with no metric substitution.",
             "fig_mixed_recall_heatmap uses synthetic recall_8_64 and prefers Real recall_8_64 when that exact full-cloud column is present; the figure manifest records the Real metric column and status counts.",
-            "Mesh-quality/application-scope material is intentionally not generated as a figure; downstream mesh quality belongs in future work unless a measured artifact is added.",
+            "This generator covers ordering artifacts. The separate make_application_artifacts.py generator validates and publishes exact page-query measurements; downstream mesh quality remains outside scope.",
         ],
     }
     manifest_path = ctx.stats_dir / "paper_artifacts_manifest.json"

@@ -1,6 +1,6 @@
 {
   "schema": "rch.generated_table.v1",
-  "caption": "Synthetic statistical analysis summary",
+  "caption": "Legacy synthetic analysis: nominal p-values and intervals; shared inputs not fully preserved",
   "label": "tab:synthetic_statistics",
   "columns": [
     "analysis",

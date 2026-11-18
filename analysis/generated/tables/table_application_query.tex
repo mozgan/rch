@@ -1,0 +1,87 @@
+\begin{table}[tbp]\centering\small
+\caption{Warm-cache exact window queries on fixed point-cloud datasets. Latencies are raw-sample percentiles. Full scan reads every page; other layouts use the common page directory. RCH/C3 is the default native rule; RCH/C0 remains a control.}
+\label{tab:application_query}
+\begin{tabular}{llrrr}\toprule Dataset & Layout & p50 (ms) & p95 (ms) & Read pages \\ \midrule
+Bunny & A0\_input & 0.3431 & 0.4806 & 219.7 \\
+Bunny & A0\_full\_scan & 0.4076 & 0.487 & 281.0 \\
+Bunny & A3\_isotropic\_hilbert & 0.008517 & 0.2783 & 27.3 \\
+Bunny & A6\_rch & 0.009133 & 0.2771 & 27.9 \\
+Bunny & A6\_rch\_C2 & 0.009608 & 0.2838 & 28.1 \\
+Bunny & A6\_rch\_C3 & 0.009748 & 0.2839 & 27.2 \\
+Bunny & A6\_rch\_C4 & 0.009243 & 0.2859 & 28.1 \\
+Armadillo & A0\_input & 2.067 & 2.946 & 939.7 \\
+Armadillo & A0\_full\_scan & 2.326 & 2.945 & 1352.0 \\
+Armadillo & A3\_isotropic\_hilbert & 0.01689 & 2.022 & 123.0 \\
+Armadillo & A6\_rch & 0.01626 & 2.036 & 124.8 \\
+Armadillo & A6\_rch\_C2 & 0.01537 & 2.081 & 124.2 \\
+Armadillo & A6\_rch\_C3 & 0.01594 & 2.069 & 123.9 \\
+Armadillo & A6\_rch\_C4 & 0.01536 & 2.08 & 124.2 \\
+Dragon & A0\_input & 0.1355 & 2.97 & 466.6 \\
+Dragon & A0\_full\_scan & 4.746 & 5.646 & 3420.0 \\
+Dragon & A3\_isotropic\_hilbert & 0.05735 & 3.925 & 256.6 \\
+Dragon & A6\_rch & 0.05601 & 4.166 & 259.9 \\
+Dragon & A6\_rch\_C2 & 0.05893 & 4.383 & 259.5 \\
+Dragon & A6\_rch\_C3 & 0.06551 & 4.309 & 258.6 \\
+Dragon & A6\_rch\_C4 & 0.05952 & 4.354 & 259.5 \\
+Usgs Cameron Peak & A0\_input & 0.02105 & 2.925 & 290.9 \\
+Usgs Cameron Peak & A0\_full\_scan & 4.918 & 6.059 & 3748.0 \\
+Usgs Cameron Peak & A3\_isotropic\_hilbert & 0.01373 & 6.041 & 242.7 \\
+Usgs Cameron Peak & A6\_rch & 0.01728 & 5.969 & 256.9 \\
+Usgs Cameron Peak & A6\_rch\_C2 & 0.01501 & 6.098 & 248.8 \\
+Usgs Cameron Peak & A6\_rch\_C3 & 0.01432 & 5.924 & 245.7 \\
+Usgs Cameron Peak & A6\_rch\_C4 & 0.01534 & 5.824 & 248.2 \\
+Noaa Santiam River & A0\_input & 0.004809 & 0.05239 & 14.7 \\
+Noaa Santiam River & A0\_full\_scan & 0.7807 & 0.7981 & 611.0 \\
+Noaa Santiam River & A3\_isotropic\_hilbert & 0.001983 & 0.00519 & 5.1 \\
+Noaa Santiam River & A6\_rch & 0.003386 & 0.00497 & 4.8 \\
+Noaa Santiam River & A6\_rch\_C2 & 0.001954 & 0.003898 & 5.0 \\
+Noaa Santiam River & A6\_rch\_C3 & 0.001954 & 0.003727 & 4.4 \\
+Noaa Santiam River & A6\_rch\_C4 & 0.001954 & 0.004933 & 4.3 \\
+Noaa Long Island & A0\_input & 0.009373 & 0.9253 & 93.5 \\
+Noaa Long Island & A0\_full\_scan & 1.453 & 1.652 & 1127.0 \\
+Noaa Long Island & A3\_isotropic\_hilbert & 0.00538 & 0.6675 & 25.1 \\
+Noaa Long Island & A6\_rch & 0.005465 & 0.6767 & 25.3 \\
+Noaa Long Island & A6\_rch\_C2 & 0.003857 & 0.6799 & 25.6 \\
+Noaa Long Island & A6\_rch\_C3 & 0.003882 & 0.6739 & 25.6 \\
+Noaa Long Island & A6\_rch\_C4 & 0.003842 & 0.6785 & 25.8 \\
+Noaa Southwest Florida & A0\_input & 0.03119 & 2.472 & 253.0 \\
+Noaa Southwest Florida & A0\_full\_scan & 8.289 & 9.273 & 5951.0 \\
+Noaa Southwest Florida & A3\_isotropic\_hilbert & 0.02355 & 4.98 & 140.0 \\
+Noaa Southwest Florida & A6\_rch & 0.02449 & 4.911 & 143.3 \\
+Noaa Southwest Florida & A6\_rch\_C2 & 0.02345 & 4.89 & 177.3 \\
+Noaa Southwest Florida & A6\_rch\_C3 & 0.03307 & 5.91 & 352.1 \\
+Noaa Southwest Florida & A6\_rch\_C4 & 0.02366 & 4.771 & 177.0 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[tbp]\centering\small
+\caption{Paired mean query latency difference against isotropic Hilbert (RCH variants minus A3). Intervals are pointwise and resample query IDs within each fixed dataset; preparation timing uncertainty is excluded.}
+\label{tab:application_paired}
+\begin{tabular}{llrrr}\toprule Dataset & Layout & Difference (ms) & 95\% interval (ms) & Break-even queries \\ \midrule
+Bunny & A6\_rch & 0.0005328 & [-7.581e-05, 0.001136] & -- \\
+Bunny & A6\_rch\_C2 & 0.001997 & [0.001364, 0.002654] & -- \\
+Bunny & A6\_rch\_C3 & 0.001668 & [0.001007, 0.002339] & -- \\
+Bunny & A6\_rch\_C4 & 0.002196 & [0.001544, 0.002855] & -- \\
+Armadillo & A6\_rch & 0.003583 & [0.001924, 0.005312] & -- \\
+Armadillo & A6\_rch\_C2 & 0.01995 & [0.01635, 0.02372] & -- \\
+Armadillo & A6\_rch\_C3 & 0.01006 & [0.007976, 0.01227] & -- \\
+Armadillo & A6\_rch\_C4 & 0.01788 & [0.01454, 0.02134] & -- \\
+Dragon & A6\_rch & 0.06005 & [0.04943, 0.07125] & -- \\
+Dragon & A6\_rch\_C2 & 0.1147 & [0.09462, 0.1355] & -- \\
+Dragon & A6\_rch\_C3 & 0.09466 & [0.07763, 0.1123] & -- \\
+Dragon & A6\_rch\_C4 & 0.1058 & [0.08708, 0.125] & -- \\
+Usgs Cameron Peak & A6\_rch & 0.008688 & [0.004342, 0.01303] & -- \\
+Usgs Cameron Peak & A6\_rch\_C2 & 0.003552 & [-0.00061, 0.007724] & -- \\
+Usgs Cameron Peak & A6\_rch\_C3 & -0.02821 & [-0.03588, -0.02085] & 1.58e+05 \\
+Usgs Cameron Peak & A6\_rch\_C4 & -0.03764 & [-0.04715, -0.0287] & 1.17e+05 \\
+Noaa Santiam River & A6\_rch & -0.0007022 & [-0.001861, 0.0002537] & 1.21e+06 \\
+Noaa Santiam River & A6\_rch\_C2 & 0.0007937 & [-0.0004593, 0.00252] & -- \\
+Noaa Santiam River & A6\_rch\_C3 & -0.001046 & [-0.002271, 2.033e-05] & 8.04e+05 \\
+Noaa Santiam River & A6\_rch\_C4 & -0.001393 & [-0.002829, -0.0002651] & 6.11e+05 \\
+Noaa Long Island & A6\_rch & -0.001141 & [-0.002496, 3.939e-05] & 1.5e+06 \\
+Noaa Long Island & A6\_rch\_C2 & -0.001327 & [-0.003418, 0.0006294] & 1.27e+06 \\
+Noaa Long Island & A6\_rch\_C3 & -0.0005477 & [-0.00267, 0.00159] & 3.08e+06 \\
+Noaa Long Island & A6\_rch\_C4 & 0.0002292 & [-0.001554, 0.002097] & -- \\
+Noaa Southwest Florida & A6\_rch & 0.001637 & [-0.002049, 0.006013] & -- \\
+Noaa Southwest Florida & A6\_rch\_C2 & 0.0554 & [0.03366, 0.07922] & -- \\
+Noaa Southwest Florida & A6\_rch\_C3 & 0.3384 & [0.2676, 0.412] & -- \\
+Noaa Southwest Florida & A6\_rch\_C4 & 0.04344 & [0.02147, 0.06724] & -- \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,16 @@
+{
+  "schema": "rch.application_workflow.artifacts.v1",
+  "source_manifest_sha256": "3fa0114e1f363efb4280dfaf9042d2f79ce9ca871c7da62f6cc50fbd0b390bd8",
+  "generator_sha256": "c96200fd4e1908931c9f7ec01afd34aae5ae352958e2d5e5ec05c54d68b8e5d7",
+  "artifacts_sha256": {
+    "outputs/application_workflow/summary.csv": "24dc113ac4f63f42ec5ae8971ecbbb0b9c4db17b2337991df5462d6bb0a27aaa",
+    "outputs/application_workflow/paired_comparisons.csv": "dd2f1da3ae2d7da69a1f5f2805c39d0e53c4bc30f5fd4e29580c4cd48be9c8e8",
+    "outputs/application_workflow/measurements.csv": "ac8d267b04e8f51254995bfbdf78d5532fb74534ba9d50451bf9136694a868c9",
+    "outputs/application_workflow/source_manifest.json": "3fa0114e1f363efb4280dfaf9042d2f79ce9ca871c7da62f6cc50fbd0b390bd8",
+    "outputs/application_workflow/scope.md": "fa6f7aee1a8ef4627d13cbf9b47f378b714d3e6b4b9b78bd4ec757f802183f0c",
+    "tables/table_application_workflow.tex": "9f678432539a535b8d468da8129336837f08addbbc320247bd82c118a9242136",
+    "tables/table_application_workflow_io.tex": "72c85daf75b35a8c32d0c1f764c9f44f676235c5eacfeacacaf7db42bdcff83d",
+    "figures/fig_application_workflow.pdf": "167df0fd630a82bb20339ef16f44b56293ab9afa373186d6891db1aec9d9d453",
+    "figures/fig_application_workflow.eps": "be898626361609eb706ae1d494ff7827707736d668ff4a5434ceca90b2d14c6a"
+  }
+}

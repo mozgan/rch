@@ -2,7 +2,7 @@
 
 # RCH development/test image.
 # Provides Ubuntu 24.04, Clang 20, GCC/G++ 13, CMake/Ninja, CGAL, and the
-# Python environment needed by the repository scripts and CTest Python tests.
+# Python environment, PostgreSQL 16 and PostGIS 3 for DBMS experiments.
 FROM ubuntu:24.04
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -50,6 +50,16 @@ RUN apt-get update \
     make \
     ninja-build \
     pkg-config \
+    poppler-utils \
+    texlive-latex-extra \
+    texlive-publishers \
+    texlive-fonts-recommended \
+    linux-tools-common \
+    linux-tools-generic \
+    postgresql-16 \
+    postgresql-client-16 \
+    postgresql-16-postgis-3 \
+    postgresql-16-postgis-3-scripts \
     python3 \
     python3-pip \
     python3-venv \
@@ -73,11 +83,15 @@ RUN apt-get update \
 
 WORKDIR /work/rch
 
-COPY requirements.txt /tmp/rch-requirements.txt
+# The development image keeps its interactive shell entry point. PostgreSQL
+# binaries are available for a separately initialized, non-root benchmark cluster.
+ENV PATH="/usr/lib/postgresql/16/bin:${PATH}"
+
+COPY requirements.txt ./requirements.txt
 
 RUN python3 -m venv "${VIRTUAL_ENV}" \
  && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir --upgrade pip setuptools wheel \
- && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir -r /tmp/rch-requirements.txt
+ && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir -r requirements.txt
 
 COPY . .
 

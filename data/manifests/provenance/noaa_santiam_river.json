@@ -1,0 +1,53 @@
+{
+  "id": "noaa_santiam_river",
+  "noaa_collection_id": 10238,
+  "listing_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/?prefix=laz%2Fgeoid18%2F10238%2F&max-keys=1000",
+  "listing_truncated": "false",
+  "url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/10238/20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz",
+  "index_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/10238/index.html",
+  "header": {
+    "point_count": 78196,
+    "crs_wkt": "COMPOUNDCRS[\"NAD83(2011) / UTM zone 10N + NAVD88 height\",PROJCRS[\"NAD83(2011) / UTM zone 10N\",BASEGEOGCRS[\"NAD83(2011)\",DATUM[\"NAD83 (National Spatial Reference System 2011)\",ELLIPSOID[\"GRS 1980\",6378137,298.257222101,LENGTHUNIT[\"metre\",1]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433]],ID[\"EPSG\",6318]],CONVERSION[\"UTM zone 10N\",METHOD[\"Transverse Mercator\",ID[\"EPSG\",9807]],PARAMETER[\"Latitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8801]],PARAMETER[\"Longitude of natural origin\",-123,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"Scale factor at natural origin\",0.9996,SCALEUNIT[\"unity\",1],ID[\"EPSG\",8805]],PARAMETER[\"False easting\",500000,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",6339]],VERTCRS[\"NAVD88 height\",VDATUM[\"North American Vertical Datum 1988\"],CS[vertical,1],AXIS[\"gravity-related height\",up,LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",5703]]]",
+    "horizontal_epsg": 6339,
+    "vertical_epsg": 5703,
+    "axis_units": [
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      }
+    ],
+    "system_identifier": "LAStools (c) by rapidlasso GmbH",
+    "generating_software": "las2las (version 221128)",
+    "creation_date": "2023-12-09",
+    "mins": [
+      543999.9966132952,
+      4960958.489843502,
+      303.1599978993641
+    ],
+    "maxs": [
+      545000.0017877902,
+      4960999.995140261,
+      359.66936687741077
+    ]
+  },
+  "archive_sha256": "3b86f4483e2204320b30a7c17a011adbff7a34d2502fa653d1bd5d616b33de33",
+  "archive_bytes": 519873,
+  "selection_attempts": [
+    {
+      "key": "laz/geoid18/10238/20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz",
+      "points": 78196,
+      "crs": "COMPD_CS[\"NAD83(2011) / UTM zone 10N + NAVD88 height\",PROJCS[\"NAD83(2011) / UTM zone 10N\",GEOGCS[\"NAD83(2011)\",DATUM[\"NAD83_National_Spatial_Reference_System_2011\",SPHEROID[\"GRS 1980\",6378137,298.257222101],AUTHORITY[\"EPSG\",\"1116\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"6318\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",-123],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"6339\"]],VERT_CS[\"NAVD88 height\",VERT_DATUM[\"North American Vertical Datum 1988\",2005],UNIT[\"metre\",1],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5703\"]]]",
+      "compound": true
+    }
+  ],
+  "selection_rule": "first NOAA COPC file sorted by size,key among first <=1000 listing entries; 0.5..12 MB, 65536..1000000 points; projected metre CRS; no ordering outcomes used",
+  "vertical_units_evidence": "NOAA geoid18 collection index states NAVD88 in metres; preserved in source index/metadata snapshot"
+}

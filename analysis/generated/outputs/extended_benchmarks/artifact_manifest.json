@@ -1,0 +1,25 @@
+{
+  "sources": {
+    "clamping_intervention": "75dba02ea01ad48d96b1da76204cf4aa22a0f15feaf42b4a26f863adedb1747a",
+    "cost_stability_scenarios": "93c820269b4c9be83a8de03d5d5b47d199d6283c46bf9286847d2521b1036e4e",
+    "real_clamping_checks": "44953313465225373a663f3ba2935a25805b3c5c5b4cfc65f83ef5bb49907dfc",
+    "application": "354248309424b7b09e1d9b5be56a519615499dedbf8346dd06184cbe2d0f7042"
+  },
+  "generator_sha256": "13118a9b056ef5321eb5d5b102c9d39d87b74959673badfa0ced25f3e6cad344",
+  "artifacts": {
+    "sfc_candidate_overfetch.csv": "3288dfc7a10cfeb5cac0293f23bb2ad502d0eae46162f0e624c464d95c6255ac",
+    "scope.md": "907b54f3e8c0be584f4b928538b450c8f4d30346fda0a05a69fb10829b68560d",
+    "embedding_context_summary.csv": "54443e3afb7faaf6f76051afcf7dc3ffefb7961f534dd0149d194b31ccd2b901",
+    "full_scene_locality.csv": "7894f827edbd7977087d3c5c8bd7a226fa6b7ae0eafecd404f805fa0ecfe6f94",
+    "sensor_site_catalog.csv": "28cf99999c569e6f4c0f56729c5ec5efc172b7d9a1d748ca7672bf48b3c77da1",
+    "embedding_context_effects.csv": "28b7cc37c35fbdc5b3b2675610d47c7928bc9d722b8794d76cec388a5cd029ab"
+  },
+  "published_artifacts": {
+    "figures/fig_clamping_intervention.pdf": "a4a03f3382e155137097ef4a5fc8d6b748261d4df9c9a52d8b9722abfa21d2fb",
+    "figures/fig_cost_stability_scenarios.pdf": "6187f28fffada4e0d593c60f42820e7aa295ca1643abf8e51295878d720ea030",
+    "tables/table_clamping_intervention.tex": "c03fed1365ecce018d5879e260d30eb3663deef103510a2aa5753a72ebd45f8c",
+    "tables/table_cost_stability_scenarios.tex": "5119ed233a6477aafb2126b5d67ca7938a5dc502b0e26ea5e470483c9a55bd85",
+    "tables/table_sensor_site_catalog.tex": "8c9dd7b944fe9bedabee6cceb8b2b3a63d869e93e5309a95b530918e1568644b",
+    "tables/table_real_lidar_locality.tex": "c29ccd10e4f22b9f6981adc76f3bfe30d5fd52fb4517947cf51424d1aa32e89f"
+  }
+}

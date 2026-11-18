@@ -99,7 +99,7 @@ def resolve_adapter(candidate: Path | None) -> Path:
     for path in candidates:
         if path.exists() and path.is_file():
             return path
-    raise FileNotFoundError("rch_cgal_spatial_sort not found; run `make cgal-adapter`")
+    raise FileNotFoundError("rch_cgal_spatial_sort not found; run `make cgal-build`")
 
 
 def write_points(path: Path, points: list[tuple[float, float, float]]) -> None:

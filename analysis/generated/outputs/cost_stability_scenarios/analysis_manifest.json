@@ -1,0 +1,10 @@
+{
+  "source_manifest_sha256": "93c820269b4c9be83a8de03d5d5b47d199d6283c46bf9286847d2521b1036e4e",
+  "artifacts": {
+    "scenario_decisions.csv": "05a56334cad2bbdf57b4d9ab211c3323b9c4c05174e0340478a9ef99c46d2b6e",
+    "scope.md": "8a7e2bc382c6d482a16fbc6eb9b1bc918c4c3565dabedf74c0fd524bec0a8f11",
+    "fig_cost_stability_scenarios.pdf": "b5efce439b61032fcd1e1db29eb523f5bb34166b6f0941006db22aa6c8135601",
+    "scenario_summary.csv": "8ea1ddac0fe966198576d0baed4a7a8e466dca6798ac5a7f9acdcbc279093972",
+    "cloud_policy_costs.csv": "dc2b2583aec06a7a6e2fd9c729227b3a2ffef7ae06eecef44b63995f69fc762a"
+  }
+}

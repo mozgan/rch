@@ -1,0 +1,18 @@
+{
+  "analysis_code_sha256": "94be6dc1c0ee399d43082d733a59c9c80f2a035e4c46c673945868719e14ef98",
+  "source_manifest_sha256": "03e2f31251bd411719a596c5307ca9aaad418aec246ae31dce61b73637b1cfdd",
+  "artifacts": {
+    "cloud_metrics.csv": "5e9929dc0c566af58250f009ff1699dc31ee467cc9eaa6e77eed68dbe4cd8c66",
+    "paired_effects.csv": "52a39330e04ab7ae15f75853b3407711afea8d45b654f3b0347baed77b547824",
+    "regime_summary.csv": "22c19732fd8654da5ae7066093d9befa5f37f7b4e50651012d8f2da504e6848c",
+    "fig_regime_map.pdf": "33b1986c7337a13249c3f905864c5bc70aad34ec8377c788d50bdfcd46ac30d0",
+    "fig_regime_shape_diagnostics.pdf": "cc16e6f19b5a343d781b738035477de51681253d9172e8f83768f5516f4ffd84",
+    "table_regime_map.tex": "a2c4d05c841e235839b2d830357f964ada6c5fa619cba7251a3f195d2d450747",
+    "scope.md": "027c028c97147d7d2246732b47a142acd76f98ea59730059367c70b05d3bfe4e"
+  },
+  "published_artifacts": {
+    "figures/fig_regime_map.pdf": "33b1986c7337a13249c3f905864c5bc70aad34ec8377c788d50bdfcd46ac30d0",
+    "figures/fig_regime_shape_diagnostics.pdf": "cc16e6f19b5a343d781b738035477de51681253d9172e8f83768f5516f4ffd84",
+    "tables/table_regime_map.tex": "a2c4d05c841e235839b2d830357f964ada6c5fa619cba7251a3f195d2d450747"
+  }
+}

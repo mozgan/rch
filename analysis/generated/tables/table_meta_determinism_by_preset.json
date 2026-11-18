@@ -11,11 +11,11 @@
   ],
   "rows": [
     {
-      "preset": "no logs",
-      "configure": "Not verified",
-      "build": "Not verified",
-      "ctest": "Not verified",
-      "log": ""
+      "preset": "bench",
+      "configure": "PASS",
+      "build": "PASS",
+      "ctest": "PASS",
+      "log": "test_bench_20261113T223152Z.json"
     }
   ]
 }

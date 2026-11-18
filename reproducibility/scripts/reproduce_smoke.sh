@@ -32,7 +32,9 @@ parallel_jobs() {
   nproc 2>/dev/null || getconf _NPROCESSORS_ONLN || echo 1
 }
 
-JOBS="$(parallel_jobs)"
+JOBS="${JOBS:-$(parallel_jobs)}"
+cmake_bin="${CMAKE:-cmake}"
+ctest_bin="${CTEST:-ctest}"
 CXX_COMPILER="${CXX:-clang++}"
 if [[ -z "${PYTHON:-}" && -n "${VIRTUAL_ENV:-}" && -x "${VIRTUAL_ENV}/bin/python" ]]; then
   PYTHON="${VIRTUAL_ENV}/bin/python"
@@ -43,21 +45,21 @@ PYTHON_EXECUTABLE="$("${PYTHON}" -c 'import sys; print(sys.executable)' 2>/dev/n
   command -v "${PYTHON}" 2>/dev/null ||
   printf '%s\n' "${PYTHON}")"
 
-cmake --preset repro -DRCH_BUILD_TOOLS=ON \
+"${cmake_bin}" --preset repro -DRCH_BUILD_TOOLS=ON \
   -B "$BUILD_DIR" \
   -DPython3_EXECUTABLE:FILEPATH="$PYTHON_EXECUTABLE" \
   -DFETCHCONTENT_BASE_DIR:PATH="$FETCHCONTENT_BASE_DIR" \
   -DCMAKE_CXX_COMPILER="$CXX_COMPILER"
-cmake --build "$BUILD_DIR" --parallel "$JOBS"
+"${cmake_bin}" --build "$BUILD_DIR" --parallel "$JOBS"
 ctest_args=(--test-dir "$BUILD_DIR" --parallel "$JOBS" --output-on-failure)
 if [[ -n "${CTEST_EXCLUDE_REGEX:-}" ]]; then
   ctest_args+=(-E "${CTEST_EXCLUDE_REGEX}")
 fi
-ctest "${ctest_args[@]}"
+"${ctest_bin}" "${ctest_args[@]}"
 
 ORDER="${RCH_ORDER_BIN:-$BUILD_DIR/src/cli/rch_order}"
 COMPARE="${RCH_COMPARE_BIN:-$BUILD_DIR/src/cli/rch_compare_orders}"
-WORK_DIR="${RCH_SMOKE_DIR:-$(mktemp -d)}"
+WORK_DIR="${RCH_SMOKE_DIR:-$(mktemp -d "$BUILD_DIR/smoke.XXXXXX")}"
 
 if [[ -z "${RCH_SMOKE_DIR:-}" ]]; then
   trap 'rm -rf "$WORK_DIR"' EXIT

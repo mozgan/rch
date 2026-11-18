@@ -1,13 +1,14 @@
 # table_2_dataset_summary.yaml — real-data runlist
 schema: rch.real_runlist.v1
 name: table_2_dataset_summary
-dataset_manifest: data/manifests/stanford_3d_scanning.yml
+dataset_manifest: data/manifests/real_datasets.yml
 processed_dir: data/processed/stanford_3d_scanning
-dataset_ids: [stanford_bunny, stanford_armadillo]
+dataset_ids: [stanford_bunny, stanford_armadillo, usgs_cameron_peak]
 #dataset_ids: [stanford_bunny, stanford_armadillo, stanford_dragon, stanford_lucy]
 geometry_ids:
   stanford_bunny: E3
   stanford_armadillo: E4
+  usgs_cameron_peak: E13
 #  stanford_dragon: E5
 #  stanford_lucy: E6
 algorithm_ids:

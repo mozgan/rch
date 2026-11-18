@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use RCH, please cite the associated article and the archived release."
 type: software
 title: "Robust Compact Hilbert (RCH)"
-version: 0.1.0
-date-released: 2026-08-21
+version: 0.2.0
+date-released: 2026-11-14
 license: MIT
 repository-code: "https://github.com/mozgan/rch"
 authors:

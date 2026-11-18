@@ -1,0 +1,13 @@
+dataset_id,metric,median_subcloud_mean_clamp_on_minus_off,minimum,maximum,n_subclouds,scope
+usgs_cameron_peak,kendall_tau,-0.0017240194281525067,-0.004069487719941367,0.0063070854716519575,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+usgs_cameron_peak,normalized_miad_all,0.04286980857263155,0.041258797345908316,0.044103189467816654,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+usgs_cameron_peak,normalized_miad_inlier,0.002638790245884465,0.0016804652116507793,0.005197194989929598,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_santiam_river,kendall_tau,0.012143549914467255,-0.004982091581133941,0.3503339213709677,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_santiam_river,normalized_miad_all,-0.0022623701738557996,-0.003560595902049159,-0.00045923070140134296,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_santiam_river,normalized_miad_inlier,0.001083115759446641,0.00028179118261764495,0.0013151763852239495,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_long_island,kendall_tau,-0.0003875702590420138,-0.004668980632942327,0.007055497006353828,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_long_island,normalized_miad_all,0.040533306670462094,0.03577427908497784,0.04527999619837631,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_long_island,normalized_miad_inlier,0.00011960743431408934,-0.0010797017762597476,0.00025117320261043097,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_southwest_florida,kendall_tau,0.009103128054740978,-0.0629887585532747,0.03778523643695017,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_southwest_florida,normalized_miad_all,0.04880586287515363,0.043441577720835324,0.05664104507760407,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI
+noaa_southwest_florida,normalized_miad_inlier,0.002152951488535018,0.0002002611683528232,0.006498067509101307,5,conditional on one fixed scene; overlapping samples are not independent sensor/site observations; no population CI

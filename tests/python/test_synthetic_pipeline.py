@@ -1221,6 +1221,8 @@ class SyntheticRunlistExpansionTest(unittest.TestCase):
                         "pathlib.Path(args['--output']).write_text('rank,raw_index,key\\n0,0,0\\n1,1,1\\n')",
                         "metadata = {",
                         "    'schema': 'rch.cgal_adapter.metadata.v1',",
+                        "    'peak_rss_kb': 1234,",
+                        "    'peak_rss_source': 'linux_proc_self_status_VmHWM',",
                         "    'cgal_version': 'test-cgal',",
                         "    'cgal_version_nr': 123,",
                         "    'cgal_git_hash': 'test-hash',",
@@ -1259,8 +1261,8 @@ class SyntheticRunlistExpansionTest(unittest.TestCase):
             )
 
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            if manifest["peak_rss_kb"] is not None:
-                self.assertGreater(manifest["peak_rss_kb"], 0)
+            self.assertEqual(manifest["peak_rss_kb"], 1234)
+            self.assertEqual(manifest["peak_rss_source"], "linux_proc_self_status_VmHWM")
 
     def test_external_cgal_manifest_records_adapter_metadata(self) -> None:
         """A7 manifests carry CGAL version and spatial-sort parameter provenance."""

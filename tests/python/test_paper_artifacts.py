@@ -664,9 +664,7 @@ class PaperArtifactEndToEndTest(unittest.TestCase):
             )
             self.assertEqual(len(manifest["figures"]), 12)
             self.assertIn("fig_schema_method_pipeline.pdf", manifest["figures"])
-            self.assertIn(
-                "fig_schema_rch_implementation_flow.pdf", manifest["figures"]
-            )
+            self.assertIn("fig_schema_rch_implementation_flow.pdf", manifest["figures"])
             self.assertEqual(len(manifest["tables"]), 6)
             self.assertEqual(manifest["inputs"]["a7_rows"], 2)
             self.assertEqual(manifest["inputs"]["dataset_catalog_rows"], 2)
@@ -686,10 +684,7 @@ class PaperArtifactEndToEndTest(unittest.TestCase):
             self.assertFalse((outputs / "synthetic_dataset" / "orders").exists())
             self.assertTrue(
                 (
-                    outputs
-                    / "synthetic_dataset"
-                    / "all"
-                    / "table_3_locality.csv"
+                    outputs / "synthetic_dataset" / "all" / "table_3_locality.csv"
                 ).exists()
             )
             self.assertFalse((outputs / "real_dataset" / "off" / "manifests").exists())
@@ -697,9 +692,7 @@ class PaperArtifactEndToEndTest(unittest.TestCase):
                 (outputs / "real_dataset" / "off" / "refinement_note.json").exists()
             )
             self.assertTrue(
-                (
-                    outputs / "a7_cgal_appendix" / "a7_cgal_spatial_sort.csv"
-                ).exists()
+                (outputs / "a7_cgal_appendix" / "a7_cgal_spatial_sort.csv").exists()
             )
             self.assertTrue((outputs / "output_snapshot_manifest.json").exists())
             synthetic_effects = stats / "synthetic_refinement_effects.csv"
@@ -789,9 +782,12 @@ class PaperArtifactRepoCoverageTest(unittest.TestCase):
         self.assertGreater(manifest["inputs"]["synthetic_rows"], 0)
         self.assertGreater(manifest["inputs"]["real_rows"], 0)
         self.assertGreater(manifest["inputs"]["a7_rows"], 0)
-        self.assertEqual(
+        self.assertIn(
             manifest["figures"]["fig_synthetic_block_read_cache_miss.pdf"]["status"],
-            "generated_from_synthetic_m8_cache_miss_rate",
+            (
+                "generated_from_synthetic_m8_cache_miss_rate",
+                "unavailable_perf_counters",
+            ),
         )
         self.assertIn("fig_schema_method_pipeline.pdf", manifest["figures"])
         self.assertIn("fig_schema_rch_implementation_flow.pdf", manifest["figures"])
@@ -929,7 +925,7 @@ class PaperArtifactRepoCoverageTest(unittest.TestCase):
         self.assertIn("A7_cgal_spatial_sort", {row["algorithm_id"] for row in runtime})
         self.assertEqual(
             set(row["dataset_id"] for row in real),
-            {"stanford_bunny", "stanford_armadillo"},
+            set(real_runlist["dataset_ids"]),
         )
         self.assertEqual(
             set(row["bit_rule"] for row in real),

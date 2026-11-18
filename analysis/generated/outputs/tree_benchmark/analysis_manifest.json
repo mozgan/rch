@@ -1,0 +1,15 @@
+{
+  "status": "validated_tree_matrix",
+  "source_manifest_sha256": "60cb5f0e4671c4cc594fa11f8bce08a266b3ae7db23416a05b9d36ffdf3f8c60",
+  "artifacts": {
+    "summary.csv": "34285265bb4c6d8cbaa33f7d4b68ccfb18b14cfa01a287effb39724213afd0c3",
+    "paired_comparisons.csv": "33168539ab1b992f481a28c60e3155ea687db078a0176fb4ad0da28dee6292cb",
+    "evidence.md": "62cb5093ee55b97834a3b5a971bc8790c32dbfae2377bf6a19659ad66723d3b2",
+    "table_tree_query.tex": "173e0a8218a4bcac5c044df8eea8ad537b190ad25c39ecc15ebe53c93a11ed54",
+    "fig_tree_query_latency.pdf": "b06115fa461c87df4dbaebb2930bdec88f9001c308b4106a031bedbb9aa9b280"
+  },
+  "published_artifacts": {
+    "figures/fig_tree_query_latency.pdf": "b06115fa461c87df4dbaebb2930bdec88f9001c308b4106a031bedbb9aa9b280",
+    "tables/table_tree_query.tex": "173e0a8218a4bcac5c044df8eea8ad537b190ad25c39ecc15ebe53c93a11ed54"
+  }
+}

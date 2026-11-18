@@ -20,12 +20,15 @@ Read [Algorithm](algorithm.md) for the six-stage pipeline.
 For experiments and reproducibility:
 
 1. Read [Experiments and interpretation](experiments.md).
-2. Install the optional tools in [Requirements](requirements.md).
+2. Install the optional tools in [Requirements](requirements.md), including
+   [CGAL setup](requirements.md#optional-cgal-baseline) for the external adapters.
 3. Follow [Reproducibility](reproducibility.md).
 4. Consult [Linux performance counters](linux-perf.md) before interpreting
    cache columns.
 
-For isolated builds, use [Docker](docker.md).
+For the target sequence, use [Build workflows](build-workflows.md). For the
+continuous application experiment, use [Storage/query workflow](application-workflow.md).
+For container builds, use [Docker](docker.md).
 
 ## Contract Versus Evidence
 
@@ -34,8 +37,8 @@ validated finite `N x 3` input, a permutation containing every accepted input
 index exactly once, deterministic tie-breaking within the documented arithmetic
 scope, bounded integer keys, explicit fallback state, and structured errors.
 
-The recorded experiments provide finite observations on specified synthetic and
-reconstruction datasets. They do not prove universal locality, robustness,
+The recorded experiments provide observations on selected synthetic clouds,
+reconstruction vertex sets, and LiDAR inputs. They do not prove universal locality, robustness,
 runtime, memory, or cache behavior. [Experiments and
 interpretation](experiments.md) lists the exact boundaries.
 
@@ -49,5 +52,9 @@ authorities and open an issue or patch the documentation:
 - `include/rch/curves/` for bit allocation, quantization, and curve keys;
 - `tests/` for executable edge cases and external oracles;
 - `experiments/configs/` and `experiments/runlists/` for recorded treatments;
-- `analysis/generated/` for generated summaries.
+- `analysis/scripts/` for the analysis and artifact-generation rules.
+
+Generated measurements are local outputs, not guaranteed contents of a clone.
+This guide links to maintained documentation and repository sources.
+See [Sharing results](reproducibility.md#sharing-results) for what to preserve.
 

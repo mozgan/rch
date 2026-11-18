@@ -1,6 +1,6 @@
 {
   "schema": "rch.generated_table.v1",
-  "caption": "Synthetic hypothesis tests stratified by bit rule",
+  "caption": "Legacy per-rule summaries: nominal p-values; shared inputs remain dependent",
   "label": "tab:synthetic_statistics_by_bit_rule",
   "columns": [
     "bit_rule",

@@ -82,12 +82,44 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_manifest(path: Path) -> dict[str, Any]:
+def load_manifest(path: Path, _ancestors: tuple[Path, ...] = ()) -> dict[str, Any]:
     """Load Real YAML manifest and require a dataset list."""
+    path = path.resolve()
+    if path in _ancestors:
+        raise ValueError(f"cyclic dataset manifest: {path}")
     with path.open("r", encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
-    if not isinstance(data, dict) or not isinstance(data.get("datasets"), list):
+    if (
+        not isinstance(data, dict)
+        or not isinstance(data.get("datasets", []), list)
+        or ("datasets" not in data and not data.get("includes"))
+    ):
         raise ValueError(f"invalid dataset manifest: {path}")
+    datasets = list(data.get("datasets", []))
+    for entry in data.get("includes", []):
+        child_path = path.parent / entry["manifest"]
+        child = load_manifest(child_path, (*_ancestors, path))
+        for item in child["datasets"]:
+            datasets.append(
+                {
+                    **item,
+                    "manifest_file": str(child_path.resolve()),
+                    "raw_dir": entry["raw_dir"],
+                    "processed_dir": entry["processed_dir"],
+                    "source": child.get("source", {}),
+                }
+            )
+    if any(
+        not isinstance(item, dict)
+        or not isinstance(item.get("id"), str)
+        or not item["id"]
+        for item in datasets
+    ):
+        raise ValueError(f"invalid manifest dataset id: {path}")
+    ids = [item["id"] for item in datasets]
+    if len(ids) != len(set(ids)):
+        raise ValueError(f"duplicate manifest dataset id: {path}")
+    data["datasets"] = datasets
     return data
 
 
@@ -145,7 +177,8 @@ def parse_ply_header(data: bytes) -> PlyHeader:
             parts[0] == "format"
             and len(parts) == 3
             and parts[2] == "1.0"
-            and parts[1] in {
+            and parts[1]
+            in {
                 "binary_big_endian",
                 "binary_little_endian",
             }
@@ -177,7 +210,7 @@ def parse_ply_header(data: bytes) -> PlyHeader:
 
 
 def read_ascii_vertices(stream: io.BytesIO, header: PlyHeader) -> list[Point]:
-    """Read ASCII vertex lines and keep only finite \(x,y,z\) coordinates."""
+    """Read ASCII vertex lines and keep only finite (x,y,z) coordinates."""
     points: list[Point] = []
     property_names = [name for name, _ in header.vertex_properties]
     x_i, y_i, z_i = (property_names.index(axis) for axis in ("x", "y", "z"))
@@ -210,7 +243,7 @@ def read_scalar(handle: BinaryIO, endian: str, scalar_type: str) -> float | int:
 def read_binary_vertices(
     stream: io.BytesIO, header: PlyHeader, endian: str
 ) -> list[Point]:
-    """Read binary PLY vertices and retain \(x,y,z\) only."""
+    """Read binary PLY vertices and retain (x,y,z) only."""
     points: list[Point] = []
     property_names = [name for name, _ in header.vertex_properties]
     for _ in range(header.vertex_count):

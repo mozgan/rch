@@ -1,0 +1,9 @@
+comparison,metric,n_clouds,median_cloud_mean_effect,ci95_low,ci95_high,inference_scope
+projected_tie_minus_raw_tie,delta_kendall,220,-3.829656862745778e-05,-0.00013786764705880916,6.127450980393523e-05,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+projected_tie_minus_raw_tie,delta_normalized_miad_all,220,-0.0028272790694289073,-0.003567454331029221,-0.0022962548209536585,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+projected_tie_minus_raw_tie,delta_normalized_miad_inlier,220,-7.335590971242843e-05,-0.00012068627384235336,2.7737404308340956e-05,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+projected_tie_minus_raw_tie,delta_shared_key_fraction,220,0.0,0.0,0.0,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+saturation_on_minus_off,delta_kendall,220,0.00019148284313724034,0.0,0.0008578431372548989,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+saturation_on_minus_off,delta_normalized_miad_all,220,0.03175312793830635,0.029895217091442217,0.0338678158910807,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+saturation_on_minus_off,delta_normalized_miad_inlier,220,0.0,-1.4615275087230713e-05,0.0,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval
+saturation_on_minus_off,delta_shared_key_fraction,220,0.09640294663404396,0.09038864732696054,0.09998513287750044,cloud bootstrap within fixed geometries; conditions kept in cloud; descriptive pointwise interval

@@ -1,0 +1,506 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "https://www.w3.org/TR/html4/frameset.dtd">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="nofollow">
+        <link rel="shortcut icon" href="https://coast.noaa.gov/digitalcoast/img/favicon.ico">
+    
+<title>2023 USGS Topobathy Lidar: Santiam River, OR Point Cloud files with Vertical Datum North American Vertical Datum of 1988 (NAVD88) using GEOID18</title>
+<script>window.skipOCMExitNotice = true</script><script type="text/javascript" src="https://coast.noaa.gov/js/federated-analytics.js"></script>
+
+</head>
+
+    <h1>2023 USGS Topobathy Lidar: Santiam River, OR Point Cloud files with Vertical Datum North American Vertical Datum of 1988 (NAVD88) using GEOID18</h1>
+	<p>Below are links to the files that make up the 2023 USGS Topobathy Lidar: Santiam River, OR dataset.</p>
+    <table padding=30px>
+    <tr><td>Vertical datum</td><td>North American Vertical Datum of 1988 (NAVD88) using GEOID18 in meters</td></tr>
+    <tr><td>Horizontal projection/datum</td><td>NAD83(2011) / UTM zone 10N</td></tr>
+    </table>
+	<p>Informational files are listed first (such as geospatial indices, metadata, and so on), followed by the files. To download in
+	bulk, it is suggested you use a download manager such as wget, uget, or filezilla for example. The geospatial index file in shapefile format
+	also has a URL attribute that some GIS programs can use to download files. You can also subset the data, make derived products, and change
+	projection, datum, etc., using the <a href="https://coast.noaa.gov/dataviewer/#/lidar/search/where:ID=10238">Digital Coast Data Access Viewer</a>
+	(add to cart, the link to bulk download will take you here).</p>
+    
+    <p>
+	The files are in LAZ format, a lossless compressed version of the ASPRS LAS format. The compression and
+	decompression can be done with the free and open source 'laszip' program available at
+	<a href=https://rapidlasso.de/laszip/>https://rapidlasso.de/laszip/</a>
+	(source at <a href=https://github.com/LASzip/LASzip>https://github.com/LASzip/LASzip</a>). This is not the same as the more general zip format.
+	You may also want to try the <a hef="https://pdal.io>PDAL</a> programs as there are Windows, MacOS, and Linux compiled versions.
+	Many geospatial programs will read LAZ files natively and decompression is often not necessary.
+	</p>
+    
+    <p>There are many download managers you can use to get all the data. An example is the <a href="https://ugetdm.com">uGet</a> program using the list of URLs in file <a href="urllist_or2023_santiam_m10238.txt">urllist_or2023_santiam_m10238.txt</a>.
+	Several posts on the <a href="https://geozoneblog.wordpress.com/">GeoZone blog</a> provide help with downloading, including:
+	<ul>
+	<li><a href="https://geozoneblog.wordpress.com/2019/05/01/bulk-lidar-download-on-digital-coast/">Using uGet to download bulk lidar</a></li>
+	<li><a href="https://geozoneblog.wordpress.com/2019/03/19/getting-lidar-data-for-a-polygon/">Downloading a subset of files based on a polygon</a></li>
+	<li><a href="https://geozoneblog.wordpress.com/2020/09/10/download-a-list-of-files-from-windows/">Downloading on Windows without additional programs</a></li>
+	</ul>
+    </p>
+    
+    <p>Example to download entire data set using wget (note: sufficiently new and trusted pre-compiled Windows versions can be hard to find):
+	<br>
+	<code>wget -np -r -nH -L --cut-dirs=2 https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/10238/index.html/</code>
+	<br>
+	This will give you the directory structure starting with geoid18. Modify the --cut-dirs=2 argument to modify
+	the start directory (e.g. --cut-dirs=4 will start at $missionid). Wget is a command-line program and the output will
+	be to the directory you run it in. More options and information can be found at https://www.gnu.org/software/wget/manual/wget.html.
+	The other options in the example mean:
+	<ul>
+	<li>-np = don't grab the parent directory</li>
+	<li>-r = recursive (descend into directories)</li>
+	<li>-nH = don't generate host-prefixed directories</li>
+	<li>-L = follow relative links only (so you don't download wget just because it's linked here)</li>
+	</ul>
+	<br>
+	If you have problems with wget that look like an authorization or certificate issue, you may need to add the option
+	"--no-check-certificate". Windows users may want to install the <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a> to get a current wget.</p>
+    
+    <p>The total size to download all the files is 38G. There are 428 LAZ files and the summary class table is:
+    <table><tr><th>Class Number</th><th>Class Name</th><th>Points</th></tr>
+<tr><td>1</td><td>Unclassified</td><td align=right>4628319561</td></tr><tr><td>2</td><td>Ground</td><td align=right>355773734</td></tr><tr><td>9</td><td>Water</td><td align=right>17762022</td></tr><tr><td>17</td><td>Bridge Deck</td><td align=right>1565205</td></tr><tr><td>20</td><td>Ignored Ground/Bathymetry</td><td align=right>1627</td></tr><tr><td>40</td><td>Bathymetric point</td><td align=right>145234992</td></tr><tr><td>41</td><td>Water surface</td><td align=right>30449276</td></tr><tr><td>45</td><td>Water column</td><td align=right>544711529</td></tr></table>
+	</p>
+	
+	<h2>Cloud Access</h2>
+	This data is in an AWS S3 bucket at s3://noaa-nos-coastal-lidar-pds/laz/geoid18/10238.
+    <h2>Meta Information</h2>Tile Index: <a href="tileindex_or2023_santiam_m10238.zip">tileindex_or2023_santiam_m10238.zip</a> (Shapefile)<br>Tile Index: <a href="tileindex_or2023_santiam_m10238.gpkg">tileindex_or2023_santiam_m10238.gpkg</a> (Geopackage)<br>Metadata: <a href="metadata_or2023_santiam.xml">metadata_or2023_santiam.xml</a><br>Metadata: <a href="metadata_or2023_santiamforHumans.html">metadata_or2023_santiamforHumans.html</a><br>XYZ range table: <a href="minmax_or2023_santiam_m10238.csv">minmax_or2023_santiam_m10238.csv</a><br>URL List: <a href="urllist_or2023_santiam_m10238.txt">urllist_or2023_santiam_m10238.txt</a><br><h2>Spatial Temporal Asset Catalog (STAC)</h2>
+<!-- Entwine here --><h2>Point Cloud Files</h2>
+<a href="20230823_OR_SantiamRiverTB_10TEQ1816.copc.laz">20230823_OR_SantiamRiverTB_10TEQ1816.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ1817.copc.laz">20230823_OR_SantiamRiverTB_10TEQ1817.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ1916.copc.laz">20230823_OR_SantiamRiverTB_10TEQ1916.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ1917.copc.laz">20230823_OR_SantiamRiverTB_10TEQ1917.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2016.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2016.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2017.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2017.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2116.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2116.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2117.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2117.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2217.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2217.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2218.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2218.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2317.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2317.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2318.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2318.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2417.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2417.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2418.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2418.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2517.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2517.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2518.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2518.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2617.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2617.copc.laz</a><br>
+<a href="20230823_OR_SantiamRiverTB_10TEQ2618.copc.laz">20230823_OR_SantiamRiverTB_10TEQ2618.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TDQ9848.copc.laz">20230829_OR_SantiamRiverTB_10TDQ9848.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TDQ9947.copc.laz">20230829_OR_SantiamRiverTB_10TDQ9947.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TDQ9948.copc.laz">20230829_OR_SantiamRiverTB_10TDQ9948.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0046.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0046.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0047.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0047.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0048.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0048.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0049.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0049.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0146.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0146.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0147.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0147.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0246.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0246.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0247.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0247.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0346.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0346.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0347.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0347.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0442.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0442.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0443.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0443.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0444.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0444.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0445.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0445.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0446.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0446.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0541.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0541.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0542.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0542.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0543.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0543.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0544.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0544.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0545.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0545.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0546.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0546.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0640.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0640.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0641.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0641.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0642.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0642.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0739.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0739.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0740.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0740.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0741.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0741.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0829.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0829.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0830.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0830.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0831.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0831.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0832.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0832.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0833.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0833.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0838.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0838.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0839.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0839.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0929.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0929.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0930.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0930.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0931.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0931.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0932.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0932.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0933.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0933.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0934.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0934.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0935.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0935.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0936.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0936.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0937.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0937.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0938.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0938.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ0939.copc.laz">20230829_OR_SantiamRiverTB_10TEQ0939.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1029.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1029.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1035.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1035.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1036.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1036.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1128.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1128.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1129.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1129.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1227.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1227.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1228.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1228.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1327.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1327.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1328.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1328.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1426.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1426.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1427.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1427.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1525.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1525.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1526.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1526.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1625.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1625.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1719.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1719.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1720.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1720.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1721.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1721.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1722.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1722.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1723.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1723.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1724.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1724.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1725.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1725.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1818.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1818.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1819.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1819.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1820.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1820.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1822.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1822.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1823.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1823.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ1918.copc.laz">20230829_OR_SantiamRiverTB_10TEQ1918.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3216.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3216.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3217.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3217.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3316.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3316.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3317.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3317.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3416.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3416.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3417.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3417.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3516.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3516.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3616.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3616.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3715.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3715.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3716.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3716.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3815.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3815.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ3915.copc.laz">20230829_OR_SantiamRiverTB_10TEQ3915.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4015.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4015.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4016.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4016.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4116.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4116.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4215.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4215.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4216.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4216.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4316.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4316.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4416.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4416.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4516.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4516.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4616.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4616.copc.laz</a><br>
+<a href="20230829_OR_SantiamRiverTB_10TEQ4816.copc.laz">20230829_OR_SantiamRiverTB_10TEQ4816.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ8854.copc.laz">20230830_OR_SantiamRiverTB_10TDQ8854.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ8855.copc.laz">20230830_OR_SantiamRiverTB_10TDQ8855.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ8856.copc.laz">20230830_OR_SantiamRiverTB_10TDQ8856.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ8954.copc.laz">20230830_OR_SantiamRiverTB_10TDQ8954.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ8955.copc.laz">20230830_OR_SantiamRiverTB_10TDQ8955.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9055.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9055.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9056.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9056.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9154.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9154.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9155.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9155.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9156.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9156.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9254.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9254.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9255.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9255.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9354.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9354.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9355.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9355.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9453.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9453.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9454.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9454.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9455.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9455.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9553.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9553.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9554.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9554.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9555.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9555.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9651.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9651.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9652.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9652.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9653.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9653.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9654.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9654.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9751.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9751.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9752.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9752.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9753.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9753.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9849.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9849.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9850.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9850.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9851.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9851.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9852.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9852.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9950.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9950.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TDQ9951.copc.laz">20230830_OR_SantiamRiverTB_10TDQ9951.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ3220.copc.laz">20230830_OR_SantiamRiverTB_10TEQ3220.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ3320.copc.laz">20230830_OR_SantiamRiverTB_10TEQ3320.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ3420.copc.laz">20230830_OR_SantiamRiverTB_10TEQ3420.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ3421.copc.laz">20230830_OR_SantiamRiverTB_10TEQ3421.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ3521.copc.laz">20230830_OR_SantiamRiverTB_10TEQ3521.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4229.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4229.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4329.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4329.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4330.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4330.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4331.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4331.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4431.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4431.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4432.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4432.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4532.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4532.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4533.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4533.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4615.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4615.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4633.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4633.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4634.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4634.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4635.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4635.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4715.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4715.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4716.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4716.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4734.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4734.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4735.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4735.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4736.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4736.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4737.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4737.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4837.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4837.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ4937.copc.laz">20230830_OR_SantiamRiverTB_10TEQ4937.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5037.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5037.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5137.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5137.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5236.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5236.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5237.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5237.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5336.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5336.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5435.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5435.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5436.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5436.copc.laz</a><br>
+<a href="20230830_OR_SantiamRiverTB_10TEQ5536.copc.laz">20230830_OR_SantiamRiverTB_10TEQ5536.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0148.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0148.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0149.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0149.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0150.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0150.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0249.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0249.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0250.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0250.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0251.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0251.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0351.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0351.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0352.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0352.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0451.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0451.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0551.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0551.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0552.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0552.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0553.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0553.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0651.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0651.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0652.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0652.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0653.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0653.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0654.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0654.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0752.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0752.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0753.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0753.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0754.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0754.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0755.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0755.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0853.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0853.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0854.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0854.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0855.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0855.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0954.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0954.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ0955.copc.laz">20230904_OR_SantiamRiverTB_10TEQ0955.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1055.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1055.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1056.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1056.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1156.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1156.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1157.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1157.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1256.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1256.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1257.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1257.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1258.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1258.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1357.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1357.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1358.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1358.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1457.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1457.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1458.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1458.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1459.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1459.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1558.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1558.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1559.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1559.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1560.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1560.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1659.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1659.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1660.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1660.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1759.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1759.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1760.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1760.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1859.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1859.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1860.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1860.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1959.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1959.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ1960.copc.laz">20230904_OR_SantiamRiverTB_10TEQ1960.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2059.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2059.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2060.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2060.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2159.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2159.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2160.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2160.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2258.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2258.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2259.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2259.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2358.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2358.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2457.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2457.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2458.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2458.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2557.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2557.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2558.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2558.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2658.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2658.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2758.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2758.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2759.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2759.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2858.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2858.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2859.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2859.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ2959.copc.laz">20230904_OR_SantiamRiverTB_10TEQ2959.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ3058.copc.laz">20230904_OR_SantiamRiverTB_10TEQ3058.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ3059.copc.laz">20230904_OR_SantiamRiverTB_10TEQ3059.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ3158.copc.laz">20230904_OR_SantiamRiverTB_10TEQ3158.copc.laz</a><br>
+<a href="20230904_OR_SantiamRiverTB_10TEQ3159.copc.laz">20230904_OR_SantiamRiverTB_10TEQ3159.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3258.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3258.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3259.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3259.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3260.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3260.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3357.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3357.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3358.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3358.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3359.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3359.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3360.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3360.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3457.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3457.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3458.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3458.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3460.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3460.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3557.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3557.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3560.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3560.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3656.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3656.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3657.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3657.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3660.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3660.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3755.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3755.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3756.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3756.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3757.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3757.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3760.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3760.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3855.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3855.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3856.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3856.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3860.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3860.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3955.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3955.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3959.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3959.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ3960.copc.laz">20230905_OR_SantiamRiverTB_10TEQ3960.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4055.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4055.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4059.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4059.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4060.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4060.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4155.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4155.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4156.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4156.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4160.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4160.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4161.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4161.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4255.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4255.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4256.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4256.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4260.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4260.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4261.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4261.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4355.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4355.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4360.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4360.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4361.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4361.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4455.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4455.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4456.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4456.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4460.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4461.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4461.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4555.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4555.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4560.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4560.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4561.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4561.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4655.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4655.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4755.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4755.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4855.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4855.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4955.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4955.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ4956.copc.laz">20230905_OR_SantiamRiverTB_10TEQ4956.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5056.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5056.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5156.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5156.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5255.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5255.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5256.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5256.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5356.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5356.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5455.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5455.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5456.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5456.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5555.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5555.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5556.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5556.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ5655.copc.laz">20230905_OR_SantiamRiverTB_10TEQ5655.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ6951.copc.laz">20230905_OR_SantiamRiverTB_10TEQ6951.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7050.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7050.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7051.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7051.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7150.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7150.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7249.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7249.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7250.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7250.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7349.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7349.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7350.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7350.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7449.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7449.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7548.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7548.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7549.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7549.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7648.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7648.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7748.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7748.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7749.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7749.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7848.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7848.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7849.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7849.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7948.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7948.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ7949.copc.laz">20230905_OR_SantiamRiverTB_10TEQ7949.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8048.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8048.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8049.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8049.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8147.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8147.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8148.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8148.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8149.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8149.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8245.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8245.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8246.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8246.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8247.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8247.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8342.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8342.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8343.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8343.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8344.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8344.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8345.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8345.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8442.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8442.copc.laz</a><br>
+<a href="20230905_OR_SantiamRiverTB_10TEQ8443.copc.laz">20230905_OR_SantiamRiverTB_10TEQ8443.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4661.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4661.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4761.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4761.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4762.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4762.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4763.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4763.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4827.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4827.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4828.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4828.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4862.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4862.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4863.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4863.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4928.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4928.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4929.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4929.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4963.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4963.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ4964.copc.laz">20230906_OR_SantiamRiverTB_10TEQ4964.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5029.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5029.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5030.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5030.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5064.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5064.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5130.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5130.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5164.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5164.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5165.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5165.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5230.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5230.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5329.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5329.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5330.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5330.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5429.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5429.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5430.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5430.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5529.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5529.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5530.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5530.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5629.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5629.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5728.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5728.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5729.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5729.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5828.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5828.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5829.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5829.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ5929.copc.laz">20230906_OR_SantiamRiverTB_10TEQ5929.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6029.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6029.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6129.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6129.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6229.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6229.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6328.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6328.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6329.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6329.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6428.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6428.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6527.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6527.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6528.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6528.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6626.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6626.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6627.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6627.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6628.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6628.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6754.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6754.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6755.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6755.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6855.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6855.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6955.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6955.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ6956.copc.laz">20230906_OR_SantiamRiverTB_10TEQ6956.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7056.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7056.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7057.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7057.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7157.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7157.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7257.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7257.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7357.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7357.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7358.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7358.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7458.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7458.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7459.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7459.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7559.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7559.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7659.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7659.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7758.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7758.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7759.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7759.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7858.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7858.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7859.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7859.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7958.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7958.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ7959.copc.laz">20230906_OR_SantiamRiverTB_10TEQ7959.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8037.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8037.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8058.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8058.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8059.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8059.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8137.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8137.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8138.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8138.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8158.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8158.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8159.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8159.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8238.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8238.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8239.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8239.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8240.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8240.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8258.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8258.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8259.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8259.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8340.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8340.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8341.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8341.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8359.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8359.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8459.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8459.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8460.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8460.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8560.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8560.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8660.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8660.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8760.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8760.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8761.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8761.copc.laz</a><br>
+<a href="20230906_OR_SantiamRiverTB_10TEQ8861.copc.laz">20230906_OR_SantiamRiverTB_10TEQ8861.copc.laz</a><br>
+
+    <p>This page is owned by the
+    <a href="https://coast.noaa.gov">NOAA Office for Coastal Management</a>
+    and was created by an automated script on 2025-06-03 07:24:37.029820.<br>
+	<a href="https://coast.noaa.gov/contactform/?subject=digitalcoast">Contact Us</a></p>
+    </body></html>

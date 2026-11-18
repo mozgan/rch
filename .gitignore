@@ -70,6 +70,8 @@ Testing/
 .cache/
 
 # Python
+.venv/
+.venv311/
 __pycache__/
 *.pyc
 *.pyo
@@ -96,5 +98,6 @@ data/demo/*
 
 # temporaries
 tmp/
+backups/
 paper/
 

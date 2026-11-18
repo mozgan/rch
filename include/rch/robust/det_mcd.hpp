@@ -21,9 +21,11 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <limits>
+#include <memory>
 #include <optional>
 #include <span>
 #include <vector>
@@ -48,6 +50,31 @@ inline constexpr double kAdaptiveMcdOutlierZPilot = 5.2;
 inline constexpr double kAdaptiveMcdScaleFloor = 1.0e-12;
 inline constexpr double kDefaultDetMcdRankRelativeTolerance = 1.0e-12;
 
+struct DetMcdTrace {
+    double guard_seconds{}, starts_seconds{}, concentration_seconds{}, finalization_seconds{};
+    std::size_t starts{}, concentration_iterations{};
+};
+
+// Opt-in nested timing; retaining shared ownership avoids borrowed pointer lifetimes.
+class ScopedDetMcdPhase {
+    using Clock = std::chrono::steady_clock;
+    std::shared_ptr<DetMcdTrace> trace_;
+    double DetMcdTrace::* field_;
+    Clock::time_point start_;
+
+public:
+    ScopedDetMcdPhase(std::shared_ptr<DetMcdTrace> trace, double DetMcdTrace::* field)
+        : trace_(std::move(trace)),
+          field_(field),
+          start_(trace_ ? Clock::now() : Clock::time_point{}) {}
+    ~ScopedDetMcdPhase() {
+        if (trace_)
+            (*trace_).*field_ += std::chrono::duration<double>(Clock::now() - start_).count();
+    }
+    ScopedDetMcdPhase(const ScopedDetMcdPhase&) = delete;
+    auto operator=(const ScopedDetMcdPhase&) -> ScopedDetMcdPhase& = delete;
+};
+
 struct DetMcdOptions {
     // Trimming parameter; \(\alpha=0.5\) gives maximal-breakdown MCD.
     double alpha{0.5};
@@ -60,6 +87,7 @@ struct DetMcdOptions {
     // Disable only to inspect the uncorrected h-subset covariance.
     bool apply_consistency_correction{true};
     bool apply_small_sample_correction{true};
+    std::shared_ptr<DetMcdTrace> trace{};
 };
 
 struct DetMcdResult {
@@ -198,19 +226,27 @@ det_mcd(const std::span<const rch::core::Vec3<double>> points, const DetMcdOptio
     DetMcdResult result{};
     result.h = mcd_h_size(points.size(), kDetMcdDimension, options.alpha);
 
-    if (points.size() < options.min_n || result.h <= kDetMcdDimension) {
-        result.policy = FallbackPolicy::disabled_small_n;
-        return result;
-    }
-    if (std::ranges::any_of(
-            points, [](const auto& point) noexcept { return !rch::core::is_finite(point); }
-        ) ||
-        sample_rank_deficient(points, options.rank_relative_tolerance)) {
-        result.policy = FallbackPolicy::disabled_rank_deficient;
-        return result;
+    {
+        const ScopedDetMcdPhase timer(options.trace, &DetMcdTrace::guard_seconds);
+        if (points.size() < options.min_n || result.h <= kDetMcdDimension) {
+            result.policy = FallbackPolicy::disabled_small_n;
+            return result;
+        }
+        if (std::ranges::any_of(
+                points, [](const auto& point) noexcept { return !rch::core::is_finite(point); }
+            ) ||
+            sample_rank_deficient(points, options.rank_relative_tolerance)) {
+            result.policy = FallbackPolicy::disabled_rank_deficient;
+            return result;
+        }
     }
 
-    const auto starts = make_initial_estimates(points, result.h);
+    const auto starts = [&] {
+        const ScopedDetMcdPhase timer(options.trace, &DetMcdTrace::starts_seconds);
+        return make_initial_estimates(points, result.h);
+    }();
+    if (options.trace)
+        options.trace->starts += starts.size();
     const CStepRunner runner{};
     const CStepOptions cstep_options{
         result.h,
@@ -223,7 +259,12 @@ det_mcd(const std::span<const rch::core::Vec3<double>> points, const DetMcdOptio
     bool have_candidate = false;
     for (std::size_t start_index = 0U; start_index < starts.size(); ++start_index) {
         const auto& start = starts[start_index];
-        auto candidate = runner.run(points, start.center, start.scatter, cstep_options);
+        auto candidate = [&] {
+            const ScopedDetMcdPhase timer(options.trace, &DetMcdTrace::concentration_seconds);
+            return runner.run(points, start.center, start.scatter, cstep_options);
+        }();
+        if (options.trace)
+            options.trace->concentration_iterations += candidate.iterations;
         candidate.used_regularization = candidate.used_regularization || start.regularized;
         if (!have_candidate || candidate.determinant < result.determinant ||
             (rch::core::exactly_equal_for_tie_break(candidate.determinant, result.determinant) &&
@@ -240,6 +281,7 @@ det_mcd(const std::span<const rch::core::Vec3<double>> points, const DetMcdOptio
         }
     }
 
+    const ScopedDetMcdPhase final_timer(options.trace, &DetMcdTrace::finalization_seconds);
     if (!have_candidate || result.subset_indices.empty()) {
         result.policy = FallbackPolicy::disabled_rank_deficient;
         return result;

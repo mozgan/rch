@@ -1,0 +1,19 @@
+# Cost decomposition on independent Gaussian ellipsoid clouds.
+schema: rch.runlist.v1
+name: cost_decomposition
+algorithm_ids: [A5_pca_compact_hilbert, A6_rch]
+bit_rules:
+  - id: C3_frame_core_occupancy
+    label: C3 frame-core occupancy
+    bit_allocator: frame_core_occupancy
+    allocation_model: robust_core_occupancy
+    budget_projection: minimax_worst_cell_edge
+    uniform_bits: 10
+    min_axis_bits: 1
+contamination_ids: [D0]
+geometry_ids: [E0, E5]
+point_counts: [1024, 4096, 16384]
+seeds: [0, 1, 2, 3, 4]
+metrics: [miad]
+independent_sampling: true
+timing_repeats: 5

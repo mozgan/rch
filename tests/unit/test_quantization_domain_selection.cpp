@@ -373,3 +373,150 @@ TEST(QuantizationDomainSelection, CountSweepSeparatesContainmentFromCellCapacity
         }
     }
 }
+
+TEST(QuantizationDomainSelection, FixedFrameDomainControlsBoundsAndUniformResolution) {
+    const std::vector<double> points{
+        -4.0,
+        -1.0,
+        0.5,
+        3.0,
+        2.0,
+        -1.0,
+        0.5,
+        4.0,
+        2.0,
+        1.0,
+        -3.0,
+        1.0,
+        5.0,
+        0.5,
+        3.0,
+        -2.0,
+        1.5,
+        -4.0,
+    };
+    constexpr double half_extent = 12.0;
+    for (const auto method :
+         {rch::orderings::OrderingMethod::PcaCompactHilbert, rch::orderings::OrderingMethod::RCH}) {
+        auto config = base_config();
+        config.method = method;
+        config.frame = method == rch::orderings::OrderingMethod::PcaCompactHilbert
+                           ? rch::orderings::FrameEstimator::SampleCovariance
+                           : rch::orderings::FrameEstimator::DetMCD;
+        config.bit_alloc = rch::orderings::BitAllocator::Uniform;
+        config.uniform_bits = 8U;
+        config.fixed_frame_domain_half_extent = half_extent;
+
+        const auto result = rch::orderings::order_point_cloud(points, config);
+        ASSERT_TRUE(result.has_value());
+        EXPECT_EQ(result->bits_axis, (BitsAxis3{8U, 8U, 8U}));
+        EXPECT_DOUBLE_EQ(result->half_extent[0], half_extent);
+        EXPECT_DOUBLE_EQ(result->half_extent[1], half_extent);
+        EXPECT_DOUBLE_EQ(result->half_extent[2], half_extent);
+    }
+}
+
+TEST(QuantizationDomainSelection, FixedFrameDomainRejectsNegativeExtent) {
+    auto config = base_config();
+    config.fixed_frame_domain_half_extent = -1.0;
+    const std::vector<double> points{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.0, 0.0, 1.0};
+    const auto result = rch::orderings::order_point_cloud(points, config);
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error().code, rch::orderings::OrderingErrorCode::invalid_input);
+}
+
+TEST(QuantizationDomainSelection, FrameDiagnosticsCountClippingAndDuplicateCells) {
+    rch::orderings::detail::FramePreparation prepared{};
+    prepared.frame.axes = rch::core::identity_matrix3<double>();
+    prepared.frame.half_extents = {1.0, 1.0, 1.0};
+    const rch::orderings::detail::Bounds3 bounds{{-1.0, -1.0, -1.0}, {1.0, 1.0, 1.0}};
+    const std::vector<double> points{
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1,
+        0.0,
+        0.0,
+        2.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+    };
+    const auto diagnostics = rch::orderings::detail::frame_quantization_diagnostics(
+        points, prepared, bounds, BitsAxis3{2U, 2U, 2U}, {1U, 2U, 2U, 3U, 1U, 3U}
+    );
+    EXPECT_EQ(diagnostics.frame_core_outside_point_count, 2U);
+    EXPECT_EQ(diagnostics.frame_core_outside_coordinate_count_by_axis[0], 2U);
+    EXPECT_EQ(diagnostics.domain_clipped_point_count, 2U);
+    EXPECT_EQ(diagnostics.domain_clipped_coordinate_count_by_axis[0], 2U);
+    EXPECT_EQ(diagnostics.domain_saturated_point_count, 4U);
+    EXPECT_EQ(diagnostics.domain_saturated_coordinate_count_by_axis[0], 4U);
+    EXPECT_EQ(diagnostics.boundary_code_coordinate_count_by_axis[0], 4U);
+    EXPECT_EQ(diagnostics.duplicate_quantized_tuple_point_count, 6U);
+    EXPECT_EQ(diagnostics.duplicate_hilbert_key_point_count, 6U);
+}
+
+TEST(QuantizationDomainSelection, FrozenQuantizerOverridesAllAdaptivePolicies) {
+    std::vector<double> points;
+    for (int i = 0; i < 40; ++i) {
+        points.insert(
+            points.end(),
+            {static_cast<double>(i % 7),
+             static_cast<double>((i * 3) % 11),
+             static_cast<double>((i * i) % 13)}
+        );
+    }
+    for (const auto method :
+         {rch::orderings::OrderingMethod::PcaCompactHilbert, rch::orderings::OrderingMethod::RCH}) {
+        for (const auto rule :
+             {rch::orderings::BitAllocator::OccupancyFloor1,
+              rch::orderings::BitAllocator::FrameCoreOccupancy,
+              rch::orderings::BitAllocator::HybridOccupancy}) {
+            auto config = base_config();
+            config.method = method;
+            config.frame = method == rch::orderings::OrderingMethod::RCH
+                               ? rch::orderings::FrameEstimator::DetMCD
+                               : rch::orderings::FrameEstimator::SampleCovariance;
+            config.bit_alloc = rule;
+            config.fixed_frame_quantizer =
+                rch::orderings::FixedFrameQuantizer{Vec3{16., 8., 4.}, BitsAxis3{6U, 5U, 4U}};
+            auto result = rch::orderings::order_point_cloud(points, config);
+            ASSERT_TRUE(result.has_value());
+            EXPECT_EQ(result->bits_axis, (BitsAxis3{6U, 5U, 4U}));
+            for (std::size_t axis = 0; axis < 3; ++axis) {
+                EXPECT_DOUBLE_EQ(
+                    std::ldexp(result->half_extent[axis], 1 - result->bits_axis[axis]), .5
+                );
+            }
+            auto permutation = result->permutation;
+            std::sort(permutation.begin(), permutation.end());
+            for (std::size_t i = 0; i < permutation.size(); ++i)
+                EXPECT_EQ(permutation[i], i);
+        }
+    }
+}
+
+TEST(QuantizationDomainSelection, FrozenQuantizerRejectsInvalidGridAndMethod) {
+    const std::vector<double> points{0., 0., 0., 1., 2., 3., 4., 1., 2.};
+    auto config = base_config();
+    config.fixed_frame_quantizer =
+        rch::orderings::FixedFrameQuantizer{Vec3{1., 1., 1.}, BitsAxis3{32U, 32U, 32U}};
+    EXPECT_FALSE(rch::orderings::order_point_cloud(points, config).has_value());
+    config.fixed_frame_quantizer->bits = {4U, 4U, 4U};
+    config.fixed_frame_quantizer->half_extents[0] = std::numeric_limits<double>::quiet_NaN();
+    EXPECT_FALSE(rch::orderings::order_point_cloud(points, config).has_value());
+    config.fixed_frame_quantizer->half_extents[0] = 1.;
+    config.fixed_frame_domain_half_extent = 1.;
+    EXPECT_FALSE(rch::orderings::order_point_cloud(points, config).has_value());
+    config.fixed_frame_domain_half_extent = 0.;
+    config.method = rch::orderings::OrderingMethod::InputOrder;
+    EXPECT_FALSE(rch::orderings::order_point_cloud(points, config).has_value());
+}

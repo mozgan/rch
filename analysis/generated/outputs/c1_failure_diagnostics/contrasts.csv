@@ -1,0 +1,5 @@
+dataset_id,algorithm_id,same_frame_and_domain,delta_miad_c1_minus_c0,delta_within_key_contribution,delta_cross_key_contribution
+stanford_bunny,A5_pca_compact_hilbert,True,0.01079011281447315,0.00330912866370672,0.00748098415076643
+stanford_bunny,A6_rch,True,0.010086133323883934,0.0036953366495450085,0.006390796674338924
+stanford_armadillo,A5_pca_compact_hilbert,True,3.190098350445309,2.7655164741217177,0.4245818763235911
+stanford_armadillo,A6_rch,True,3.068714833550072,2.741173446330385,0.3275413872196865

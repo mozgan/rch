@@ -1,6 +1,6 @@
 {
   "schema": "rch.generated_table.v1",
-  "caption": "Claim status summary",
+  "caption": "Legacy claim directions on recorded configurations. Synthetic p-values are nominal under shared inputs; statuses do not confirm hypotheses. Real-data status is a descriptive direction check on fixed datasets.",
   "label": "tab:claim_status",
   "columns": [
     "claim",
@@ -10,28 +10,28 @@
   "rows": [
     {
       "claim": "H1 synthetic MIAD",
-      "status": "Confirmed",
-      "evidence": "p_adj=0.0029296875"
+      "status": "Favorable direction (descriptive)",
+      "evidence": "nominal p_adj=0.0029296875; median_delta=-0.24352633067050333; shared inputs"
     },
     {
       "claim": "H2 synthetic MIAD",
-      "status": "Confirmed",
-      "evidence": "p_adj=0.0029296875"
+      "status": "Favorable direction (descriptive)",
+      "evidence": "nominal p_adj=0.0029296875; median_delta=-0.12857494612964593; shared inputs"
     },
     {
       "claim": "H3 contamination stability",
-      "status": "Confirmed",
-      "evidence": "p=4.999750012499375e-05; median_delta=0.14482230392156858"
+      "status": "Favorable direction (descriptive)",
+      "evidence": "nominal p=4.999750012499375e-05; median_delta=0.14482230392156858; shared inputs"
     },
     {
       "claim": "A7 CGAL baseline comparison",
-      "status": "Confirmed",
-      "evidence": "p_adj=0.0029296875; median_delta=-0.6946745278872353"
+      "status": "Favorable direction (descriptive)",
+      "evidence": "nominal p_adj=0.0029296875; median_delta=-0.6946745278872353; shared inputs"
     },
     {
       "claim": "H1 real-data direction",
       "status": "Failed",
-      "evidence": "comparisons=10; failed=10"
+      "evidence": "comparisons=15; failed=13; fixed datasets only"
     }
   ]
 }

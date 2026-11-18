@@ -32,6 +32,30 @@
       "family": "Stanford 3D Scanning Repository",
       "status": "ready_to_measure",
       "source": "https://graphics.stanford.edu/data/3Dscanrep/"
+    },
+    {
+      "dataset": "usgs_cameron_peak",
+      "family": "USGS 3DEP airborne LiDAR",
+      "status": "measured",
+      "source": "https://www.sciencebase.gov/catalog/item/636353a1d34ebe442506c1aa"
+    },
+    {
+      "dataset": "noaa_santiam_river",
+      "family": "NOAA/USGS Santiam River Topobathy 2023",
+      "status": "measured",
+      "source": "https://www.fisheries.noaa.gov/inport/item/74249"
+    },
+    {
+      "dataset": "noaa_long_island",
+      "family": "NOAA/USGS Long Island Post Sandy 2014",
+      "status": "measured",
+      "source": "https://www.fisheries.noaa.gov/inport/item/49890"
+    },
+    {
+      "dataset": "noaa_southwest_florida",
+      "family": "NOAA/FDEM Southwest Florida 2007",
+      "status": "measured",
+      "source": "https://www.fisheries.noaa.gov/inport/item/49677"
     }
   ]
 }

@@ -1,0 +1,4 @@
+metric,n_clouds,median_cloud_effect
+kendall_tau,220,-0.06465992647058823
+normalized_miad_all,220,0.0026962543830044046
+normalized_miad_inlier,220,0.004193113396474761

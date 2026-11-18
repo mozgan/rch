@@ -1,0 +1,3 @@
+# Recorded C1 failure diagnostics
+
+One fixed dataset per site, seed 0 only; repeated seed labels are not independent scenes. Recomputed MIAD must agree with recorded CSVs. C0/C1 frame and covering-domain equality is checked. C1 changes both the bit budget and its distribution: this comparison does not isolate either alone. Within-key and cross-key contributions sum to MIAD; their fractions describe the observed path, not a causal tie-breaking loss. Missing clipping diagnostics remain unknown. No scene-level confidence intervals or deployable selection thresholds are inferred. Use run_c1_resolution_ablation.py for equal-budget and fixed-domain interventions.

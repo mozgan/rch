@@ -1,0 +1,50 @@
+dataset_id,layout_id,bit_rule,bit_allocator,resolved_bits_axis,domain_half_extents,frame_mode,robust_fallback_used,outside_core_fraction,clipped_fraction,duplicate_key_fraction
+stanford_bunny,A0_input,,,null,null,,,,,
+stanford_bunny,A0_full_scan,,,null,null,,,,,
+stanford_bunny,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[0.07784949999999999, 0.0771668, 0.060336650000000006]",,False,,,0.00016691239880935822
+stanford_bunny,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[0.10166489378963617, 0.0904819913710076, 0.07091915711181027]",principal_eigenframe,False,0.03616435307536095,0.0,0.00011127493253957215
+stanford_bunny,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[6, 6, 5]","[0.10166489378963617, 0.0904819913710076, 0.07091915711181027]",principal_eigenframe,False,0.03616435307536095,0.0,0.9788021253512115
+stanford_bunny,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[6, 5, 5]","[0.10166489378963617, 0.07073068199507924, 0.058342641897783015]",principal_eigenframe,False,0.03616435307536095,0.03616435307536095,0.9851447965059671
+stanford_bunny,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[6, 6, 5]","[0.10166489378963617, 0.0904819913710076, 0.07091915711181027]",principal_eigenframe,False,0.03616435307536095,0.0,0.9788021253512115
+stanford_armadillo,A0_input,,,null,null,,,,,
+stanford_armadillo,A0_full_scan,,,null,null,,,,,
+stanford_armadillo,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[63.5001277923584, 75.66098022460938, 57.71426010131836]",,False,,,0.0005549967047070658
+stanford_armadillo,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[97.57319434589263, 65.72080528400612, 52.34815765014856]",principal_eigenframe,False,0.07201660365141582,0.0,0.0005665591360551296
+stanford_armadillo,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[7, 6, 6]","[97.57319434589263, 65.72080528400612, 52.34815765014856]",principal_eigenframe,False,0.07201660365141582,0.0,0.9925248881334767
+stanford_armadillo,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[7, 6, 6]","[97.57319434589263, 58.95637768642688, 37.32172211906945]",principal_eigenframe,False,0.07201660365141582,0.07201660365141582,0.9889925653566431
+stanford_armadillo,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[7, 6, 6]","[97.57319434589263, 65.72080528400612, 52.34815765014856]",principal_eigenframe,False,0.07201660365141582,0.0,0.9925248881334767
+stanford_dragon,A0_input,,,null,null,,,,,
+stanford_dragon,A0_full_scan,,,null,null,,,,,
+stanford_dragon,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[0.10244510000000001, 0.07222175, 0.0458109]",,False,,,0.23452113013972511
+stanford_dragon,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[0.12426477640976104, 0.08755755791710516, 0.05309001329667]",principal_eigenframe,False,0.10293045733414069,0.0,0.25231180523026653
+stanford_dragon,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[7, 7, 6]","[0.12426477640976104, 0.08755755791710516, 0.05309001329667]",principal_eigenframe,False,0.10293045733414069,0.0,0.9941687897725325
+stanford_dragon,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[8, 7, 6]","[0.12426477640976104, 0.07493195943806151, 0.032978528344226876]",principal_eigenframe,False,0.10293045733414069,0.10293045733414069,0.9762867164025637
+stanford_dragon,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[8, 7, 6]","[0.12426477640976104, 0.08755755791710516, 0.05309001329667]",principal_eigenframe,False,0.10293045733414069,0.0,0.9867952335797279
+usgs_cameron_peak,A0_input,,,null,null,,,,,
+usgs_cameron_peak,A0_full_scan,,,null,null,,,,,
+usgs_cameron_peak,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[58.771043942077085, 411.2962661925121, 128.96891033782072]",,False,,,0.16415218651354607
+usgs_cameron_peak,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[575.994053967569, 63.504817418135936, 52.41484822304777]",principal_eigenframe,False,0.11500097993836814,0.0,0.13241260826233991
+usgs_cameron_peak,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[9, 6, 6]","[575.994053967569, 63.504817418135936, 52.41484822304777]",principal_eigenframe,False,0.11500097993836814,0.0,0.9871982519567493
+usgs_cameron_peak,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[9, 7, 4]","[408.97791437318506, 61.83194826634983, 14.898324092886055]",principal_eigenframe,False,0.11500097993836814,0.11500097993836814,0.966162936645942
+usgs_cameron_peak,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[10, 7, 6]","[575.994053967569, 63.504817418135936, 52.41484822304777]",principal_eigenframe,False,0.11500097993836814,0.0,0.9385662042191559
+noaa_santiam_river,A0_input,,,null,null,,,,,
+noaa_santiam_river,A0_full_scan,,,null,null,,,,,
+noaa_santiam_river,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[500, 20.75, 28.25]",,False,,,0.07384009412246151
+noaa_santiam_river,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[624.6403417240134, 323.66474188766125, 715.5409173179913]",principal_eigenframe,False,0.1697912936723106,0.0,0.9682336692413934
+noaa_santiam_river,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[6, 5, 6]","[624.6403417240134, 323.66474188766125, 715.5409173179913]",principal_eigenframe,False,0.1697912936723106,0.0,0.9999616348662336
+noaa_santiam_river,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[6, 6, 5]","[27.935559448719555, 21.81637446848493, 15.6714931803234]",principal_eigenframe,False,0.1697912936723106,0.1697912936723106,0.9493963885620748
+noaa_santiam_river,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[11, 10, 11]","[624.6403417240134, 323.66474188766125, 715.5409173179913]",principal_eigenframe,False,0.1697912936723106,0.0,0.8874366975292853
+noaa_long_island,A0_input,,,null,null,,,,,
+noaa_long_island,A0_full_scan,,,null,null,,,,,
+noaa_long_island,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[309.4200000000419, 141.62000000011176, 13.86]",,False,,,0.11227476384014648
+noaa_long_island,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[472.74907793452263, 258.04879321673627, 23.642259310515275]",principal_eigenframe,False,0.15468643797422701,0.0,0.29226255704595583
+noaa_long_island,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[8, 7, 4]","[472.74907793452263, 258.04879321673627, 23.642259310515275]",principal_eigenframe,False,0.15468643797422701,0.0,0.9950548612170729
+noaa_long_island,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[8, 7, 3]","[195.95860762272332, 92.5037730583987, 4.093974609833592]",principal_eigenframe,False,0.15468643797422701,0.15468643797422701,0.9861147716081065
+noaa_long_island,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[10, 9, 5]","[472.74907793452263, 258.04879321673627, 23.642259310515275]",principal_eigenframe,False,0.15468643797422701,0.0,0.8539276747444202
+noaa_southwest_florida,A0_input,,,null,null,,,,,
+noaa_southwest_florida,A0_full_scan,,,null,null,,,,,
+noaa_southwest_florida,A3_isotropic_hilbert,C0_uniform,uniform,"[10, 10, 10]","[760.140000000014, 766.9700000002049, 65.17]",,False,,,1.0
+noaa_southwest_florida,A6_rch,C0_uniform,uniform,"[10, 10, 10]","[1825.0016430975502, 1147.9508747377745, 108.45082228216732]",principal_eigenframe,False,0.3976838843517765,0.0,1.0
+noaa_southwest_florida,A6_rch_C2,C2_occupancy_floor1,occupancy_floor1,"[9, 8, 5]","[1825.0016430975502, 1147.9508747377745, 108.45082228216732]",principal_eigenframe,False,0.3976838843517765,0.0,1.0
+noaa_southwest_florida,A6_rch_C3,C3_frame_core_occupancy,frame_core_occupancy,"[10, 9, 1]","[649.0252565707489, 250.46426603135055, 1.0790200978906912]",principal_eigenframe,False,0.3976838843517765,0.3976838843517765,1.0
+noaa_southwest_florida,A6_rch_C4,C4_hybrid,hybrid_occupancy,"[12, 11, 8]","[1825.0016430975502, 1147.9508747377745, 108.45082228216732]",principal_eigenframe,False,0.3976838843517765,0.0,1.0

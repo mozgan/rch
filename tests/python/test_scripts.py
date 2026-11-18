@@ -8,6 +8,7 @@ import io
 import json
 import subprocess
 import struct
+import sys
 import tarfile
 import tempfile
 import unittest
@@ -150,7 +151,9 @@ class CreateAndDownloadScriptsTest(unittest.TestCase):
             )
 
             self.assertEqual(Path(result["manifest"]), root / "rch_demo.yml")
-            manifest = yaml.safe_load((root / "rch_demo.yml").read_text(encoding="utf-8"))
+            manifest = yaml.safe_load(
+                (root / "rch_demo.yml").read_text(encoding="utf-8")
+            )
             self.assertEqual(len(manifest["datasets"]), 2)
             self.assertTrue(Path(manifest["datasets"][0]["url"]).is_absolute())
 
@@ -239,7 +242,9 @@ class VerifyDemoArtifactsScriptTest(unittest.TestCase):
             expected_refinement_for_row({"algorithm_id": "A0_input"}, "all"), "off"
         )
         self.assertEqual(
-            expected_refinement_for_row({"algorithm_id": "A7_cgal_spatial_sort"}, "all"),
+            expected_refinement_for_row(
+                {"algorithm_id": "A7_cgal_spatial_sort"}, "all"
+            ),
             "external",
         )
         self.assertEqual(
@@ -248,7 +253,7 @@ class VerifyDemoArtifactsScriptTest(unittest.TestCase):
 
 
 class DemoPerfShimTest(unittest.TestCase):
-    """Contract tests for tools/demo/perf used by `make bench-demo`."""
+    """Contract tests for tools/demo/perf used by the demo fixture utilities."""
 
     def test_demo_perf_emits_parseable_cache_counters(self) -> None:
         """Supported perf-stat calls return deterministic M8 counter CSV."""
@@ -311,25 +316,114 @@ class DemoPerfShimTest(unittest.TestCase):
         self.assertNotIn("cache-references", completed.stderr)
 
 
+class ArtifactInputRoutingTest(unittest.TestCase):
+    """Artifact readers reuse complete runs without changing benchmark writers."""
+
+    def test_reader_fallback_writers_and_explicit_overrides(self):
+        makefile = (ROOT / "Makefile").read_text()
+        routing = makefile.split("# Artifact readers may reuse", 1)[1].split("\n", 1)[1].split("# CTest regexes", 1)[0]
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            fixture = root / "Makefile"
+            fixture.write_text(
+                "INDEPENDENT_OUTPUT_DIR ?= experiments/outputs/independent_benchmarks\n"
+                "REAL_OUTPUT_DIR ?= experiments/outputs/real_dataset\n"
+                "APPLICATION_QUERY_OUTPUT_DIR ?= experiments/outputs/application_query/full_benchmark\n"
+                + routing
+                + "\npaper-artifacts test-integration bench-real bench-independent:\n"
+                + "\t@printf '%s\\n' '$(INDEPENDENT_OUTPUT_DIR)' '$(REAL_OUTPUT_DIR)' '$(APPLICATION_QUERY_OUTPUT_DIR)'\n"
+            )
+            def run(target, *overrides, environment=None):
+                import os
+                env = {k: v for k, v in os.environ.items() if k not in ("MAKEFLAGS", "MFLAGS", "MAKELEVEL", "INDEPENDENT_OUTPUT_DIR", "REAL_OUTPUT_DIR", "APPLICATION_QUERY_OUTPUT_DIR")}
+                env.update(environment or {})
+                return subprocess.run(["make", "--no-print-directory", target, *overrides], cwd=root, env=env, capture_output=True, text=True, check=True).stdout.splitlines()
+            closure = root / "experiments/outputs/independent_benchmarks_closure"
+            (closure / "regime_map").mkdir(parents=True)
+            (closure / "benchmark_manifest.json").write_text("{}")
+            (closure / "regime_map/run_manifest.json").write_text("{}")
+            for target in ("paper-artifacts", "test-integration"):
+                self.assertEqual(run(target)[:2], ["experiments/outputs/independent_benchmarks_closure", "experiments/outputs/real_dataset_closure"])
+            self.assertEqual(run("bench-independent")[0], "experiments/outputs/independent_benchmarks")
+            self.assertEqual(run("bench-real")[1], "experiments/outputs/real_dataset")
+            self.assertEqual(run("paper-artifacts", "INDEPENDENT_OUTPUT_DIR=chosen", "REAL_OUTPUT_DIR=real_chosen")[:2], ["chosen", "real_chosen"])
+            self.assertEqual(run("paper-artifacts", environment={"REAL_OUTPUT_DIR": "environment_real"})[1], "environment_real")
+            canonical = root / "experiments/outputs/independent_benchmarks"
+            (canonical / "regime_map").mkdir(parents=True)
+            (canonical / "benchmark_manifest.json").write_text("{}")
+            (canonical / "regime_map/run_manifest.json").write_text("{}")
+            self.assertEqual(run("paper-artifacts")[:2], ["experiments/outputs/independent_benchmarks", "experiments/outputs/real_dataset"])
+
+    def test_shared_source_never_redirects_to_another_run(self):
+        from scripts.resolve_artifact_source import resolve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            engine = root / "engine"; engine.mkdir()
+            source = root / "application_query"; source.mkdir()
+            content = b'{"datasets": []}'
+            (engine / "source_manifest.json").write_bytes(content)
+            (source / "run_manifest.json").write_bytes(content)
+            self.assertEqual(resolve(engine, Path("application_query"), root), Path("application_query"))
+            other = root / "another_run"; other.mkdir()
+            (other / "run_manifest.json").write_bytes(content)
+            (source / "run_manifest.json").write_text("changed")
+            with self.assertRaisesRegex(ValueError, "different application run"):
+                resolve(engine, Path("application_query"), root)
+            (engine / "source_manifest.json").unlink()
+            self.assertEqual(resolve(engine, Path("application_query"), root), Path("application_query"))
+
+    def test_consumers_use_one_application_source(self):
+        makefile = (ROOT / "Makefile").read_text()
+        for target in ("bench-tree", "bench-dbms", "tree-analysis", "dbms-analysis"):
+            recipe = makefile.split("\n" + target + ":", 1)[1].split("\n\n", 1)[0]
+            self.assertIn("$(APPLICATION_QUERY_OUTPUT_DIR)", recipe)
+        self.assertNotIn("TREE_SOURCE_ROOT", makefile)
+        self.assertNotIn("DBMS_SOURCE_ROOT", makefile)
+
+
+class ArchiveResultsTest(unittest.TestCase):
+    def test_archive_stays_in_repository_and_excludes_previous_backups(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            (root / "scripts").mkdir(parents=True)
+            script = root / "scripts/archive_results.py"
+            script.write_bytes((ROOT / "scripts/archive_results.py").read_bytes())
+            (root / "Makefile").write_text("fixture")
+            (root / "backups").mkdir()
+            (root / "backups/previous.tar.gz").write_text("previous backup")
+            result = subprocess.run([sys.executable, str(script)], cwd=root,
+                                    capture_output=True, text=True, check=True)
+            archive = Path(result.stdout.strip())
+            self.assertEqual(archive.parent, root / "backups/sources")
+            expected_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
+            self.assertEqual(archive.with_suffix(".gz.sha256").read_text().split()[0], expected_hash)
+            with tarfile.open(archive) as saved:
+                self.assertIn("Makefile", saved.getnames())
+                self.assertFalse(any(name.startswith("backups") for name in saved.getnames()))
+            rejected = root.parent / "external"
+            result = subprocess.run([sys.executable, str(script), "--output-dir", str(rejected)],
+                                    cwd=root, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(rejected.exists())
+
+
 class MakefileTestCoverageTest(unittest.TestCase):
     """Coverage gates for Makefile test aggregators."""
 
-    def test_aggregate_targets_include_explicit_l3_smoke_tests(self) -> None:
-        """Named L3 smoke tests stay wired into aggregate Makefile targets."""
+    def test_aggregate_targets_preserve_transitive_validation(self) -> None:
+        """Consolidated workflows keep CLI, adapter and artifact validation reachable."""
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
-
-        test_all_start = makefile.index("\ntest-all:")
-        test_all_end = makefile.index("\npaper-all:", test_all_start)
-        test_all_block = makefile[test_all_start:test_all_end]
-        self.assertIn("test-cli", test_all_block)
-        self.assertIn("test-integration", test_all_block)
-        self.assertIn("test-smoke", test_all_block)
-
-        all_targets_start = makefile.index("\nall-targets:")
-        all_targets_block = makefile[all_targets_start:]
-        self.assertIn("$(MAKE) test-cli", all_targets_block)
-        self.assertIn("$(MAKE) test-cgal", all_targets_block)
-        self.assertIn("$(MAKE) test-integration", all_targets_block)
+        test_block = makefile.split("\ntest:", 1)[1].split("\ntest-cli:", 1)[0]
+        self.assertIn("$(MAKE) test-cli", test_block)
+        cgal_block = makefile.split("\ncgal-build:", 1)[1].split("\nreal-data:", 1)[0]
+        self.assertIn("tests/integration/test_cgal_spatial_sort_adapter.py", cgal_block)
+        bench_block = makefile.split("\nbench:", 1)[1].split("\nall-targets:", 1)[0]
+        self.assertIn("$(MAKE) test-integration", bench_block)
+        all_block = makefile.split("\nall-targets:", 1)[1].split("\ndocker-image:", 1)[
+            0
+        ]
+        for target in ("test", "repro-smoke", "bench"):
+            self.assertIn("$(MAKE) " + target, all_block)
 
     def test_run_all_tests_default_presets_match_cmake_test_presets(self) -> None:
         """The multi-preset wrapper remains aligned with CMakePresets.json."""
@@ -355,7 +449,7 @@ class MakefileTestCoverageTest(unittest.TestCase):
         script = (ROOT / "scripts/format.sh").read_text(encoding="utf-8")
         self.assertIn("git ls-files", script)
         self.assertIn("find include src", script)
-        self.assertIn("if [ \"${#cxx_files[@]}\" -eq 0 ]", script)
+        self.assertIn('if [ "${#cxx_files[@]}" -eq 0 ]', script)
 
 
 if __name__ == "__main__":

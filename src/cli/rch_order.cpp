@@ -32,6 +32,7 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <optional>
 #include <span>
 #include <sstream>
@@ -40,11 +41,8 @@
 #include <utility>
 #include <vector>
 
-#if defined(__unix__) || defined(__APPLE__)
-#include <sys/resource.h>
-#endif
-
 #include "rch/io/xyz_parse.hpp"
+#include "rch/metrics/memory.hpp"
 #include "rch/orderings/orderer.hpp"
 
 namespace {
@@ -60,6 +58,9 @@ struct Args {
     std::uint8_t uniform_bits{10U};
     std::uint8_t min_axis_bits{1U};
     std::size_t timing_repeats{1U};
+    double fixed_frame_domain_half_extent{};
+    std::optional<rch::orderings::FixedFrameQuantizer> fixed_frame_quantizer{};
+    double frame_grid_shift_cells{};
 };
 
 [[nodiscard]] constexpr auto is_ascii_digit(const char c) noexcept -> bool {
@@ -73,7 +74,9 @@ struct Args {
                  "[--bit-allocator uniform|sample_count_uniform|monotone_half|"
                  "occupancy_floor1|occupancy_floor10|frame_core_occupancy|hybrid_occupancy] "
                  "[--refinement off|all] [--uniform-bits N] "
-                 "[--min-axis-bits N] [--timing-repeats N]\n";
+                 "[--min-axis-bits N] [--fixed-frame-domain-half-extent X] "
+                 "[--fixed-frame-quantizer H0,H1,H2,B0,B1,B2] [--frame-grid-shift-cells F] "
+                 "[--timing-repeats N]\n";
     return 2;
 }
 
@@ -281,6 +284,56 @@ bit_budget_projection_to_string(const rch::orderings::BitAllocator value) noexce
                 return std::nullopt;
             }
             args.min_axis_bits = *min_axis_bits;
+        } else if (flag == "--frame-grid-shift-cells") {
+            try {
+                std::size_t used{};
+                args.frame_grid_shift_cells = std::stod(std::string{value}, &used);
+                if (used != value.size() || !std::isfinite(args.frame_grid_shift_cells) ||
+                    std::abs(args.frame_grid_shift_cells) > 1.0)
+                    return std::nullopt;
+            } catch (...) {
+                return std::nullopt;
+            }
+        } else if (flag == "--fixed-frame-quantizer") {
+            if (value.empty() || value.back() == ',')
+                return std::nullopt;
+            std::istringstream fields{std::string{value}};
+            rch::orderings::FixedFrameQuantizer grid{};
+            for (std::size_t axis = 0U; axis < 6U; ++axis) {
+                std::string token;
+                if (!std::getline(fields, token, ','))
+                    return std::nullopt;
+                if (axis < 3U) {
+                    try {
+                        std::size_t used{};
+                        grid.half_extents[axis] = std::stod(token, &used);
+                        if (used != token.size())
+                            return std::nullopt;
+                    } catch (...) {
+                        return std::nullopt;
+                    }
+                } else {
+                    const auto bits = parse_u8_token(token);
+                    if (!bits.has_value())
+                        return std::nullopt;
+                    grid.bits[axis - 3U] = *bits;
+                }
+            }
+            std::string extra;
+            if (std::getline(fields, extra, ','))
+                return std::nullopt;
+            args.fixed_frame_quantizer = grid;
+        } else if (flag == "--fixed-frame-domain-half-extent") {
+            try {
+                std::size_t used = 0U;
+                const double extent = std::stod(std::string{value}, &used);
+                if (used != value.size() || !std::isfinite(extent) || extent <= 0.0) {
+                    return std::nullopt;
+                }
+                args.fixed_frame_domain_half_extent = extent;
+            } catch (...) {
+                return std::nullopt;
+            }
         } else if (flag == "--timing-repeats") {
             const auto timing_repeats = parse_size_token(value);
             if (!timing_repeats.has_value()) {
@@ -471,6 +524,20 @@ void write_frame_axes_json(std::ostream& output, const rch::core::Matrix3<double
     output << "  ],\n";
 }
 
+void write_vec3_json(
+    std::ostream& output, const std::string_view name, const rch::core::Vec3<double>& value
+) {
+    output << "  \"" << name << "\": [" << value[0] << ", " << value[1] << ", " << value[2]
+           << "],\n";
+}
+
+void write_count_array_json(
+    std::ostream& output, const std::string_view name, const std::array<std::size_t, 3>& value
+) {
+    output << "    \"" << name << "\": [" << value[0] << ", " << value[1] << ", " << value[2]
+           << "],\n";
+}
+
 [[nodiscard]] auto median_seconds(std::vector<double> values) -> double {
     if (values.empty()) {
         return 0.0;
@@ -504,16 +571,11 @@ effective_frame_estimator(const Args& args, const rch::orderings::OrderingMethod
 }
 
 [[nodiscard]] auto peak_rss_kb() -> std::optional<std::uint64_t> {
-#if defined(__unix__) || defined(__APPLE__)
-    rusage usage{};
-    if (getrusage(RUSAGE_SELF, &usage) != 0) {
-        return std::nullopt;
-    }
-#if defined(__APPLE__)
-    return static_cast<std::uint64_t>(usage.ru_maxrss / 1024L);
-#else
-    return static_cast<std::uint64_t>(usage.ru_maxrss);
-#endif
+#if defined(__linux__)
+    // VmHWM belongs to the current executable's memory map. Unlike ru_maxrss,
+    // it does not retain the launching interpreter's pre-exec high-water mark.
+    // This is an approximate process peak, not incremental algorithm memory.
+    return rch::metrics::read_peak_rss_kb();
 #else
     return std::nullopt;
 #endif
@@ -525,13 +587,15 @@ effective_frame_estimator(const Args& args, const rch::orderings::OrderingMethod
     const Args& args,
     const rch::orderings::OrderingResult& result,
     const std::size_t point_count,
-    const double sort_seconds
+    const double sort_seconds,
+    const rch::orderings::TimingBreakdown& timing
 ) -> bool {
     const auto hash = rch::orderings::hash_hex(result.output_hash);
     std::ofstream output{path};
     if (!output.is_open()) {
         return false;
     }
+    output << std::setprecision(std::numeric_limits<double>::max_digits10);
     output << "{\n";
     output << "  \"status\": \"ok\",\n";
     output << "  \"input\": \"" << json_escape(args.input.string()) << "\",\n";
@@ -546,10 +610,37 @@ effective_frame_estimator(const Args& args, const rch::orderings::OrderingMethod
     output << "  \"refinement\": \"" << rch::orderings::to_string(args.refinement) << "\",\n";
     output << "  \"uniform_bits\": " << static_cast<unsigned int>(args.uniform_bits) << ",\n";
     output << "  \"min_axis_bits\": " << static_cast<unsigned int>(args.min_axis_bits) << ",\n";
+    output << "  \"fixed_frame_domain_half_extent\": " << args.fixed_frame_domain_half_extent
+           << ",\n";
+    output << "  \"controlled_frame_quantizer\": "
+           << (args.fixed_frame_quantizer.has_value() ? "true" : "false") << ",\n";
+    output << "  \"frame_grid_shift_cells\": " << args.frame_grid_shift_cells << ",\n";
     output << "  \"timing_repeats\": " << args.timing_repeats << ",\n";
     output << std::setprecision(std::numeric_limits<double>::max_digits10);
     output << "  \"sort_seconds\": " << sort_seconds << ",\n";
+    output << "  \"timing_breakdown_seconds\": {\n"
+           << "    \"robust_estimator\": " << timing.robust_estimator_seconds << ",\n"
+           << "    \"frame_construction\": " << timing.frame_construction_seconds << ",\n"
+           << "    \"domain_bit_allocation\": " << timing.domain_bit_allocation_seconds << ",\n"
+           << "    \"quantization_encoding\": " << timing.quantization_encoding_seconds << ",\n"
+           << "    \"key_sort\": " << timing.key_sort_seconds << ",\n"
+           << "    \"diagnostics\": " << timing.diagnostics_seconds << ",\n"
+           << "    \"robust_pilot\": " << timing.robust_pilot_seconds << ",\n"
+           << "    \"robust_guard\": " << timing.robust_guard_seconds << ",\n"
+           << "    \"robust_starts\": " << timing.robust_starts_seconds << ",\n"
+           << "    \"robust_concentration\": " << timing.robust_concentration_seconds << ",\n"
+           << "    \"robust_finalization\": " << timing.robust_finalization_seconds << ",\n"
+           << "    \"robust_remainder\": " << timing.robust_remainder_seconds << ",\n"
+           << "    \"refinement\": " << timing.refinement_seconds << "\n  },\n";
+    output << "  \"robust_work_counts\": {\"starts\": " << timing.robust_start_count
+           << ", \"concentration_iterations\": " << timing.robust_concentration_iteration_count
+           << "},\n";
     const auto rss = peak_rss_kb();
+    output << "  \"peak_rss_source\": \"" << (rss ? "linux_proc_self_status_VmHWM" : "unavailable")
+           << "\",\n";
+    output
+        << "  \"peak_rss_scope\": \"approximate current executable image peak through order "
+           "output; includes input and all timing repeats; not incremental algorithm memory\",\n";
     if (rss.has_value()) {
         output << "  \"peak_rss_kb\": " << *rss << ",\n";
     } else {
@@ -560,6 +651,85 @@ effective_frame_estimator(const Args& args, const rch::orderings::OrderingMethod
     output << "  \"bits_axis\": [" << static_cast<unsigned int>(result.bits_axis[0]) << ", "
            << static_cast<unsigned int>(result.bits_axis[1]) << ", "
            << static_cast<unsigned int>(result.bits_axis[2]) << "],\n";
+    output << "  \"fitted_frame_diagnostics\": ";
+    if (result.fitted_frame_diagnostics) {
+        const auto& frame = *result.fitted_frame_diagnostics;
+        output << "{\"mode\": \""
+               << (frame.mode == rch::frames::RobustFrameMode::canonical_axes_fallback
+                       ? "canonical_axes_fallback"
+                       : "principal_eigenframe")
+               << "\", \"gap12\": ";
+        if (std::isfinite(frame.gap12))
+            output << frame.gap12;
+        else
+            output << "null";
+        output << ", \"gap23\": ";
+        if (std::isfinite(frame.gap23))
+            output << frame.gap23;
+        else
+            output << "null";
+        output << "},\n";
+    } else
+        output << "null,\n";
+    write_vec3_json(output, "frame_center", result.center);
+    write_vec3_json(output, "frame_domain_half_extents", result.half_extent);
+    output << "  \"quantization_diagnostics_scope\": \""
+           << (result.fitted_frame_diagnostics ? "frame_and_keys"
+               : args.method == rch::orderings::OrderingMethod::IsotropicHilbert
+                   ? "raw_aabb_keys_only"
+                   : "not_collected")
+           << "\",\n";
+    auto diagnostics = result.quantization_diagnostics;
+    if (args.method == rch::orderings::OrderingMethod::IsotropicHilbert) {
+        // The raw-AABB path has no frame diagnostics. Count actual output keys
+        // instead of publishing the default-constructed collision count of zero.
+        auto keys = result.primary_keys;
+        std::sort(keys.begin(), keys.end());
+        diagnostics.duplicate_hilbert_key_point_count = 0;
+        for (std::size_t begin = 0; begin < keys.size();) {
+            std::size_t end = begin + 1;
+            while (end < keys.size() && keys[end] == keys[begin])
+                ++end;
+            if (end - begin > 1)
+                diagnostics.duplicate_hilbert_key_point_count += end - begin;
+            begin = end;
+        }
+        // Fixed-depth Hilbert encoding is injective on the quantized tuples.
+        diagnostics.duplicate_quantized_tuple_point_count =
+            diagnostics.duplicate_hilbert_key_point_count;
+    }
+    output << "  \"quantization_diagnostics\": {\n";
+    output << "    \"frame_core_outside_point_count\": "
+           << diagnostics.frame_core_outside_point_count << ",\n";
+    write_count_array_json(
+        output,
+        "frame_core_outside_coordinate_count_by_axis",
+        diagnostics.frame_core_outside_coordinate_count_by_axis
+    );
+    output << "    \"domain_clipped_point_count\": " << diagnostics.domain_clipped_point_count
+           << ",\n";
+    write_count_array_json(
+        output,
+        "domain_clipped_coordinate_count_by_axis",
+        diagnostics.domain_clipped_coordinate_count_by_axis
+    );
+    output << "    \"domain_saturated_point_count\": " << diagnostics.domain_saturated_point_count
+           << ",\n";
+    write_count_array_json(
+        output,
+        "domain_saturated_coordinate_count_by_axis",
+        diagnostics.domain_saturated_coordinate_count_by_axis
+    );
+    write_count_array_json(
+        output,
+        "boundary_code_coordinate_count_by_axis",
+        diagnostics.boundary_code_coordinate_count_by_axis
+    );
+    output << "    \"duplicate_quantized_tuple_point_count\": "
+           << diagnostics.duplicate_quantized_tuple_point_count << ",\n";
+    output << "    \"duplicate_hilbert_key_point_count\": "
+           << diagnostics.duplicate_hilbert_key_point_count << "\n";
+    output << "  },\n";
     write_frame_axes_json(output, result.frame_axes);
     output << "  \"robust_fallback_used\": " << (result.robust_fallback_used ? "true" : "false")
            << "\n";
@@ -588,27 +758,76 @@ int main(const int argc, char** argv) {
     config.refinement = args->refinement;
     config.uniform_bits = args->uniform_bits;
     config.min_axis_bits = args->min_axis_bits;
+    config.fixed_frame_domain_half_extent = args->fixed_frame_domain_half_extent;
+    config.fixed_frame_quantizer = args->fixed_frame_quantizer;
+    if (config.fixed_frame_quantizer)
+        config.fixed_frame_quantizer->origin_shift_cells = args->frame_grid_shift_cells;
+    else if (args->frame_grid_shift_cells != 0.0) {
+        std::cerr << "grid shift requires fixed frame quantizer\n";
+        return 1;
+    }
+
     std::optional<rch::orderings::OrderingResult> final_result{};
     std::vector<double> elapsed_seconds;
+    std::vector<rch::orderings::TimingBreakdown> phase_timings;
     elapsed_seconds.reserve(args->timing_repeats);
+    phase_timings.reserve(args->timing_repeats);
     for (std::size_t repeat = 0U; repeat < args->timing_repeats; ++repeat) {
+        auto timing = std::make_shared<rch::orderings::TimingBreakdown>();
         const auto start = std::chrono::steady_clock::now();
-        auto result = rch::orderings::order_point_cloud(std::span<const double>{*points}, config);
+        auto result =
+            rch::orderings::order_point_cloud(std::span<const double>{*points}, config, timing);
         const auto stop = std::chrono::steady_clock::now();
         if (!result.has_value()) {
             std::cerr << "ordering failed: " << result.error().message << '\n';
             return 1;
         }
+        // Finite input coordinates can still overflow intermediate moments or
+        // bounds. Never publish a successful order with non-JSON frame values.
+        // This check is outside the timed ordering call and before output files.
+        if (!rch::core::is_finite(result->center) || !rch::core::is_finite(result->half_extent) ||
+            !rch::core::is_finite(result->frame_axes)) {
+            std::cerr << "ordering failed: non-finite frame geometry; "
+                         "cannot export a successful manifest\n";
+            return 1;
+        }
         elapsed_seconds.push_back(std::chrono::duration<double>{stop - start}.count());
+        phase_timings.push_back(*timing);
         final_result = std::move(*result);
     }
     const double sort_seconds = median_seconds(std::move(elapsed_seconds));
+    const auto median_phase = [&phase_timings](auto member) {
+        std::vector<double> values;
+        values.reserve(phase_timings.size());
+        for (const auto& timing : phase_timings)
+            values.push_back(timing.*member);
+        return median_seconds(std::move(values));
+    };
+    const rch::orderings::TimingBreakdown timing{
+        median_phase(&rch::orderings::TimingBreakdown::robust_estimator_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::frame_construction_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::domain_bit_allocation_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::quantization_encoding_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::key_sort_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::diagnostics_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::refinement_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_pilot_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_guard_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_starts_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_concentration_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_finalization_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_remainder_seconds),
+        median_phase(&rch::orderings::TimingBreakdown::robust_start_count),
+        median_phase(&rch::orderings::TimingBreakdown::robust_concentration_iteration_count),
+    };
 
     if (!write_order_csv(args->output, *final_result)) {
         std::cerr << "failed to write output csv\n";
         return 1;
     }
-    if (!write_manifest(args->manifest, *args, *final_result, points->size() / 3U, sort_seconds)) {
+    if (!write_manifest(
+            args->manifest, *args, *final_result, points->size() / 3U, sort_seconds, timing
+        )) {
         std::cerr << "failed to write manifest\n";
         return 1;
     }

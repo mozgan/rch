@@ -21,7 +21,7 @@ import argparse
 import math
 from pathlib import Path
 
-from data.synthetic.generators.common import Point, write_xyz_csv
+from data.synthetic.generators.common import Point, SplitMix64, write_xyz_csv
 
 CYLINDER_DIMS: dict[str, tuple[float, float]] = {
     # (radius, height)
@@ -32,6 +32,8 @@ CYLINDER_DIMS: dict[str, tuple[float, float]] = {
 
 _HALTON_BASE_U = 2
 _HALTON_BASE_V = 3
+# Before the modulo wrap, consecutive seeds use adjacent Halton offsets, so
+# fixed-size windows overlap by count - 1 points.
 _SEED_OFFSET_PRIME = 1_000_003
 
 
@@ -54,7 +56,9 @@ def cylinder_xyz(theta: float, h: float, radius: float) -> Point:
     return (radius * math.cos(theta), radius * math.sin(theta), h)
 
 
-def cylinder_points(count: int, family: str, seed: int) -> list[Point]:
+def cylinder_points(
+    count: int, family: str, seed: int, sampling: str = "halton"
+) -> list[Point]:
     """Return `count` deterministic cylinder-lateral surface points.
 
     Behaviour:
@@ -69,6 +73,8 @@ def cylinder_points(count: int, family: str, seed: int) -> list[Point]:
         raise ValueError("count must be non-negative")
     if family not in CYLINDER_DIMS:
         raise ValueError(f"unknown cylinder family: {family}")
+    if sampling not in {"halton", "iid"}:
+        raise ValueError("sampling must be 'halton' or 'iid'")
     radius, height = CYLINDER_DIMS[family]
     if (
         (not math.isfinite(radius))
@@ -80,13 +86,20 @@ def cylinder_points(count: int, family: str, seed: int) -> list[Point]:
             f"cylinder dims must be finite and positive; got r={radius}, H={height}"
         )
     offset = (seed % _SEED_OFFSET_PRIME) + 1
+    rng = SplitMix64(seed ^ 0x7F4A_7C15_9E37_79B9)
     two_pi = 2.0 * math.pi
     half_h = 0.5 * height
     points: list[Point] = []
     for i in range(count):
-        idx = offset + i
-        theta = two_pi * _radical_inverse(idx, _HALTON_BASE_U)
-        h = -half_h + height * _radical_inverse(idx, _HALTON_BASE_V)
+        if sampling == "halton":
+            idx = offset + i
+            theta_u = _radical_inverse(idx, _HALTON_BASE_U)
+            height_u = _radical_inverse(idx, _HALTON_BASE_V)
+        else:
+            theta_u = rng.uniform01()
+            height_u = rng.uniform01()
+        theta = two_pi * theta_u
+        h = -half_h + height * height_u
         points.append(cylinder_xyz(theta, h, radius))
     return points
 

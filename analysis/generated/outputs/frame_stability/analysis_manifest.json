@@ -1,0 +1,16 @@
+{
+  "status": "validated_frame_stability",
+  "source_manifest_sha256": "f06eb0bfe0cddb4032ddd71c4dfe67cfd2280ccc6ab6122471c8e1656eb29420",
+  "artifacts": {
+    "frame_stability_effects.csv": "093fa1ff472884188fee83145292e3af1f77b83e11b2e8f4e07bb30d241a670a",
+    "fig_frame_stability.pdf": "40dd16487145f581051895fc81daab3ab4db5bffb7688e559f80b486d138c1cc",
+    "frame_stability_grid_diagnostics.csv": "deee33e5c40187540b61b1007bbbb4aa9839614131ab30b3f1c2cc51082fdef4",
+    "frame_stability_summary.csv": "6608e0f511d2871598c30c930879226f5685cfed21d6a4885ea06e15336c2202",
+    "protocol_limits.md": "26f319e60b78e28ce1c5d3ce52c0a54afa410226812e58f8ad41671f6781f991",
+    "table_frame_stability.tex": "f472ba0c58f972dcc31c76a93a3e81caa67e38c970b1e3c0d5d8fe2b2ae45cd2"
+  },
+  "published_artifacts": {
+    "figures/fig_frame_stability.pdf": "40dd16487145f581051895fc81daab3ab4db5bffb7688e559f80b486d138c1cc",
+    "tables/table_frame_stability.tex": "f472ba0c58f972dcc31c76a93a3e81caa67e38c970b1e3c0d5d8fe2b2ae45cd2"
+  }
+}

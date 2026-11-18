@@ -50,7 +50,9 @@ def halton_pair(index: int) -> tuple[float, float]:
     return radical_inverse(index, 2), radical_inverse(index, 3)
 
 
-def patch_points(count: int, family: str, seed: int) -> list[Point]:
+def patch_points(
+    count: int, family: str, seed: int, sampling: str = "halton"
+) -> list[Point]:
     """Return `count` deterministic quadric-surface-patch points.
 
     Algorithm: sample \((u,v)=(h_2(i),h_3(i))\), map to
@@ -69,10 +71,12 @@ def patch_points(count: int, family: str, seed: int) -> list[Point]:
         or sigma_z < 0.0
     ):
         raise ValueError("quadric coefficients must be finite with sigma_z >= 0")
+    if sampling not in {"halton", "iid"}:
+        raise ValueError("sampling must be 'halton' or 'iid'")
     rng = SplitMix64(seed ^ 0x7F4A_7C15_9E37_79B9)  # substream isolation
     points: list[Point] = []
     for i in range(1, count + 1):
-        u, v = halton_pair(i)
+        u, v = (halton_pair(i) if sampling == "halton" else (rng.uniform01(), rng.uniform01()))
         x = -1.0 + 2.0 * u  # map [0,1) → [-1, 1)
         y = -1.0 + 2.0 * v
         z_base = (a * x * x) + (b * y * y)

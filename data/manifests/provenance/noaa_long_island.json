@@ -1,0 +1,53 @@
+{
+  "id": "noaa_long_island",
+  "noaa_collection_id": 4938,
+  "listing_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/?prefix=laz%2Fgeoid18%2F4938%2F&max-keys=1000",
+  "listing_truncated": "true",
+  "url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/4938/20140403_usgs_ny_li_18TXL585375.copc.laz",
+  "index_url": "https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/laz/geoid18/4938/index.html",
+  "header": {
+    "point_count": 144182,
+    "crs_wkt": "COMPOUNDCRS[\"NAD83(2011) / UTM zone 18N + NAVD88 height\",PROJCRS[\"NAD83(2011) / UTM zone 18N\",BASEGEOGCRS[\"NAD83(2011)\",DATUM[\"NAD83 (National Spatial Reference System 2011)\",ELLIPSOID[\"GRS 1980\",6378137,298.257222101,LENGTHUNIT[\"metre\",1]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433]],ID[\"EPSG\",6318]],CONVERSION[\"UTM zone 18N\",METHOD[\"Transverse Mercator\",ID[\"EPSG\",9807]],PARAMETER[\"Latitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8801]],PARAMETER[\"Longitude of natural origin\",-75,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"Scale factor at natural origin\",0.9996,SCALEUNIT[\"unity\",1],ID[\"EPSG\",8805]],PARAMETER[\"False easting\",500000,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",6347]],VERTCRS[\"NAVD88 height\",VDATUM[\"North American Vertical Datum 1988\"],CS[vertical,1],AXIS[\"gravity-related height\",up,LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",5703]]]",
+    "horizontal_epsg": 6347,
+    "vertical_epsg": 5703,
+    "axis_units": [
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      },
+      {
+        "name": "metre",
+        "to_metre": 1.0
+      }
+    ],
+    "system_identifier": "LAStools (c) by rapidlasso GmbH",
+    "generating_software": "las2las (version 150925)",
+    "creation_date": "2014-11-18",
+    "mins": [
+      658499.9965870243,
+      4537499.996033029,
+      -1.537251241411358
+    ],
+    "maxs": [
+      659118.8312484921,
+      4537783.2446750775,
+      26.182299863309908
+    ]
+  },
+  "archive_sha256": "043f19dd8c03dd40d668757f8d8e2548351e3404aad6eb3765ceefb7e54a0a76",
+  "archive_bytes": 603625,
+  "selection_attempts": [
+    {
+      "key": "laz/geoid18/4938/20140403_usgs_ny_li_18TXL585375.copc.laz",
+      "points": 144182,
+      "crs": "COMPD_CS[\"NAD83(2011) / UTM zone 18N + NAVD88 height\",PROJCS[\"NAD83(2011) / UTM zone 18N\",GEOGCS[\"NAD83(2011)\",DATUM[\"NAD83_National_Spatial_Reference_System_2011\",SPHEROID[\"GRS 1980\",6378137,298.257222101],AUTHORITY[\"EPSG\",\"1116\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"6318\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",-75],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"6347\"]],VERT_CS[\"NAVD88 height\",VERT_DATUM[\"North American Vertical Datum 1988\",2005],UNIT[\"metre\",1],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5703\"]]]",
+      "compound": true
+    }
+  ],
+  "selection_rule": "first NOAA COPC file sorted by size,key among first <=1000 listing entries; 0.5..12 MB, 65536..1000000 points; projected metre CRS; no ordering outcomes used",
+  "vertical_units_evidence": "NOAA geoid18 collection index states NAVD88 in metres; preserved in source index/metadata snapshot"
+}

@@ -51,11 +51,13 @@
 #include <algorithm>
 #include <array>
 #include <bit>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <expected>
 #include <limits>
+#include <memory>
 #include <numeric>
 #include <optional>
 #include <span>
@@ -133,6 +135,13 @@ struct OrderingError {
     std::string_view message{};
 };
 
+// Experimental intervention: freeze domain sizes and depths while frames vary.
+struct FixedFrameQuantizer {
+    rch::core::Vec3<double> half_extents{};
+    rch::curves::BitsAxis3 bits{};
+    double origin_shift_cells{};
+};
+
 // User-facing controls for method, frame estimator, bit allocation, and refinement.
 struct OrderingConfig {
     OrderingMethod method{OrderingMethod::RCH};
@@ -143,7 +152,43 @@ struct OrderingConfig {
     std::uint8_t min_axis_bits{1U};
     RefinementMode refinement{RefinementMode::Off};
     double tau_quant_squared{4.0};
+    // Optional common half-width for controlled frame ablations. Zero keeps
+    // the normal per-frame covering/core domain selection.
+    double fixed_frame_domain_half_extent{};
+    std::optional<FixedFrameQuantizer> fixed_frame_quantizer{};
 };
+
+// Per-input diagnostics for frame-domain clipping and quantized collisions.
+struct QuantizationDiagnostics {
+    std::size_t frame_core_outside_point_count{};
+    std::array<std::size_t, 3> frame_core_outside_coordinate_count_by_axis{};
+    std::size_t domain_clipped_point_count{};
+    std::array<std::size_t, 3> domain_clipped_coordinate_count_by_axis{};
+    std::size_t domain_saturated_point_count{};
+    std::array<std::size_t, 3> domain_saturated_coordinate_count_by_axis{};
+    std::array<std::size_t, 3> boundary_code_coordinate_count_by_axis{};
+    std::size_t duplicate_quantized_tuple_point_count{};
+    std::size_t duplicate_hilbert_key_point_count{};
+};
+
+// Optional wall-clock decomposition; phases are disjoint except estimator/frame
+// preparation's local setup, which is assigned to frame construction.
+struct TimingBreakdown {
+    double robust_estimator_seconds{};
+    double frame_construction_seconds{};
+    double domain_bit_allocation_seconds{};
+    double quantization_encoding_seconds{};
+    double key_sort_seconds{};
+    double diagnostics_seconds{};
+    double refinement_seconds{};
+    // Nested within robust_estimator_seconds; do not add to top-level phases.
+    double robust_pilot_seconds{}, robust_guard_seconds{}, robust_starts_seconds{};
+    double robust_concentration_seconds{}, robust_finalization_seconds{},
+        robust_remainder_seconds{};
+    double robust_start_count{}, robust_concentration_iteration_count{};
+};
+
+using SharedTimingBreakdown = std::shared_ptr<TimingBreakdown>;
 
 // Ordering output plus diagnostics needed by experiments and manifests.
 struct OrderingResult {
@@ -158,6 +203,9 @@ struct OrderingResult {
     bool robust_fallback_used{};
     bool finite_only_passed{};
     std::array<std::uint8_t, 32> output_hash{};
+    QuantizationDiagnostics quantization_diagnostics{};
+    std::optional<rch::frames::RobustPrincipalFrame> fitted_frame_diagnostics{};
+    TimingBreakdown timing{};
 };
 
 using OrderingExpected = std::expected<OrderingResult, OrderingError>;
@@ -721,6 +769,69 @@ sample_count_uniform_bits(const std::size_t n, const OrderingConfig& config) noe
     };
 }
 
+[[nodiscard]] inline auto frame_quantization_diagnostics(
+    const std::span<const double> points_xyz,
+    const FramePreparation& prepared,
+    const Bounds3& bounds,
+    const rch::curves::BitsAxis3& bits_axis,
+    const std::vector<std::uint64_t>& primary_keys
+) -> QuantizationDiagnostics {
+    const std::size_t count = points_xyz.size() / 3U;
+    QuantizationDiagnostics diagnostics{};
+    std::vector<rch::curves::Point3u32> tuples;
+    tuples.reserve(count);
+    for (std::size_t i = 0U; i < count; ++i) {
+        const auto raw = point_at(points_xyz, i);
+        const auto projected =
+            rch::frames::project_to_robust_frame(raw, prepared.center, prepared.frame);
+        const auto quantized = quantized_point(projected, bounds, bits_axis);
+        bool outside_core_point = false;
+        bool clipped_point = false;
+        bool saturated_point = false;
+        for (std::size_t axis = 0U; axis < 3U; ++axis) {
+            if (std::abs(projected[axis]) > prepared.frame.half_extents[axis]) {
+                outside_core_point = true;
+                ++diagnostics.frame_core_outside_coordinate_count_by_axis[axis];
+            }
+            if (projected[axis] < bounds.lo[axis] || projected[axis] > bounds.hi[axis]) {
+                clipped_point = true;
+                ++diagnostics.domain_clipped_coordinate_count_by_axis[axis];
+            }
+            if (projected[axis] <= bounds.lo[axis] || projected[axis] >= bounds.hi[axis]) {
+                saturated_point = true;
+                ++diagnostics.domain_saturated_coordinate_count_by_axis[axis];
+            }
+            const std::uint32_t max_code = rch::curves::quantization_max_code(bits_axis[axis]);
+            if (quantized[axis] == 0U || quantized[axis] == max_code) {
+                ++diagnostics.boundary_code_coordinate_count_by_axis[axis];
+            }
+        }
+        diagnostics.frame_core_outside_point_count += static_cast<std::size_t>(outside_core_point);
+        diagnostics.domain_clipped_point_count += static_cast<std::size_t>(clipped_point);
+        diagnostics.domain_saturated_point_count += static_cast<std::size_t>(saturated_point);
+        tuples.push_back(quantized);
+    }
+
+    const auto count_non_singleton_groups = [](auto values) {
+        std::ranges::sort(values);
+        std::size_t duplicated = 0U;
+        for (std::size_t begin = 0U; begin < values.size();) {
+            std::size_t end = begin + 1U;
+            while (end < values.size() && values[end] == values[begin]) {
+                ++end;
+            }
+            if (end - begin > 1U) {
+                duplicated += end - begin;
+            }
+            begin = end;
+        }
+        return duplicated;
+    };
+    diagnostics.duplicate_quantized_tuple_point_count = count_non_singleton_groups(tuples);
+    diagnostics.duplicate_hilbert_key_point_count = count_non_singleton_groups(primary_keys);
+    return diagnostics;
+}
+
 // Creates symmetric frame-coordinate bounds \([-a_j,a_j]\).
 [[nodiscard]] inline auto
 bounds_from_half_extents(const rch::core::Vec3<double>& half_extents) noexcept -> Bounds3 {
@@ -781,7 +892,8 @@ struct FrameDomain {
 }
 
 // FrameCoreOccupancy is the only mode whose quantization bounds come from the
-// statistical \(3\sigma\) core box; out-of-core points then clamp to the box faces.
+// statistical \(2\sigma\) core box (tau_quant_squared = 4 by default).
+// Out-of-core points then clamp to the box faces.
 // HybridOccupancy keeps the covering bounds (no clamp) but still lets robust
 // statistics drive the bit budget via allocate_hybrid_occupancy_bits.
 [[nodiscard]] constexpr auto uses_statistical_frame_domain(const BitAllocator bit_alloc) noexcept
@@ -921,13 +1033,41 @@ mrcd_or_sample_frame(const std::span<const double> points_xyz, const double tau_
 
 // Builds a DetMCD robust frame, falling back to sample covariance when disabled.
 [[nodiscard]] inline auto det_mcd_or_sample_frame(
-    const std::span<const double> points_xyz, const double tau_quant_squared = 4.0
+    const std::span<const double> points_xyz,
+    const double tau_quant_squared = 4.0,
+    const SharedTimingBreakdown& timings = {}
 ) -> FramePreparation {
     const auto points = materialize_points(points_xyz);
     FramePreparation prepared{};
     rch::robust::DetMcdOptions options{};
+    const auto robust_start =
+        !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
     options.alpha = rch::robust::adaptive_mcd_pilot(points).alpha;
+    const auto pilot_stop =
+        !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
+    if (timings)
+        options.trace = std::make_shared<rch::robust::DetMcdTrace>();
     const auto robust = rch::robust::det_mcd(points, options);
+    if (static_cast<bool>(timings)) {
+        const auto total =
+            std::chrono::duration<double>(std::chrono::steady_clock::now() - robust_start).count();
+        const auto pilot = std::chrono::duration<double>(pilot_stop - robust_start).count();
+        const auto& t = *options.trace;
+        timings->robust_estimator_seconds += total;
+        timings->robust_pilot_seconds += pilot;
+        timings->robust_guard_seconds += t.guard_seconds;
+        timings->robust_starts_seconds += t.starts_seconds;
+        timings->robust_concentration_seconds += t.concentration_seconds;
+        timings->robust_finalization_seconds += t.finalization_seconds;
+        timings->robust_remainder_seconds += std::max(
+            0.0,
+            total - pilot - t.guard_seconds - t.starts_seconds - t.concentration_seconds -
+                t.finalization_seconds
+        );
+        timings->robust_start_count += static_cast<double>(t.starts);
+        timings->robust_concentration_iteration_count +=
+            static_cast<double>(t.concentration_iterations);
+    }
     const bool robust_ok = robust.policy == rch::robust::FallbackPolicy::hr_adjusted_f ||
                            robust.policy == rch::robust::FallbackPolicy::chi2_regularized ||
                            robust.policy == rch::robust::FallbackPolicy::none;
@@ -950,7 +1090,8 @@ mrcd_or_sample_frame(const std::span<const double> points_xyz, const double tau_
 [[nodiscard]] inline auto prepare_frame(
     const std::span<const double> points_xyz,
     const FrameEstimator estimator,
-    const double tau_quant_squared = 4.0
+    const double tau_quant_squared = 4.0,
+    const SharedTimingBreakdown& timings = {}
 ) -> FramePreparation {
     switch (estimator) {
     case FrameEstimator::SampleCovariance:
@@ -961,7 +1102,7 @@ mrcd_or_sample_frame(const std::span<const double> points_xyz, const double tau_
         return mrcd_or_sample_frame(points_xyz, tau_quant_squared);
     case FrameEstimator::DetMCD:
     default:
-        return det_mcd_or_sample_frame(points_xyz, tau_quant_squared);
+        return det_mcd_or_sample_frame(points_xyz, tau_quant_squared, timings);
     }
 }
 
@@ -976,7 +1117,8 @@ template <typename KeyFactory>
     const rch::core::Matrix3<double>& frame_axes,
     const bool scatter_regularized,
     const bool robust_fallback_used,
-    KeyFactory&& make_key
+    KeyFactory&& make_key,
+    const SharedTimingBreakdown& timings = {}
 ) -> OrderingExpected {
     const std::size_t n = points_xyz.size() / 3U;
     OrderingResult result{};
@@ -992,6 +1134,8 @@ template <typename KeyFactory>
     result.finite_only_passed = true;
 
     std::vector<rch::curves::CurveKey> keys(n);
+    const auto encode_start =
+        !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
     for (std::size_t i = 0U; i < n; ++i) {
         const auto key = make_key(i);
         if (!key.has_value()) {
@@ -1006,12 +1150,22 @@ template <typename KeyFactory>
         result.primary_keys[i] = key->hilbert;
     }
 
+    const auto sort_start =
+        !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
+    if (static_cast<bool>(timings))
+        timings->quantization_encoding_seconds +=
+            std::chrono::duration<double>(sort_start - encode_start).count();
     std::ranges::sort(
         result.permutation, [&keys](const std::uint64_t lhs, const std::uint64_t rhs) noexcept {
             return keys[static_cast<std::size_t>(lhs)] < keys[static_cast<std::size_t>(rhs)];
         }
     );
+    if (static_cast<bool>(timings))
+        timings->key_sort_seconds +=
+            std::chrono::duration<double>(std::chrono::steady_clock::now() - sort_start).count();
     result.output_hash = make_output_hash(result);
+    if (static_cast<bool>(timings))
+        result.timing = *timings;
     return result;
 }
 
@@ -1157,11 +1311,22 @@ order_compact_aabb(const std::span<const double> points_xyz, const OrderingConfi
     const std::span<const double> points_xyz,
     const OrderingConfig& config,
     const OrderingMethod method,
-    const FramePreparation& prepared
+    const FramePreparation& prepared,
+    const SharedTimingBreakdown& timings = {}
 ) -> OrderingExpected {
+    const auto allocation_start =
+        !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
     const auto domain = frame_domain(points_xyz, prepared.center, prepared.frame);
     const auto& covering_half_extents = domain.covering_half_extents;
-    const auto bounds_half_extents = uses_statistical_frame_domain(config.bit_alloc)
+    const auto bounds_half_extents = config.fixed_frame_quantizer.has_value()
+                                         ? config.fixed_frame_quantizer->half_extents
+                                     : config.fixed_frame_domain_half_extent > 0.0
+                                         ? rch::core::Vec3<double>{
+                                               config.fixed_frame_domain_half_extent,
+                                               config.fixed_frame_domain_half_extent,
+                                               config.fixed_frame_domain_half_extent,
+                                           }
+                                     : uses_statistical_frame_domain(config.bit_alloc)
                                          ? prepared.frame.half_extents
                                          : covering_half_extents;
     // \(N_{\mathrm{core}}\): points occupying the core box. Falls back to the full count only
@@ -1181,8 +1346,24 @@ order_compact_aabb(const std::span<const double> points_xyz, const OrderingConfi
     } else {
         bits_axis = compact_bits_for(covering_half_extents, points_xyz.size() / 3U, config);
     }
-    const Bounds3 bounds = bounds_from_half_extents(bounds_half_extents);
+    if (config.fixed_frame_quantizer.has_value()) {
+        bits_axis = config.fixed_frame_quantizer->bits;
+    }
+    auto bounds = bounds_from_half_extents(bounds_half_extents);
+    if (config.fixed_frame_quantizer) {
+        for (std::size_t j = 0U; j < 3U; ++j) {
+            const auto shift =
+                config.fixed_frame_quantizer->origin_shift_cells *
+                std::ldexp(bounds_half_extents[j], 1 - static_cast<int>(bits_axis[j]));
+            bounds.lo[j] += shift;
+            bounds.hi[j] += shift;
+        }
+    }
     const bool morton = method == OrderingMethod::RobustFrameMorton;
+    if (static_cast<bool>(timings))
+        timings->domain_bit_allocation_seconds +=
+            std::chrono::duration<double>(std::chrono::steady_clock::now() - allocation_start)
+                .count();
 
     auto ordered = sort_with_keys(
         points_xyz,
@@ -1209,17 +1390,34 @@ order_compact_aabb(const std::span<const double> points_xyz, const OrderingConfi
                 return std::nullopt;
             }
             return rch::curves::CurveKey{*curve_key, raw[0], raw[1], raw[2], i};
-        }
+        },
+        timings
     );
+    if (ordered.has_value()) {
+        const auto diagnostics_start =
+            !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
+        ordered->fitted_frame_diagnostics = prepared.frame;
+        ordered->quantization_diagnostics = frame_quantization_diagnostics(
+            points_xyz, prepared, bounds, bits_axis, ordered->primary_keys
+        );
+        if (static_cast<bool>(timings)) {
+            timings->diagnostics_seconds +=
+                std::chrono::duration<double>(std::chrono::steady_clock::now() - diagnostics_start)
+                    .count();
+            ordered->timing = *timings;
+        }
+    }
     return ordered;
 }
 
 } // namespace detail
 
 // Validates input and dispatches the selected ordering strategy.
-[[nodiscard]] inline auto
-order_point_cloud(const std::span<const double> points_xyz, const OrderingConfig& config = {})
-    -> OrderingExpected {
+[[nodiscard]] inline auto order_point_cloud(
+    const std::span<const double> points_xyz,
+    const OrderingConfig& config = {},
+    const SharedTimingBreakdown& timings = {}
+) -> OrderingExpected {
     const auto count = detail::point_count(points_xyz);
     if (!count.has_value()) {
         return std::unexpected(
@@ -1236,6 +1434,51 @@ order_point_cloud(const std::span<const double> points_xyz, const OrderingConfig
                 "points_xyz contains NaN or infinity",
             }
         );
+    }
+    if (!std::isfinite(config.fixed_frame_domain_half_extent) ||
+        config.fixed_frame_domain_half_extent < 0.0) {
+        return std::unexpected(
+            OrderingError{
+                OrderingErrorCode::invalid_input,
+                "fixed_frame_domain_half_extent must be finite and non-negative",
+            }
+        );
+    }
+
+    if (config.fixed_frame_quantizer.has_value()) {
+        const auto& grid = *config.fixed_frame_quantizer;
+        if (!std::isfinite(grid.origin_shift_cells) || std::abs(grid.origin_shift_cells) > 1.0) {
+            return std::unexpected(
+                OrderingError{
+                    OrderingErrorCode::invalid_input,
+                    "grid origin shift must be finite and within one cell"
+                }
+            );
+        }
+        unsigned total_bits = 0U;
+        for (std::size_t axis = 0U; axis < 3U; ++axis) {
+            if (!std::isfinite(grid.half_extents[axis]) || grid.half_extents[axis] <= 0.0 ||
+                grid.bits[axis] == 0U || grid.bits[axis] > 32U) {
+                return std::unexpected(
+                    OrderingError{
+                        OrderingErrorCode::invalid_input,
+                        "fixed frame quantizer requires finite positive extents and 1..32 bits"
+                    }
+                );
+            }
+            total_bits += grid.bits[axis];
+        }
+        if (total_bits > config.bit_sum_max || total_bits > rch::curves::kMaxCurveTotalBits ||
+            config.fixed_frame_domain_half_extent != 0.0 ||
+            (config.method != OrderingMethod::RCH &&
+             config.method != OrderingMethod::PcaCompactHilbert)) {
+            return std::unexpected(
+                OrderingError{
+                    OrderingErrorCode::invalid_input,
+                    "fixed frame quantizer requires PCA/RCH, valid budget and no cube override"
+                }
+            );
+        }
     }
 
     OrderingExpected result = std::unexpected(
@@ -1260,23 +1503,34 @@ order_point_cloud(const std::span<const double> points_xyz, const OrderingConfig
     case OrderingMethod::CompactHilbertAABB:
         result = detail::order_compact_aabb(points_xyz, config);
         break;
-    case OrderingMethod::PcaCompactHilbert:
-        result = detail::order_frame_curve(
-            points_xyz,
-            config,
-            config.method,
-            detail::sample_frame(points_xyz, config.tau_quant_squared)
-        );
+    case OrderingMethod::PcaCompactHilbert: {
+        const auto frame_start =
+            !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
+        const auto prepared = detail::sample_frame(points_xyz, config.tau_quant_squared);
+        if (static_cast<bool>(timings))
+            timings->frame_construction_seconds +=
+                std::chrono::duration<double>(std::chrono::steady_clock::now() - frame_start)
+                    .count();
+        result = detail::order_frame_curve(points_xyz, config, config.method, prepared, timings);
         break;
+    }
     case OrderingMethod::RobustFrameMorton:
-    case OrderingMethod::RCH:
-        result = detail::order_frame_curve(
-            points_xyz,
-            config,
-            config.method,
-            detail::prepare_frame(points_xyz, config.frame, config.tau_quant_squared)
-        );
+    case OrderingMethod::RCH: {
+        const auto frame_start =
+            !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
+        const auto robust_before = !timings ? 0.0 : timings->robust_estimator_seconds;
+        const auto prepared =
+            detail::prepare_frame(points_xyz, config.frame, config.tau_quant_squared, timings);
+        if (static_cast<bool>(timings))
+            timings->frame_construction_seconds += std::max(
+                0.0,
+                std::chrono::duration<double>(std::chrono::steady_clock::now() - frame_start)
+                        .count() -
+                    (timings->robust_estimator_seconds - robust_before)
+            );
+        result = detail::order_frame_curve(points_xyz, config, config.method, prepared, timings);
         break;
+    }
     default:
         break;
     }
@@ -1284,7 +1538,15 @@ order_point_cloud(const std::span<const double> points_xyz, const OrderingConfig
     // Post-sort local MIAD refinement is applied here, uniformly across methods,
     // so the off/all refinement axis can be ablated cleanly.
     if (result.has_value() && detail::should_refine(config.method, config.refinement)) {
+        const auto refinement_start =
+            !timings ? std::chrono::steady_clock::time_point{} : std::chrono::steady_clock::now();
         detail::apply_miad_refinement(points_xyz, *result);
+        if (static_cast<bool>(timings)) {
+            timings->refinement_seconds +=
+                std::chrono::duration<double>(std::chrono::steady_clock::now() - refinement_start)
+                    .count();
+            result->timing = *timings;
+        }
     }
     return result;
 }

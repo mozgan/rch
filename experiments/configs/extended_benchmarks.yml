@@ -1,0 +1,31 @@
+schema: rch.extended_benchmark_protocol
+manuscript_editing: forbidden
+scope: [sensor_site_diversity, clamping_intervention, cost_stability, fixed_resolution_control]
+real_data:
+  regions: [Oregon_Santiam, Florida_Southwest, New_York_Long_Island]
+  selection: before_ordering_outcomes; official USGS/NOAA public LAZ/COPC tile listings
+  preferred_point_count: [65536, 1000000]
+  maximum_download_bytes: 12000000
+  preserve: all_records_of_selected_file; finite_checks; declared_CRS_and_axis_unit_conversion
+  independence: geographically_separate_projects_are_fixed_sites; hardware_independence_only_if_metadata_confirms
+clamping:
+  sampling: existing_independent_geometry_seed_clouds; selected_real_site_subclouds_recorded_separately
+  input_conditions: [D0, D1, D2, D3, D4]
+  natural_arm: native_C3; record_quantization_diagnostics
+  intervention_arms: [common_extended_encoder_clamp_on, common_extended_encoder_clamp_off]
+  invariants_within_input: [center, axes, native_domain, native_bits, physical_cell_widths, lattice_origin, embedding_offset, extended_encoder_depths, raw_coordinate_index_tie_break]
+  embedding: common_across_declared_D0_D4; no_use_of_outcome_metric
+  additional_arm: native_keys_with_projected_coordinate_tie_break
+  clean_reference: recomputed_for_each_arm
+  interpretation: conditional_saturation_intervention; not_exact_native_C3_causal_loss; not_deployable_quantizer
+cost_decision:
+  tau_min_scenarios: [0.5, 0.75, 0.9, 0.95]
+  preparation_budget_multipliers: [2, 5, 10, 20]
+  stability: minimum_inlier_Kendall_over_D1_D4_on_same_clean_cloud
+  time: recorded_ordering_time_for_same_cloud_and_method; explicit_measurement_boundary
+  selection: lowest_measured_cost_eligible_method; none_if_no_method_meets_both_constraints
+  thresholds: hypothetical_user_supplied_scenarios_not_application_requirements_or_tuned_optima
+  no_cross_scale_transfer: subcloud_Kendall_does_not_justify_full_scene_preparation_cost
+literature:
+  requirement: PCA_fixed_Hilbert_control_and_positioning_against_SFC_systems
+  forbidden_claims: [HistSFC_replication, SplitSFC_replication, general_DBMS_superiority]

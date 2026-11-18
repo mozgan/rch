@@ -23,7 +23,8 @@ oracle, regression, and Python tests. Important coverage includes:
 - fallback semantics and degenerate clouds;
 - pinned hashes for seven tiny fixtures across eight methods.
 
-Use `make test-cli` for the developer executables.
+`make test` also runs the developer CLI checks; use `make test-cli` to run
+those checks separately.
 
 ## Level 2: Reproducibility Smoke
 
@@ -33,7 +34,7 @@ make repro-smoke
 
 The smoke script builds the reproducibility preset, runs the hash-locked tests,
 generates three small inputs, runs each ordering twice, compares the CSVs, and
-requires equal manifest hashes. It checks repeat execution in the current
+requires equal integer-output digests in the manifests. It checks repeat execution in the current
 environment; it is not by itself a cross-platform proof.
 
 The pinned portability record in
@@ -41,17 +42,22 @@ The pinned portability record in
 output digest for recorded x86-64 Clang and GCC runs. Its scope explicitly
 excludes bit-exact floating-point diagnostics.
 
-## Level 3: Small End-To-End Artifact Workflow
+## Level 3: Measurements and Artifact Validation
 
 ```bash
-make bench-demo
+make bench
 ```
 
-This creates deterministic file-backed demo data, runs synthetic and real-data
-demo matrices, exercises the CGAL adapter, generates report artifacts, and
-checks their layout. The demo uses a controlled `perf` shim; it validates the
-pipeline and schemas, not real hardware-counter values or the full study
-sample size.
+`bench` runs the synthetic, real, independent and CGAL ordering matrices,
+then application, tree, DBMS, page-cache and continuous storage/query
+experiments, followed by artifacts and validation. `app-query` can also run
+separately on seven real datasets. Do not rerun it in the same output
+directory after a successful `bench`; use a new directory for new measurements.
+Application, tree and DBMS all use the same `APPLICATION_QUERY_OUTPUT_DIR`
+(default `experiments/outputs/application_query/full_benchmark`). Their
+source manifest hashes must match. Each query run requires an unused output
+directory; archive completed runs before regeneration. See
+[build workflows](build-workflows.md) for the clean sequence and overrides.
 
 ## Level 4: Stored Results
 
@@ -59,47 +65,63 @@ To regenerate tables and figures from existing full outputs:
 
 ```bash
 make paper-artifacts
-make paper-pdf
 ```
 
-`paper-artifacts` requires the optional CGAL adapter and Poppler's `pdftops`.
+`paper-artifacts` requires existing core and application measurements and Poppler's `pdftops`.
 It reads `experiments/outputs/` and writes `analysis/generated/` before the
-document build consumes the generated figures.
+document build copies the referenced generated figures into `paper/figures/`.
+`make paper-pdf` is an optional next step when manuscript sources are present.
+It copies the referenced figures and compiles the document. Inline manuscript
+tables and claims must still be updated by hand.
 
 Run the stored-result consistency checks:
 
 ```bash
-python paper/review/verify_claims.py
-python paper/review/round5/verify_comparison.py
-python paper/review/round5/verify_estimator.py
+make validate-extended-benchmarks
+make test-integration
 ```
 
-Some checks require R, `robustbase`, a C++23 compiler, and PDF text tools.
-Passing them establishes consistency with stored records; it does not rerun the
-full experiment.
+These commands require the matching recorded experiment outputs. They reject
+changed source hashes; that rejection requires rerunning affected measurements,
+not editing the stored hashes. `make measurement-diagnostics` analyzes preserved
+refinement and key/coordinate records without claiming a new benchmark run.
+See [the complete workflow](build-workflows.md#complete-clean-run) for clean-run
+instructions and checkpointed benchmark recovery.
 
-## Level 5: Full Experiment Rerun
+## Level 5: Clean or checkpointed reruns
+
+For a complete clean restart, see [Build workflows](build-workflows.md#complete-clean-run).
+`make all-targets` includes data preparation, cleanup, builds, tests,
+measurements, artifact generation, and validation. It does not compile the manuscript.
+
+For a measurement rerun with existing results, inspect the plan before running:
 
 ```bash
-make bench
-make paper-pdf
+make plan-benchmark-rerun
+make rerun-benchmarks
 ```
 
-The full workflow builds internal tools and CGAL, runs both refinement arms,
-downloads Stanford source archives on the first real-data run, regenerates
-tables and figures, and runs the recorded determinism checks. It is long and
-can be affected by machine load and performance-counter permissions.
+The run command archives existing outputs and records checkpoints. After an
+interruption, inspect `make plan-benchmark-resume`, then use
+`make resume-benchmarks`. These checkpoints cover measurement stages, not the
+full build and sanitizer sequence. The continuous workflow has its own
+[resume command](application-workflow.md#separate-execution).
 
-Before rerunning:
+Record the OS, CPU, kernel, compiler, CMake, Python packages, CGAL and database
+versions. Check source checksums and [perf permissions](linux-perf.md). Do not
+compare timing columns with different measurement boundaries.
 
-1. Preserve or archive existing `experiments/outputs/` and
-   `analysis/generated/` if they are evidence you need to retain.
-2. Record OS, architecture, compiler, CMake, Python package, CGAL, R package,
-   CPU, memory, and kernel versions.
-3. Check the source URLs and SHA-256 values in `data/manifests/`.
-4. Read [linux-perf.md](linux-perf.md).
-5. Do not compare internal and CGAL time columns as if their timing boundaries
-   were identical.
+## Sharing results
+
+Share the source commit together with the matching manifests, row-level
+results, workload/input hashes, source snapshots, and environment records.
+Real source archives must be downloaded from their providers using the tracked
+manifests. Do not replace missing provenance with invented values. Preserve
+completed outputs before cleanup; `make archive` writes a local backup, not
+a public release or permanent identifier.
+
+Documentation links point to maintained repository files. Paths to generated
+outputs describe where commands write results; they are not promised downloads.
 
 ## Digest Semantics
 

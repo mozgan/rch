@@ -1,0 +1,134 @@
+dataset_id,layout_id,reference,mean_delta_seconds,ci95_low_seconds,ci95_high_seconds,extra_preparation_seconds,break_even_queries,interpretation
+stanford_bunny,A3_isotropic_hilbert,A0_input,-0.00025188725,-0.00026129646476562497,-0.00024262038447265624,0.019038929,75.5851238996813,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch,A0_input,-0.0002513544078125,-0.0002605749619335937,-0.00024224866330078125,0.436177654,1735.3093498379012,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch,A3_isotropic_hilbert,5.328421875000001e-07,-7.58082226562497e-08,1.1364209765625005e-06,0.41713872500000004,,conditional on observed workload; no positive query saving
+stanford_bunny,A0_input,A0_full_scan,-8.1723359375e-05,-9.1711008984375e-05,-7.175184695312501e-05,-9.59900000000076e-06,0.0,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch,A0_full_scan,-0.0003330777671875,-0.00034230994853515624,-0.00032364599962890624,0.43616805500000005,1309.5081628623602,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C2,A0_input,-0.00024989072578125,-0.00025924501810546875,-0.0002405991920703125,0.435962959,1744.614401502977,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C2,A0_full_scan,-0.00033161408515625,-0.00034094680232421874,-0.00032197539474609373,0.43595336,1314.6406606781718,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C2,A3_isotropic_hilbert,1.996524218750001e-06,1.36443099609375e-06,2.6544873242187517e-06,0.41692403,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C2,A6_rch,1.463682031250001e-06,8.990740820312499e-07,2.059252031250002e-06,-0.0002146950000000425,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C3,A0_input,-0.00025021951328125,-0.00025954764208984375,-0.0002410292106640625,0.43502004899999996,1738.5536535315364,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C3,A0_full_scan,-0.00033194287265625,-0.0003411850869335937,-0.00032230841421875,0.43501045,1310.4979375486807,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C3,A3_isotropic_hilbert,1.6677367187499993e-06,1.00730970703125e-06,2.3390604882812467e-06,0.41598112,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C3,A6_rch,1.1348945312499993e-06,5.767423632812491e-07,1.725167617187497e-06,-0.0011576050000000615,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C4,A0_input,-0.00024969120625,-0.0002592330289453125,-0.000240312965625,0.4350826729999999,1742.4829633943102,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C4,A0_full_scan,-0.000331414565625,-0.0003408538987890625,-0.0003216670369921875,0.43507307399999995,1312.7759583514833,query saving observed; preparation uncertainty not included
+stanford_bunny,A6_rch_C4,A3_isotropic_hilbert,2.1960437500000016e-06,1.544311718750001e-06,2.8549214648437523e-06,0.41604374399999994,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C4,A6_rch,1.6632015625000016e-06,1.0886696093750016e-06,2.291561191406253e-06,-0.001094981000000106,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C2,A6_rch_C3,3.287875000000016e-07,-1.524135546874972e-07,8.060425585937519e-07,0.000942910000000019,,conditional on observed workload; no positive query saving
+stanford_bunny,A6_rch_C4,A6_rch_C3,5.283070312500024e-07,6.083933593750348e-08,9.938001953125038e-07,6.26239999999556e-05,,conditional on observed workload; no positive query saving
+stanford_armadillo,A3_isotropic_hilbert,A0_input,-0.001242151484375,-0.0013256149536914061,-0.0011585202852734376,0.095218744,76.656305770878,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch,A0_input,-0.001238568034375,-0.0013219180928710937,-0.0011538450307031249,3.931868661,3174.527802975377,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch,A3_isotropic_hilbert,3.583449999999995e-06,1.9240419726562434e-06,5.311636855468742e-06,3.8366499170000004,,conditional on observed workload; no positive query saving
+stanford_armadillo,A0_input,A0_full_scan,-0.00063117252265625,-0.0007214167459960938,-0.0005428557783789063,-0.00013454300000000433,0.0,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch,A0_full_scan,-0.00186974055703125,-0.0019283996744335937,-0.0018092774964453126,3.931734118,2102.8233586817823,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C2,A0_input,-0.0012222034828125,-0.0013059424271093748,-0.0011391955773828125,3.9239552950000007,3210.5581027885028,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C2,A0_full_scan,-0.00185337600546875,-0.001914710908671875,-0.0017907971655273438,3.9238207520000006,2117.12072478655,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C2,A3_isotropic_hilbert,1.9948001562500003e-05,1.6352637851562505e-05,2.3718177226562506e-05,3.828736551000001,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C2,A6_rch,1.6364551562500006e-05,1.3254265156250005e-05,1.9774279707031256e-05,-0.007913365999999478,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C3,A0_input,-0.0012320947195312499,-0.00131584141421875,-0.0011498754640820311,4.023485018999999,3265.5646966255426,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C3,A0_full_scan,-0.0018632672421875,-0.0019220257281835937,-0.0018016911148242187,4.023350475999999,2159.298668974899,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C3,A3_isotropic_hilbert,1.0056764843750003e-05,7.976101914062504e-06,1.22656436328125e-05,3.928266274999999,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C3,A6_rch,6.473314843750008e-06,4.680953144531256e-06,8.385805058593752e-06,0.09161635799999868,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C4,A0_input,-0.00122426812109375,-0.0013084262515625,-0.0011393337048632812,4.040341752,3300.209882448295,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C4,A0_full_scan,-0.00185544064375,-0.0019155199876757813,-0.0017939655241796875,4.040207209,2177.492027357127,query saving observed; preparation uncertainty not included
+stanford_armadillo,A6_rch_C4,A3_isotropic_hilbert,1.788336328125e-05,1.45354400390625e-05,2.1335180097656252e-05,3.945123008,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C4,A6_rch,1.4299913281250005e-05,1.1589156992187507e-05,1.7236376523437506e-05,0.10847309099999958,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C2,A6_rch_C3,9.891236718749998e-06,7.84703185546875e-06,1.202876888671876e-05,-0.09952972399999815,,conditional on observed workload; no positive query saving
+stanford_armadillo,A6_rch_C4,A6_rch_C3,7.826598437499997e-06,6.220147128906242e-06,9.553620156249999e-06,0.0168567330000009,,conditional on observed workload; no positive query saving
+stanford_dragon,A3_isotropic_hilbert,A0_input,0.000133132890625,9.008988515624998e-05,0.00017887501798828125,0.22958008400000002,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch,A0_input,0.0001931813875,0.000140228318671875,0.0002482052609570312,7.197810293,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch,A3_isotropic_hilbert,6.0048496875000005e-05,4.942623953125e-05,7.1246636796875e-05,6.968230209000001,,conditional on observed workload; no positive query saving
+stanford_dragon,A0_input,A0_full_scan,-0.00396398390390625,-0.004059064718671876,-0.0038657777888867185,-0.00027001799999999687,0.0,query saving observed; preparation uncertainty not included
+stanford_dragon,A6_rch,A0_full_scan,-0.00377080251640625,-0.003918341652871094,-0.0036291412486523437,7.197540275000001,1908.7555616303107,query saving observed; preparation uncertainty not included
+stanford_dragon,A6_rch_C2,A0_input,0.00024783136328125,0.000185206227890625,0.00031295489984375,7.191923402999999,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C2,A0_full_scan,-0.003716152540625,-0.0038656017375976563,-0.003559022332265625,7.1916533849999995,1935.2417066793694,query saving observed; preparation uncertainty not included
+stanford_dragon,A6_rch_C2,A3_isotropic_hilbert,0.00011469847265625,9.462023322265627e-05,0.00013547368556640624,6.9623433189999995,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C2,A6_rch,5.464997578125e-05,4.451047429687501e-05,6.502166132812499e-05,-0.005886890000001088,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C3,A0_input,0.00022779727734375,0.00016883249857421872,0.0002884013785742187,7.188853032,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C3,A0_full_scan,-0.0037361866265625,-0.003883151891835937,-0.003585732872480469,7.188583014000001,1924.0428095568388,query saving observed; preparation uncertainty not included
+stanford_dragon,A6_rch_C3,A3_isotropic_hilbert,9.466438671875e-05,7.763146119140625e-05,0.0001123217991015625,6.959272948000001,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C3,A6_rch,3.461588984374999e-05,2.7623200195312486e-05,4.191789621093748e-05,-0.008957260999999939,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C4,A0_input,0.00023889142890624998,0.00017712351148437501,0.0003010098302734375,7.2237326479999995,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C4,A0_full_scan,-0.003725092475,-0.0038790542015625,-0.0035713882997851563,7.22346263,1939.1364586190575,query saving observed; preparation uncertainty not included
+stanford_dragon,A6_rch_C4,A3_isotropic_hilbert,0.00010575853828124999,8.707998798828123e-05,0.0001250153838671875,6.994152564,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C4,A6_rch,4.5710041406249985e-05,3.6898096093749994e-05,5.4986071953124995e-05,0.02592235499999962,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C2,A6_rch_C3,2.003408593750001e-05,1.562699382812503e-05,2.4552652480468775e-05,0.0030703709999988504,,conditional on observed workload; no positive query saving
+stanford_dragon,A6_rch_C4,A6_rch_C3,1.1094151562499998e-05,7.704065781249992e-06,1.4515921328125002e-05,0.03487961599999956,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A3_isotropic_hilbert,A0_input,0.0005897647265624999,0.0004596068679882812,0.0007290067576367187,0.23794767500000003,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch,A0_input,0.00059845237890625,0.0004708201440039063,0.0007359252017773437,4.7227398030000005,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch,A3_isotropic_hilbert,8.687652343749999e-06,4.342489316406264e-06,1.30334298046875e-05,4.4847921280000005,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A0_input,A0_full_scan,-0.0044674779640625,-0.004539006151679687,-0.004394521778144532,0.007934244999999993,1.7760009257628186,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch,A0_full_scan,-0.00386902558515625,-0.004062759091953126,-0.003663511167695313,4.730674048,1222.7042556010786,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C2,A0_input,0.00059331692421875,0.00046731318046875,0.0007319056699218748,4.68242913,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch_C2,A0_full_scan,-0.00387416103984375,-0.0040733402203515625,-0.003665530617109375,4.690363375,1210.6784738068525,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C2,A3_isotropic_hilbert,3.5521976562500056e-06,-6.100175585937468e-07,7.72374111328126e-06,4.444481455,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch_C2,A6_rch,-5.135454687499993e-06,-1.0251390312500006e-05,-5.8819863281238185e-08,-0.04031067300000046,0.0,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C3,A0_input,0.00056155333671875,0.00043997760097656244,0.0006935498403515624,4.691809446,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch_C3,A0_full_scan,-0.00390592462734375,-0.0040953738399999995,-0.003703718599257812,4.699743690999999,1203.234608804034,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C3,A3_isotropic_hilbert,-2.8211389843749992e-05,-3.5877257714843744e-05,-2.084842566406248e-05,4.453861771,157874.59588726066,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C3,A6_rch,-3.6899042187499994e-05,-4.449279652343747e-05,-2.9455281953124983e-05,-0.030930357000000797,0.0,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C4,A0_input,0.0005521256484375,0.0004297964803515625,0.0006846736726367187,4.646714285000001,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch_C4,A0_full_scan,-0.003915352315625,-0.004106557850273437,-0.003721742000292969,4.65464853,1188.8198442384587,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C4,A3_isotropic_hilbert,-3.7639078125e-05,-4.7149291914062494e-05,-2.870381404296876e-05,4.408766610000001,117132.69372215796,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C4,A6_rch,-4.632673046875e-05,-5.5768733769531225e-05,-3.777472195312498e-05,-0.07602551799999979,0.0,query saving observed; preparation uncertainty not included
+usgs_cameron_peak,A6_rch_C2,A6_rch_C3,3.17635875e-05,2.349898972656248e-05,4.060351839843749e-05,-0.009380315999999667,,conditional on observed workload; no positive query saving
+usgs_cameron_peak,A6_rch_C4,A6_rch_C3,-9.427688281250007e-06,-1.5059636347656254e-05,-4.7710517968750045e-06,-0.045095160999998996,0.0,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A3_isotropic_hilbert,A0_input,-5.250752343749999e-06,-1.1028728339843749e-05,1.288504687499998e-06,0.041107911999999996,7828.956558755049,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch,A0_input,-5.952954687499999e-06,-1.1961922499999998e-05,6.601831249999927e-07,0.8928408470000001,149982.80582830324,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch,A3_isotropic_hilbert,-7.022023437500006e-07,-1.8609720507812512e-06,2.537379296874999e-07,0.851732935,1212945.161150353,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A0_input,A0_full_scan,-0.0007613584796875,-0.0007704048059179688,-0.0007500671563867188,-0.00843876,0.0,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch,A0_full_scan,-0.000767311434375,-0.000777844170234375,-0.0007534813486328126,0.8844020870000001,1152.5986025744219,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C2,A0_input,-4.457042187499999e-06,-1.1015040292968749e-05,3.328775820312494e-06,0.8928756360000001,200329.1865856947,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C2,A0_full_scan,-0.000765815521875,-0.0007780459174023438,-0.000749584848984375,0.8844368760000001,1154.8954686039415,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C2,A3_isotropic_hilbert,7.937101562499996e-07,-4.5926162109374966e-07,2.519874785156248e-06,0.8517677240000001,,conditional on observed workload; no positive query saving
+noaa_santiam_river,A6_rch_C2,A6_rch,1.4959125000000002e-06,-1.8692439453124976e-07,3.6703321874999983e-06,3.478899999997953e-05,,conditional on observed workload; no positive query saving
+noaa_santiam_river,A6_rch_C3,A0_input,-6.296562499999999e-06,-1.2385303574218747e-05,3.6324378906249366e-07,0.8820562780000001,140085.36848478837,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C3,A0_full_scan,-0.0007676550421875,-0.0007782351841210938,-0.0007529759558007813,0.8736175180000001,1138.0339735808298,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C3,A3_isotropic_hilbert,-1.04581015625e-06,-2.2708433984375006e-06,2.0329960937499555e-08,0.8409483660000001,804111.8753478352,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C3,A6_rch,-3.4360781249999947e-07,-7.420564648437489e-07,1.5872505859375436e-07,-0.010784569000000022,0.0,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C4,A0_input,-6.64327109375e-06,-1.2859384785156247e-05,-1.4540583984375352e-07,0.892139387,134292.18443897707,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C4,A0_full_scan,-0.00076800175078125,-0.0007783495109375,-0.0007538179287890625,0.883700627,1150.6492349803307,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C4,A3_isotropic_hilbert,-1.3925187500000013e-06,-2.8290471679687508e-06,-2.651121093750004e-07,0.8510314749999999,611145.4334097828,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C4,A6_rch,-6.903164062500007e-07,-9.570346484375018e-07,-4.591707421875009e-07,-0.0007014600000001536,0.0,query saving observed; preparation uncertainty not included
+noaa_santiam_river,A6_rch_C2,A6_rch_C3,1.8395203124999996e-06,2.206852539062501e-07,3.9259565429687485e-06,0.010819358000000001,,conditional on observed workload; no positive query saving
+noaa_santiam_river,A6_rch_C4,A6_rch_C3,-3.467085937500013e-07,-8.890399023437514e-07,8.531906250000033e-08,0.010083108999999868,29082.37402177122,query saving observed; preparation uncertainty not included
+noaa_long_island,A3_isotropic_hilbert,A0_input,-4.9048584375e-05,-7.316595146484376e-05,-2.075905789062499e-05,0.07401214500000003,1508.9557821718486,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch,A0_input,-5.01894390625e-05,-7.418536369140624e-05,-2.3455225605468743e-05,1.790376483,35672.37483508187,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch,A3_isotropic_hilbert,-1.1408546874999955e-06,-2.4962683789062427e-06,3.9386308593749196e-08,1.7163643379999998,1504454.8239190248,query saving observed; preparation uncertainty not included
+noaa_long_island,A0_input,A0_full_scan,-0.0013332413421874999,-0.001362173821425781,-0.0013025339426757812,0.0004691479999999956,0.3518852777474231,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch,A0_full_scan,-0.00138343078125,-0.0014223751651953123,-0.0013374333384570313,1.7908456309999998,1294.4960132966537,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C2,A0_input,-5.037517578125e-05,-7.309655287109375e-05,-2.5031283300781266e-05,1.762523027,34987.92807500284,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C2,A0_full_scan,-0.00138361651796875,-0.0014214301723046874,-0.0013378134171875002,1.762992175,1274.1913327171037,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C2,A3_isotropic_hilbert,-1.3265914062500023e-06,-3.4177870703125044e-06,6.294028515624976e-07,1.6885108819999999,1272819.1016803498,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C2,A6_rch,-1.8573671875000696e-07,-1.7315654687500072e-06,1.4112276171874948e-06,-0.027853455999999888,0.0,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C3,A0_input,-4.959627890625e-05,-7.30263269140625e-05,-2.427884361328125e-05,1.762714376,35541.262668757736,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C3,A0_full_scan,-0.00138283762109375,-0.0014213300662304688,-0.0013377236679296876,1.7631835239999998,1275.047407667009,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C3,A3_isotropic_hilbert,-5.476945312499997e-07,-2.670215742187497e-06,1.5897697460937519e-06,1.6887022309999997,3083292.1174982074,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C3,A6_rch,5.931601562499957e-07,-1.11058078125001e-06,2.5002210546874966e-06,-0.027662107000000047,,conditional on observed workload; no positive query saving
+noaa_long_island,A6_rch_C4,A0_input,-4.8819339062499995e-05,-7.21175638671875e-05,-2.279610789062502e-05,1.767144534,36197.63331366793,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C4,A0_full_scan,-0.00138206068125,-0.0014206053009374999,-0.0013362677562695313,1.767613682,1278.9696617382153,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C4,A3_isotropic_hilbert,2.2924531250000244e-07,-1.554169648437499e-06,2.097026328125003e-06,1.6931323889999998,,conditional on observed workload; no positive query saving
+noaa_long_island,A6_rch_C4,A6_rch,1.370099999999998e-06,-8.926736328125188e-08,3.076389980468746e-06,-0.02323194899999992,,conditional on observed workload; no positive query saving
+noaa_long_island,A6_rch_C2,A6_rch_C3,-7.788968750000027e-07,-1.708647812500003e-06,4.064205078124636e-08,-0.00019134899999984079,0.0,query saving observed; preparation uncertainty not included
+noaa_long_island,A6_rch_C4,A6_rch_C3,7.769398437500022e-07,1.4690734375000178e-07,1.4820391992187543e-06,0.004430158000000128,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A3_isotropic_hilbert,A0_input,0.00016751955625,4.87792071484375e-05,0.0003007035094921874,0.3919716729999999,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch,A0_input,0.0001691560828125,4.969975990234376e-05,0.0003080844652539062,13.33080597,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch,A3_isotropic_hilbert,1.6365265624999874e-06,-2.0489515820312616e-06,6.012876289062505e-06,12.938834297,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A0_input,A0_full_scan,-0.00793006650703125,-0.008004219713222656,-0.007851786911699219,0.0007373479999999988,0.09298131350427187,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch,A0_full_scan,-0.00776091042421875,-0.007933544798789063,-0.007566808006933595,13.331543318,1717.7808516379077,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch_C2,A0_input,0.00022292334375,0.0001055161188671875,0.0003588659413867187,12.924291367000002,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C2,A0_full_scan,-0.00770714316328125,-0.007877927028808593,-0.007509742856542969,12.925028715000002,1677.0194144800707,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch_C2,A3_isotropic_hilbert,5.540378749999999e-05,3.366258308593749e-05,7.922058316406247e-05,12.532319694000002,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C2,A6_rch,5.37672609375e-05,3.374308019531251e-05,7.617892001953125e-05,-0.406514602999998,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C3,A0_input,0.0005058990484375,0.00036334745519531246,0.0006644604635546872,13.05714131,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C3,A0_full_scan,-0.00742416745859375,-0.007631134840351563,-0.007195785952324219,13.057878658,1758.8340687123132,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch_C3,A3_isotropic_hilbert,0.0003383794921875,0.00026759754498046875,0.00041202551482421874,12.665169637,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C3,A6_rch,0.000336742965625,0.00026600067080078126,0.0004097798704296874,-0.27366465999999967,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C4,A0_input,0.00021095884296875,0.00010019515732421876,0.00033784030203124995,13.246884698,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C4,A0_full_scan,-0.0077191076640625,-0.007886957156328124,-0.007531506979726562,13.247622046,1716.211591098328,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch_C4,A3_isotropic_hilbert,4.3439286718749995e-05,2.147159490234374e-05,6.724020771484375e-05,12.854913025,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C4,A6_rch,4.180276015625e-05,2.1477523417968755e-05,6.46609028515625e-05,-0.08392127199999955,,conditional on observed workload; no positive query saving
+noaa_southwest_florida,A6_rch_C2,A6_rch_C3,-0.0002829757046875,-0.0003415078059375,-0.0002260790869921875,-0.1328499429999983,0.0,query saving observed; preparation uncertainty not included
+noaa_southwest_florida,A6_rch_C4,A6_rch_C3,-0.00029494020546874997,-0.00035721699251953123,-0.0002367135587304688,0.18974338800000012,643.328323781561,query saving observed; preparation uncertainty not included

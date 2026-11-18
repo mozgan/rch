@@ -32,6 +32,10 @@ add_executable(rch_cgal_spatial_sort cgal_hilbert_sort_adapter.cpp)
 target_link_libraries(rch_cgal_spatial_sort PRIVATE CGAL::CGAL rch::core)
 target_compile_features(rch_cgal_spatial_sort PRIVATE cxx_std_23)
 
+add_executable(rch_cgal_tree_benchmark cgal_tree_benchmark.cpp)
+target_link_libraries(rch_cgal_tree_benchmark PRIVATE CGAL::CGAL rch::core)
+target_compile_features(rch_cgal_tree_benchmark PRIVATE cxx_std_23)
+
 if(RCH_BUILD_TESTS)
     find_package(Python3 COMPONENTS Interpreter REQUIRED)
     add_test(
@@ -40,5 +44,11 @@ if(RCH_BUILD_TESTS)
             Python3::Interpreter
             "${CMAKE_SOURCE_DIR}/tests/integration/test_cgal_spatial_sort_adapter.py"
             "$<TARGET_FILE:rch_cgal_spatial_sort>"
+    )
+    add_test(
+        NAME CgalTreeBenchmark.Smoke
+        COMMAND Python3::Interpreter
+            "${CMAKE_SOURCE_DIR}/tests/integration/test_tree_benchmark.py"
+            "$<TARGET_FILE:rch_cgal_tree_benchmark>"
     )
 endif()

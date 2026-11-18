@@ -585,4 +585,28 @@ TEST(OrderingsSmoke, RchAcceptsMrcdFrameEstimator) {
     EXPECT_TRUE(axes_are_finite_orthonormal(result->frame_axes));
 }
 
+TEST(OrderingsSmoke, EstimatorSubtimingPreservesNativeOutput) {
+    std::vector<double> points;
+    for (int i = 0; i < 64; ++i) {
+        points.push_back(std::sin(static_cast<double>(i)) * 4.0);
+        points.push_back(std::cos(static_cast<double>(i) * 1.7));
+        points.push_back(std::sin(static_cast<double>(i) * 2.3));
+    }
+    const auto plain = rch::orderings::order_point_cloud(points);
+    auto timing = std::make_shared<rch::orderings::TimingBreakdown>();
+    const auto timed = rch::orderings::order_point_cloud(points, {}, timing);
+    ASSERT_TRUE(plain.has_value());
+    ASSERT_TRUE(timed.has_value());
+    EXPECT_EQ(plain->permutation, timed->permutation);
+    EXPECT_EQ(plain->primary_keys, timed->primary_keys);
+    EXPECT_EQ(plain->output_hash, timed->output_hash);
+    EXPECT_GT(timing->robust_start_count, 0.0);
+    EXPECT_GE(timing->robust_concentration_iteration_count, timing->robust_start_count);
+    const auto nested = timing->robust_pilot_seconds + timing->robust_guard_seconds +
+                        timing->robust_starts_seconds + timing->robust_concentration_seconds +
+                        timing->robust_finalization_seconds + timing->robust_remainder_seconds;
+    EXPECT_NEAR(nested, timing->robust_estimator_seconds, 1.0e-9);
+    EXPECT_GT(timing->robust_concentration_seconds, 0.0);
+}
+
 } // namespace

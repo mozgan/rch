@@ -69,7 +69,7 @@
       "direction": "lower",
       "algorithm_id": "A0_input",
       "bit_rule": "C0_uniform",
-      "estimate": "2.63291e-05",
+      "estimate": "2.66933e-05",
       "n": 105,
       "note": "table_5 D0 mean"
     },
@@ -77,9 +77,9 @@
       "scope": "synthetic runtime",
       "metric": "cache_miss_rate",
       "direction": "lower",
-      "algorithm_id": "A6_rch_b3_ogk",
-      "bit_rule": "C3_frame_core_occupancy",
-      "estimate": "0.226368",
+      "algorithm_id": "A6_rch_b2_mrcd",
+      "bit_rule": "C0_uniform",
+      "estimate": "0.232379",
       "n": 105,
       "note": "table_5 D0 mean"
     },
@@ -89,39 +89,39 @@
       "direction": "lower",
       "algorithm_id": "A3_isotropic_hilbert",
       "bit_rule": "C0_uniform",
-      "estimate": "0.00522789",
-      "n": 10,
+      "estimate": "0.00391765",
+      "n": 15,
       "note": "full-cloud exact rows; 6 tied"
     },
     {
       "scope": "real D0",
       "metric": "m1_l1_locality",
       "direction": "lower",
-      "algorithm_id": "A6_rch_b3_ogk",
-      "bit_rule": "C3_frame_core_occupancy",
-      "estimate": "94399.6",
-      "n": 10,
-      "note": "full-cloud exact rows"
+      "algorithm_id": "A2_morton",
+      "bit_rule": "C2_occupancy_floor1",
+      "estimate": "1.22186e+06",
+      "n": 15,
+      "note": "full-cloud exact rows; 3 tied"
     },
     {
       "scope": "real D0",
       "metric": "m1_l2_locality",
       "direction": "higher",
-      "algorithm_id": "A2_morton",
+      "algorithm_id": "A1_lexicographic",
       "bit_rule": "C0_uniform",
-      "estimate": "3.49147e-11",
-      "n": 10,
-      "note": "minimum-ratio diagnostic; 38 tied"
+      "estimate": "2.64627e-09",
+      "n": 15,
+      "note": "minimum-ratio diagnostic"
     },
     {
       "scope": "real D0",
       "metric": "recall_8_64",
       "direction": "higher",
-      "algorithm_id": "A3_isotropic_hilbert",
-      "bit_rule": "C0_uniform",
-      "estimate": "0.782188",
-      "n": 10,
-      "note": "full-cloud exact rows; 6 tied"
+      "algorithm_id": "A2_morton",
+      "bit_rule": "C2_occupancy_floor1",
+      "estimate": "0.784763",
+      "n": 15,
+      "note": "full-cloud exact rows; 3 tied"
     }
   ]
 }

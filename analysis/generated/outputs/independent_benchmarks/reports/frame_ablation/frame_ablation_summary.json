@@ -1,0 +1,428 @@
+{
+  "schema": "rch.frame_ablation.analysis.v1",
+  "fixed_domain_experiment": {
+    "contrast": "DetMCD robust frame \u2212 sample-covariance PCA; shared domain, C0 8 bits/axis",
+    "unit": "one independently sampled geometry/replicate cloud",
+    "n_clouds": 220,
+    "n_geometries": 11,
+    "median_cloud_effect": -0.0007116251285343295,
+    "stratified_cloud_bootstrap_95_percentile_ci": [
+      -0.0036170576008487387,
+      0.0012623430699541527
+    ],
+    "median_effect_by_geometry": {
+      "E0": -0.0030628502264450352,
+      "E1": -0.00992155244130688,
+      "E10": 0.014458847675077657,
+      "E11": 0.00716401419558052,
+      "E12": -0.008482394377560709,
+      "E2": -0.02473117427974203,
+      "E5": -0.0041572048875691825,
+      "E6": 0.0005043961315764345,
+      "E7": 0.003058397233559107,
+      "E8": 0.0016626074381265732,
+      "E9": -0.006020682422500423
+    },
+    "positive_clouds": 102,
+    "negative_clouds": 118,
+    "tied_clouds": 0,
+    "bootstrap_resamples": 20000,
+    "bootstrap_seed": 20261104,
+    "shared_cube_half_width": {
+      "median": 9.393163133016873,
+      "minimum": 2.8398320781707658,
+      "maximum": 63.846884618121884
+    },
+    "effective_cell_width": {
+      "formula": "2 * shared_cube_half_width / 2^8; equal for PCA and DetMCD within each cloud",
+      "median": 0.07338408697669432
+    }
+  },
+  "C2_C3_C4_factorial": [
+    {
+      "contrast": "Frame contrast at C2_occupancy_floor1: DetMCD \u2212 PCA",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.005534378440724186,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0045404800438976906,
+        0.007863658005134333
+      ],
+      "median_effect_by_geometry": {
+        "E0": 0.005244443248278108,
+        "E1": -0.018381578320533776,
+        "E10": 0.005859923538263145,
+        "E11": 0.005160684682401398,
+        "E12": 0.023606201317636397,
+        "E2": -0.01164027431428949,
+        "E5": 0.0020760468380050384,
+        "E6": 0.0050929922281327394,
+        "E7": 0.010390132862367896,
+        "E8": 0.026239251892165916,
+        "E9": -0.004846021499368192
+      },
+      "positive_clouds": 143,
+      "negative_clouds": 77,
+      "tied_clouds": 0,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261200
+    },
+    {
+      "contrast": "Frame contrast at C3_frame_core_occupancy: DetMCD \u2212 PCA",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0057064183751015934,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.003489484322714842,
+        0.00766618139096871
+      ],
+      "median_effect_by_geometry": {
+        "E0": 0.0010127286121592305,
+        "E1": 0.0012828470439085748,
+        "E10": -0.008243306233712722,
+        "E11": 0.005160684682401398,
+        "E12": 0.0314227953683453,
+        "E2": 0.011216129788394369,
+        "E5": -0.0021305546033607015,
+        "E6": 0.005527428626825148,
+        "E7": 0.010390132862367896,
+        "E8": 0.013248537390169235,
+        "E9": 0.0016966656413159864
+      },
+      "positive_clouds": 136,
+      "negative_clouds": 84,
+      "tied_clouds": 0,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261201
+    },
+    {
+      "contrast": "Frame contrast at C4_hybrid: DetMCD \u2212 PCA",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.005534378440724186,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.003769816722411723,
+        0.008878651664422005
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.005514060157936762,
+        "E1": -0.0003224454886148198,
+        "E10": 0.010352449735025582,
+        "E11": 0.005160684682401398,
+        "E12": 0.025632234625215078,
+        "E2": -0.0006089720747496363,
+        "E5": 0.003551315267900673,
+        "E6": 0.0050929922281327394,
+        "E7": 0.010390132862367896,
+        "E8": 0.0024831496679474374,
+        "E9": 0.0012413062219572835
+      },
+      "positive_clouds": 141,
+      "negative_clouds": 79,
+      "tied_clouds": 0,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261202
+    },
+    {
+      "contrast": "Frame\u00d7rule interaction: (C3_frame_core_occupancy\u2212C2) in DetMCD minus PCA",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.0053525149056383725,
+        "E1": 0.013570852207224426,
+        "E10": -0.01140497447813904,
+        "E11": 0.0,
+        "E12": 0.007989514720661978,
+        "E2": 0.014449186959889837,
+        "E5": -0.0016965805297029651,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.01732565259393859,
+        "E9": 0.022540119834253636
+      },
+      "positive_clouds": 92,
+      "negative_clouds": 80,
+      "tied_clouds": 48,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261203
+    },
+    {
+      "contrast": "Frame\u00d7rule interaction: (C4_hybrid\u2212C2) in DetMCD minus PCA",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.014246353383068455,
+        "E1": 0.007282596661280616,
+        "E10": 0.002004612610994161,
+        "E11": 0.0,
+        "E12": 0.0,
+        "E2": 0.007333695715842969,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.01737412918232495,
+        "E9": -0.0015079681990007865
+      },
+      "positive_clouds": 63,
+      "negative_clouds": 68,
+      "tied_clouds": 89,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261204
+    },
+    {
+      "contrast": "Rule effect within DetMCD robust frame: C3_frame_core_occupancy \u2212 C2",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": -0.002040825746896291,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        -0.003549427235065711,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.04602401351790625,
+        "E1": -0.015917676164109218,
+        "E10": -0.03196673080616963,
+        "E11": 0.0,
+        "E12": 0.007989514720661978,
+        "E2": -0.027356789366843826,
+        "E5": -0.00273189496644885,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.02988416247725545,
+        "E9": -0.02098070362209392
+      },
+      "positive_clouds": 53,
+      "negative_clouds": 119,
+      "tied_clouds": 48,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261205
+    },
+    {
+      "contrast": "Rule effect within DetMCD robust frame: C4_hybrid \u2212 C2",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.03733756238954328,
+        "E1": 0.0465798932353777,
+        "E10": -0.041295530995092866,
+        "E11": 0.0,
+        "E12": 0.0,
+        "E2": -0.04946121771190981,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.04293568595549424,
+        "E9": -0.04557092749208147
+      },
+      "positive_clouds": 37,
+      "negative_clouds": 93,
+      "tied_clouds": 90,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261206
+    },
+    {
+      "contrast": "Rule effect within sample covariance / PCA: C3_frame_core_occupancy \u2212 C2",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.038187504091233615,
+        "E1": -0.030915807198044987,
+        "E10": -0.03135949203438204,
+        "E11": 0.0,
+        "E12": 0.0,
+        "E2": -0.008015309166586215,
+        "E5": -0.0008343640064323032,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.016008043244221837,
+        "E9": -0.022140238156701852
+      },
+      "positive_clouds": 42,
+      "negative_clouds": 98,
+      "tied_clouds": 80,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261207
+    },
+    {
+      "contrast": "Rule effect within sample covariance / PCA: C4_hybrid \u2212 C2",
+      "unit": "one independently sampled geometry/replicate cloud",
+      "n_clouds": 220,
+      "n_geometries": 11,
+      "median_cloud_effect": 0.0,
+      "stratified_cloud_bootstrap_95_percentile_ci": [
+        0.0,
+        0.0
+      ],
+      "median_effect_by_geometry": {
+        "E0": -0.02385232740260701,
+        "E1": 0.02123193383929478,
+        "E10": -0.046055190945266555,
+        "E11": 0.0,
+        "E12": 0.0,
+        "E2": -0.04794473052886972,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0,
+        "E8": -0.009995570992884062,
+        "E9": -0.04366530442769406
+      },
+      "positive_clouds": 30,
+      "negative_clouds": 84,
+      "tied_clouds": 106,
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 20261208
+    }
+  ],
+  "bit_allocation_summaries": [
+    {
+      "algorithm_id": "A5_pca_compact_hilbert",
+      "bit_rule": "C2_occupancy_floor1",
+      "n_clouds": 220,
+      "median_total_bits": 9.5,
+      "distinct_axis_allocations": 10,
+      "axis_allocation_counts": {
+        "3 3 3": 23,
+        "4 2 3": 2,
+        "4 3 2": 5,
+        "4 3 3": 53,
+        "4 4 1": 20,
+        "4 4 2": 40,
+        "5 2 2": 60,
+        "5 2 3": 3,
+        "5 3 2": 8,
+        "6 2 2": 6
+      }
+    },
+    {
+      "algorithm_id": "A5_pca_compact_hilbert",
+      "bit_rule": "C3_frame_core_occupancy",
+      "n_clouds": 220,
+      "median_total_bits": 9.0,
+      "distinct_axis_allocations": 6,
+      "axis_allocation_counts": {
+        "3 3 3": 20,
+        "4 3 2": 16,
+        "4 3 3": 44,
+        "4 4 1": 20,
+        "4 4 2": 40,
+        "5 2 2": 80
+      }
+    },
+    {
+      "algorithm_id": "A5_pca_compact_hilbert",
+      "bit_rule": "C4_hybrid",
+      "n_clouds": 220,
+      "median_total_bits": 11.0,
+      "distinct_axis_allocations": 13,
+      "axis_allocation_counts": {
+        "4 3 3": 26,
+        "4 3 4": 4,
+        "4 4 1": 20,
+        "4 4 2": 40,
+        "4 4 3": 14,
+        "4 4 4": 17,
+        "5 2 2": 20,
+        "5 3 3": 40,
+        "5 4 3": 3,
+        "6 2 2": 1,
+        "6 2 3": 4,
+        "6 3 2": 10,
+        "6 3 3": 21
+      }
+    },
+    {
+      "algorithm_id": "A6_rch",
+      "bit_rule": "C2_occupancy_floor1",
+      "n_clouds": 220,
+      "median_total_bits": 9.0,
+      "distinct_axis_allocations": 12,
+      "axis_allocation_counts": {
+        "3 3 3": 32,
+        "3 4 2": 1,
+        "3 4 3": 2,
+        "4 2 3": 3,
+        "4 3 2": 1,
+        "4 3 3": 43,
+        "4 4 1": 20,
+        "4 4 2": 40,
+        "5 2 2": 64,
+        "5 2 3": 6,
+        "5 3 2": 4,
+        "6 2 2": 4
+      }
+    },
+    {
+      "algorithm_id": "A6_rch",
+      "bit_rule": "C3_frame_core_occupancy",
+      "n_clouds": 220,
+      "median_total_bits": 9.0,
+      "distinct_axis_allocations": 9,
+      "axis_allocation_counts": {
+        "3 3 3": 20,
+        "4 2 2": 2,
+        "4 3 2": 34,
+        "4 3 3": 29,
+        "4 4 1": 21,
+        "4 4 2": 39,
+        "5 2 1": 3,
+        "5 2 2": 67,
+        "5 3 2": 5
+      }
+    },
+    {
+      "algorithm_id": "A6_rch",
+      "bit_rule": "C4_hybrid",
+      "n_clouds": 220,
+      "median_total_bits": 11.0,
+      "distinct_axis_allocations": 17,
+      "axis_allocation_counts": {
+        "3 4 4": 2,
+        "4 3 3": 22,
+        "4 3 4": 2,
+        "4 4 1": 20,
+        "4 4 2": 37,
+        "4 4 3": 10,
+        "4 4 4": 28,
+        "4 5 3": 1,
+        "5 2 2": 9,
+        "5 2 3": 5,
+        "5 3 2": 3,
+        "5 3 3": 44,
+        "5 3 4": 1,
+        "6 2 2": 3,
+        "6 2 3": 7,
+        "6 3 2": 2,
+        "6 3 3": 24
+      }
+    }
+  ],
+  "interpretation": "These are CLEAN-DATA MIAD effects, not contaminated Kendall stability effects. The separate frame_stability report evaluates that question. Effects are conditional on the tested geometries. The fixed-domain contrast holds the cube and 8-bit axis depth constant; the factorial contrasts estimate rule-specific differences and interactions."
+}

@@ -21,6 +21,12 @@ import argparse
 import hashlib
 import shutil
 import string
+import sys
+import time
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from http.client import IncompleteRead
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 import urllib.request
 from pathlib import Path
@@ -109,12 +115,45 @@ def download_url(url: str, target: Path) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     tmp = target.with_suffix(target.suffix + ".tmp")
     local_path = local_source_path(url)
-    if local_path is not None:
-        shutil.copyfile(local_path, tmp)
-    else:
-        with urllib.request.urlopen(url, timeout=60) as response, tmp.open("wb") as out:
-            shutil.copyfileobj(response, out)
-    tmp.replace(target)
+    try:
+        if local_path is not None:
+            shutil.copyfile(local_path, tmp)
+        else:
+            for attempt in range(6):
+                try:
+                    with urllib.request.urlopen(url, timeout=60) as response, tmp.open("wb") as out:
+                        shutil.copyfileobj(response, out)
+                    break
+                except (HTTPError, URLError, TimeoutError, ConnectionError, IncompleteRead) as exc:
+                    tmp.unlink(missing_ok=True)
+                    if isinstance(exc, HTTPError) and exc.code not in {408, 429, 500, 502, 503, 504}:
+                        exc.close()
+                        raise
+                    delay = min(60.0, 5.0 * 2**attempt)
+                    if isinstance(exc, HTTPError):
+                        header = exc.headers.get('Retry-After') if exc.headers else None
+                        exc.close()
+                        if header:
+                            try:
+                                if header.strip().isdigit():
+                                    requested = float(header)
+                                else:
+                                    date = parsedate_to_datetime(header)
+                                    if date.tzinfo is None:
+                                        date = date.replace(tzinfo=timezone.utc)
+                                    requested = max(0.0, (date - datetime.now(timezone.utc)).total_seconds())
+                                delay = max(delay, requested)
+                            except (ValueError, TypeError, OverflowError):
+                                pass
+                    if attempt == 5:
+                        raise
+                    if delay > 300:
+                        raise RuntimeError('Server requested a long Retry-After; try make real-data later (no cleanup needed)') from exc
+                    print(f'[download] temporary network/HTTP failure; retry {attempt + 2}/6 in {delay:.0f}s', file=sys.stderr, flush=True)
+                    time.sleep(delay)
+        tmp.replace(target)
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 def ensure_dataset(dataset: dict[str, Any], raw_dir: Path, force: bool = False) -> Path:

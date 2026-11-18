@@ -1,0 +1,32 @@
+schema: rch.dataset_manifest.v1
+source:
+  id: usgs_3dep
+  name: USGS 3D Elevation Program
+  homepage: https://www.usgs.gov/3d-elevation-program/
+  license_summary: Public domain; all 3DEP products are free of charge and without use restrictions. Credit USGS and the acquisition project.
+  license_url: https://www.usgs.gov/3d-elevation-program/
+  citation: USGS, Lidar Point Cloud CO_CameronPeakWildfire_2021_D21, tile w2970n1375, published 2022; accessed 2026-11-04.
+datasets:
+  - id: usgs_cameron_peak
+    label: USGS Cameron Peak LiDAR
+    url: https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_CameronPeakWildfire_2021_D21/CO_CameronPkFire_1_2021/LAZ/USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.laz
+    filename: USGS_LPC_CO_CameronPeakWildfire_2021_D21_w2970n1375.laz
+    sha256: 3d760640dee4dfbc14714a16fa154d0f4b974297fe0dcdf0e1b35e246500883d
+    archive_type: laz
+    canonical_format: laz
+    inner_path: ''
+    expected_vertices: 479622
+    expected_bytes: 4103128
+    horizontal_epsg: 6430
+    vertical_epsg: 6360
+    source_units: US survey foot
+    coordinate_scale_to_metre: 0.3048006096012192
+    metadata_url: https://www.sciencebase.gov/catalog/item/636353a1d34ebe442506c1aa
+    metadata_snapshot: data/manifests/provenance/usgs_cameron_peak_tnm.json
+    source_note: |
+      Complete discrete-return airborne LiDAR tile; not a reconstructed mesh.
+      Selected before ordering/query results for a manageable complete-file size.
+      Contains all source records in acquisition-file order, with all classes and returns retained.
+      NAD83(2011) / Colorado North (ftUS), NAVD88 height (ftUS), GEOID18.
+      Convert all axes to metres using 1200/3937; no crop, thinning, deduplication,
+      recentering, outlier injection or classification filtering. One tile is one fixed case.

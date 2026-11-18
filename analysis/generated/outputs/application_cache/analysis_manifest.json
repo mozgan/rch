@@ -1,0 +1,14 @@
+{
+  "source_manifest_sha256": "96ffc96c6efc91dc0cc3df30dff62951afab2356385a11d07e7eecbf906050b6",
+  "generator_sha256": "cf96b3b42a00ff8e0406bf022c37626e9a083f4902c5444093a68d24cd97a785",
+  "artifacts_sha256": {
+    "figures/fig_application_cache_latency.pdf": "3b9798a9b64e44e59b38332b481ae179263fe9f77428f290bf674553ce5e3332",
+    "tables/table_application_cache.tex": "794414959e5d1440f436ece808ca1dc526bbf17acaa5a910b5ac681f9972b20f",
+    "tables/table_application_cache_io.tex": "e7acbddb371751f43d77cdeb65a32d955894d8a797e294129933edd395a3266d",
+    "outputs/application_cache/io_evidence.md": "0784216d8547acb699e13f4fd41165c733f5862e2e783b37315a55a990003eb1",
+    "outputs/application_cache/io_analysis_manifest.json": "78393b542b5eee89a1f2df6e18daaf64da44a57acc4b64b12755313c86e3b254",
+    "outputs/application_cache/summary.csv": "1565849e50f9df935fb0d0009e594245e5c173aaa9966e5ec87f409e8e0a52b0",
+    "outputs/application_cache/source_manifest.json": "96ffc96c6efc91dc0cc3df30dff62951afab2356385a11d07e7eecbf906050b6",
+    "outputs/application_cache/evidence.md": "ee0914cf71afec13c9b2bdca0b9f4e63741aa54de725763b889cc46750102285"
+  }
+}

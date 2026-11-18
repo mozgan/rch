@@ -1,0 +1,33 @@
+# Matched independent clouds for a PCA-frame fixed-resolution Hilbert control.
+schema: rch.runlist.v1
+name: pca_fixed_hilbert_control
+algorithm_ids:
+  - A3_isotropic_hilbert
+  - A5_pca_compact_hilbert
+  - A6_rch
+bit_rules:
+  - id: C0_uniform
+    label: C0 uniform (10 bits/axis)
+    bit_allocator: uniform
+    allocation_model: fixed_equal_depth
+    budget_projection: equal_depth_axis_cap
+    uniform_bits: 10
+    min_axis_bits: 1
+contamination_ids: [D0]
+geometry_ids: [E1, E2, E9, E10]
+point_counts: [384]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+metrics: [miad]
+independent_sampling: true
+timing_repeats: 1
+additional_geometries:
+  - id: E9
+    label: prolate Gaussian 3:1:1
+    generator: gaussian_ellipsoid
+    geometry: plate_5to1
+    axes: [3.0, 1.0, 1.0]
+  - id: E10
+    label: prolate Gaussian 7:1:1
+    generator: gaussian_ellipsoid
+    geometry: rod_10to1
+    axes: [7.0, 1.0, 1.0]

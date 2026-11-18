@@ -35,7 +35,7 @@ inspired by DetMCD, but its starts, pilot, corrections, and numerical guards
 are implementation-specific. It must not be described as an exact solution of
 the combinatorial minimum-covariance-determinant problem.
 
-For each axis, RCH obtains a lower median `c_j` and a MAD scale. A guarded
+For each axis, RCH obtains a lower median `c_j` and a normal-scaled MAD scale. A guarded
 median of the three scales normalizes radial distances. The pilot counts points
 whose normalized radius exceeds 5.2 and chooses
 
@@ -66,11 +66,14 @@ subset, numerical failure, determinant increase beyond tolerance, or the
 200-step bound. Deterministic raw-coordinate and original-index tie-breaks are
 used when distances are equal.
 
-The eligible candidate with the smallest determinant wins. The selected
-scatter receives the configured consistency and finite-sample corrections.
+Only an unchanged subset counts as convergence. A returned non-converged
+candidate can still be selected; finite starts do not establish the global
+MCD solution. The eligible candidate with the smallest determinant wins.
+The selected scatter receives the configured consistency and finite-sample corrections.
 Ridge repairs are recorded. If the sample is too small, rank deficient, or
 otherwise unusable by the robust branch, RCH falls back to sample mean and
-sample covariance and sets `robust_fallback_used`.
+sample covariance and sets `robust_fallback_used`. This fallback has no
+high-breakdown robustness guarantee.
 
 MRCD and OGK are available as explicit estimator variants. Selecting them is
 an ablation/configuration choice; it does not change the name of the ordering
@@ -88,7 +91,9 @@ $$
 Eigenvector signs are canonicalized. If the eigensolver fails, values are not
 finite, or a relative eigengap is too small to define stable axes, RCH uses
 the canonical coordinate axes. This axis fallback is distinct from the robust
-estimator fallback flag.
+estimator fallback flag. Scatter repair, estimator replacement, and axis
+fallback are separate events; a false `robust_fallback_used` flag does not
+mean that no numerical repair occurred.
 
 Each point is projected without whitening:
 
@@ -104,6 +109,7 @@ RCH then forms two symmetric boxes:
 - the covering box extends each half-extent to include every projected point.
 
 The core support is the number of points inside all three core intervals.
+If this count is zero, allocation uses `N` as the support count.
 
 ## Stage 4: Allocate Axis Bits
 
@@ -162,14 +168,15 @@ t_j=\frac{y_j+b_j}{2b_j},
 q_j=
 \begin{cases}
 0, & t_j\le 0,\\
-\lfloor t_j2^{m_j}\rfloor, & 0<t_j<1,\\
+\min\{2^{m_j}-1,\lfloor t_j2^{m_j}\rfloor\}, & 0<t_j<1,\\
 2^{m_j}-1, & t_j\ge 1.
 \end{cases}
 $$
 
 The implementation checks the interval and conversion bounds and uses
-`long double` for the interior arithmetic. Invalid intervals and zero-depth
-axes map to zero.
+`long double` for the interior arithmetic. The upper cap is redundant in exact
+arithmetic for `0 < t_j < 1`, but keeps the code in range after rounding.
+Invalid intervals, non-finite projected values, and zero-depth axes map to zero.
 
 The compact Hilbert encoder accepts unequal per-axis depths and produces at
 most 63 key bits. Quantization collisions do not discard records. Before any
@@ -193,6 +200,7 @@ MIAD-decreasing local search to every non-input internal method:
 - adjacent swaps after the joint passes.
 
 A move is accepted only when its computed local edge delta is negative.
+This is a floating-point test, not a strict-decrease theorem for every input.
 Refinement changes the permutation but not the stored curve keys or bit depths;
 the final sequence therefore need not remain key-sorted.
 

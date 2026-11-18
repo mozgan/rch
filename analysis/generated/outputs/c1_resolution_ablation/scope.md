@@ -1,0 +1,1 @@
+Fixed real inputs; one native fitted frame per method, checked across all arms. Equal-budget balancing isolates a distribution change at fixed total bits; axis-depth arms change the budget. No bootstrap, population inference, timing comparison or deployable selection policy. Native replay must match its digest. New native results may differ from previous benchmark records.

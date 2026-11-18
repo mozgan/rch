@@ -156,7 +156,7 @@ struct Hilbert3Compact {
             const std::uint8_t rank = static_cast<std::uint8_t>((index >> remaining) & rank_mask);
             const std::uint8_t pattern = static_cast<std::uint8_t>(
                 detail::rotate_right<dimensions>(entry, direction) &
-                static_cast<std::uint8_t>(~free_mask & 0x7U)
+                static_cast<std::uint8_t>(~static_cast<unsigned int>(free_mask) & 0x7U)
             );
 
             const detail::GrayRankInverse3 inverse =

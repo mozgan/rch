@@ -7,8 +7,8 @@ and sorts compact Hilbert keys. The result is a permutation of the original
 records; RCH does not resample, merge, or replace the input coordinates.
 
 The repository contains the public library, developer command-line tools,
-examples, tests, experiment runners, stored results, analysis scripts, and the
-accompanying research paper.
+examples, tests, experiment runners, and analysis scripts. See the
+[documentation map](docs/README.md) for the supported workflows.
 
 ## What RCH Is For
 
@@ -17,12 +17,14 @@ storage, block access, or downstream locality experiments. RCH is an ordering
 component, not a surface reconstruction algorithm, spatial database, or proof
 that one order is best for every workload.
 
-The recorded evidence is deliberately bounded. RCH improves selected locality
-and contamination-stability measures on the recorded anisotropic synthetic
-clouds, costs more than the simpler internal baselines, and does not beat
-isotropic Hilbert on mean inter-adjacent distance for the two recorded Stanford
-reconstruction vertex sets. See [the evidence guide](docs/experiments.md) before
-generalizing the results.
+The evaluation uses 80 independent clouds for locality, 220 for contamination
+stability, and seven fixed real inputs. RCH shows locality and stability
+benefits in the tested synthetic groups, with higher preparation cost. Default
+RCH/C3 has higher mean inter-adjacent distance than isotropic Hilbert on six
+of the seven real inputs. Query results are mixed, and RCH/C3 is slower in
+median paired total-time comparisons in all 21 tested storage/query settings.
+See [Experiments and interpretation](docs/experiments.md) for the design,
+results, and limits.
 
 ## Quick Start
 
@@ -86,24 +88,33 @@ make test
 Useful narrower checks are:
 
 ```bash
-make test-unit
 make test-property
 make test-oracle
-make test-regression
 make test-cli
 make repro-smoke
 ```
 
-The full benchmark and paper-artifact workflow needs optional CGAL, dataset,
-Linux performance-counter, and LaTeX dependencies. Start with the small
-file-backed workflow:
+The full benchmark uses the real CGAL adapter and pinned Stanford/USGS/NOAA data:
 
 ```bash
-make bench-demo
+make bench
 ```
 
-See [requirements](docs/requirements.md) and
-[reproducibility](docs/reproducibility.md) before running `make bench`.
+This can be a long run. See [build workflows](docs/build-workflows.md),
+[requirements](docs/requirements.md) and
+[reproducibility](docs/reproducibility.md) before running them.
+
+For the complete data preparation, build, test, and measurement sequence, use
+`make all-targets`. It finishes with artifacts and integration checks; manuscript
+compilation is a separate optional step.
+
+For the separate continuous storage/query workflow, use
+`make bench-application-workflow`. It measures input reading, one ordering
+call, storage preparation, 256/512/1024 queries, result writing, and file
+synchronization (`fsync(2)`). It also records Linux process I/O counters
+(`proc_pid_io(5)`). See the
+[workflow guide](docs/application-workflow.md) for scope, pilot runs,
+clean regeneration, resume, and artifact commands.
 
 ## Developer CLI
 
@@ -119,14 +130,15 @@ cmake --build build/src-tools --parallel
 Order an XYZ file and write both the permutation and its provenance:
 
 ```bash
+mkdir -p build/cli-output
 build/src-tools/src/cli/rch_order \
   --input examples/tiny_point_cloud.xyz \
   --method rch \
   --frame-estimator det_mcd \
   --bit-allocator frame_core_occupancy \
   --refinement off \
-  --output /tmp/rch-order.csv \
-  --manifest /tmp/rch-manifest.json
+  --output build/cli-output/rch-order.csv \
+  --manifest build/cli-output/rch-manifest.json
 ```
 
 The CSV schema is `rank,raw_index,key`. The JSON manifest records the effective
@@ -137,6 +149,8 @@ and SHA-256 integer-output digest. Details are in [the CLI guide](docs/cli.md).
 
 - [Documentation map](docs/README.md)
 - [Getting started](docs/getting-started.md)
+- [Build and experiment workflows](docs/build-workflows.md)
+- [Continuous storage/query workflow](docs/application-workflow.md)
 - [Algorithm and mathematical contract](docs/algorithm.md)
 - [C++ API](docs/api.md)
 - [Command-line tools](docs/cli.md)
@@ -154,12 +168,11 @@ and SHA-256 integer-output digest. Details are in [the CLI guide](docs/cli.md).
 | `src/cli/` | Ordering, comparison, and block-read tools |
 | `examples/` | Minimal public-API program and tiny point cloud |
 | `tests/` | Unit, property, oracle, regression, integration, and fuzz tests |
-| `experiments/` | Algorithm configurations, runlists, runners, and outputs |
+| `experiments/` | Tracked configurations and runners; measurements are generated locally |
 | `analysis/` | Table, statistic, and figure generation |
 | `data/` | Synthetic generators and external-data manifests |
 | `baselines/reference_r/` | R reference computations for robust estimators |
 | `reproducibility/` | Smoke workflow and expected portability records |
-| `paper/` | Research paper, bibliography, figures, and supporting files |
 
 ## Citation And License
 

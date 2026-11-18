@@ -38,20 +38,19 @@ datasets:
     expected_vertices: 172974
     expected_faces: 345944
     source_note: Stanford page reports vripped reconstruction and 345944 triangles; local PLY header reports 172974 vertices.
-#  - id: stanford_dragon
-#    label: Stanford Dragon
-#    url: https://graphics.stanford.edu/pub/3Dscanrep/dragon/dragon_recon.tar.gz
-#    filename: dragon_recon.tar.gz
-#    sha256: 74ac1d90989c9b1732edee82d57e9ce71452144cf4355f108d8c9c616d28d02f
-#    archive_type: tar.gz
-#    inner_path: dragon_recon/dragon_vrip.ply
-#    canonical_format: ascii_ply
-#    expected_vertices: 437645
-#    expected_faces: 871414
-#    source_note: |
-#      Stanford page reports the full vrip reconstruction of Dragon. SHA-256 captured
-#      via a fresh download from the official Stanford mirror; PLY header reports 437645 vertices
-#      and 871414 faces (ascii_ply).
+  - id: stanford_dragon
+    label: Stanford Dragon
+    url: https://graphics.stanford.edu/pub/3Dscanrep/dragon/dragon_recon.tar.gz
+    filename: dragon_recon.tar.gz
+    sha256: 74ac1d90989c9b1732edee82d57e9ce71452144cf4355f108d8c9c616d28d02f
+    archive_type: tar.gz
+    inner_path: dragon_recon/dragon_vrip.ply
+    canonical_format: ascii_ply
+    expected_vertices: 437645
+    expected_faces: 871414
+    source_note: |
+      Stanford page reports the full vrip reconstruction of Dragon. The pinned archive SHA-256
+      was verified by the manifest downloader; conversion checks the archive member and counts.
 #  - id: stanford_lucy
 #    label: Stanford Lucy
 #    url: https://graphics.stanford.edu/data/3Dscanrep/lucy.tar.gz

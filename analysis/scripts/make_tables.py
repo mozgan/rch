@@ -22,6 +22,11 @@ import numpy as np
 from scipy.stats import bootstrap, spearmanr, wilcoxon
 from scipy.stats import t as student_t
 
+if __package__:
+    from .legacy_claims import STRATIFIED_SCOPE, annotate_legacy_statistics
+else:
+    from legacy_claims import STRATIFIED_SCOPE, annotate_legacy_statistics
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 BOOTSTRAP_RESAMPLES = 9999
 BOOTSTRAP_SEED = 20260513
@@ -31,7 +36,7 @@ BLOCK_SIGNFLIP_EXACT_LIMIT = 20
 BLOCK_SIGNFLIP_RESAMPLES = 20000
 BLOCK_SIGNFLIP_SEED = 20260726
 
-# Inferential locality gate is pinned to a single clean size and the original
+# Historical nominal locality gate is pinned to a single clean size and the original
 # baseline-ladder method set, so enriching the descriptive L1/L2 figures with
 # extra sizes (e.g. 256) and the MRCD/OGK robust-frame variants does not change
 # the published H1/H2/A7 Wilcoxon gate or the E1-vs-E2 Spearman summary.
@@ -273,18 +278,12 @@ def block_signflip_test(
 ) -> dict[str, Any]:
     """Stratified signed-rank test with whole-block sign flipping.
 
-    Why this and not a pooled Wilcoxon. The gate's samples are indexed by
-    (bit_rule, geometry, seed), but there are only 10 distinct point clouds
-    (geometry x seed at the pinned size); the bit rule is a *within-cloud*
-    factor. Feeding all 40 differences to `scipy.stats.wilcoxon` asserts 40
-    independent pairs, which is false. The independence unit is the cloud.
-
-    So each cloud is treated as an **exchangeability block**. Under the null the
-    two method labels are interchangeable for a whole cloud, and swapping them
-    negates every difference of that cloud at once — i.e. *whole-block* sign
-    flipping, the case Winkler et al. describe as blocks "exchanged ... on their
-    entirety". Blocks are independent of each other, so their signs flip freely:
-    2**n_blocks rearrangements, enumerated exactly for n_blocks <= 20.
+    Repeated conditions within a caller-supplied block change sign together.
+    Valid inference requires a joint distribution invariant under these block
+    sign changes; this helper does not establish that assumption. In particular,
+    the historical geometry/seed blocks do not preserve shared E1/E2 draws.
+    The separate shared-seed sensitivity groups both geometries together.
+    Enumeration covers 2**n_blocks sign patterns exactly for n_blocks <= 20.
 
     The statistic is the sum of signed ranks with ranks formed **within each
     stratum**. Within-stratum ranking is what keeps the strata commensurable: a
@@ -599,10 +598,9 @@ def paired_metric_blocks(
 ) -> list[dict[str, float]]:
     """Group the paired RCH-vs-baseline differences into exchangeability blocks.
 
-    One block per point cloud — (geometry, seed) at the pinned gate size — with
-    the bit rule as the within-block stratum. This is the structure
-    `block_signflip_test` needs: the cloud is the independence unit, the bit rule
-    is not.
+    Historical (geometry, seed) blocks at the pinned size retain repeated bit
+    rules. E1/E2 still share draws across these blocks; this is incomplete
+    dependence blocking and the resulting p-values remain nominal.
     """
     samples: dict[tuple[Any, ...], dict[str, float]] = defaultdict(dict)
     for row in rows:
@@ -630,6 +628,77 @@ def paired_metric_blocks(
         if "A6_rch" in pair and baseline in pair:
             blocks[(geometry, seed)][str(rule)] = pair["A6_rch"] - pair[baseline]
     return [dict(block) for block in blocks.values()]
+
+
+def shared_seed_locality_sensitivity(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Keep shared E1/E2 inputs together in the five-seed locality sensitivity.
+
+    This is separate from the historical geometry/seed gate. Rank magnitudes
+    within six geometry/rule strata; flip all six contributions per seed jointly.
+    Missing or incomplete designs are reported, never silently tested as five
+    complete blocks. Exact enumeration does not prove sign-change validity.
+    """
+    algorithms = ("A6_rch", "A3_isotropic_hilbert", "A2_morton", "A7_cgal_spatial_sort")
+    cells: dict[tuple[str, int, str], dict[str, float]] = defaultdict(dict)
+    for row in rows:
+        if (
+            row.get("runlist") != "table_3_locality"
+            or not _is_gate_size(row.get("point_count"))
+            or row.get("contamination_id") != "D0"
+            or row.get("geometry_id") not in ("E1", "E2")
+            or row.get("bit_rule") not in PRIMARY_BIT_RULES
+            or row.get("refinement", "off") not in ("off", "external")
+            or (
+                row.get("refinement") == "external"
+                and row.get("algorithm_id") != algorithms[-1]
+            )
+            or row.get("algorithm_id") not in algorithms
+        ):
+            continue
+        seed = float(row["seed"])
+        if not seed.is_integer() or int(seed) not in range(5):
+            continue
+        value = float(row["miad"])
+        if not math.isfinite(value):
+            raise ValueError("non-finite MIAD in shared-seed sensitivity")
+        key = (str(row["geometry_id"]), int(seed), str(row["bit_rule"]))
+        algorithm = str(row["algorithm_id"])
+        if algorithm in cells[key]:
+            raise ValueError(f"duplicate shared-seed cell: {key}, {algorithm}")
+        cells[key][algorithm] = value
+
+    expected = {
+        (geometry, seed, rule)
+        for geometry in ("E1", "E2")
+        for seed in range(5)
+        for rule in PRIMARY_BIT_RULES
+    }
+    scope = {
+        "schema": "rch.shared_seed_locality_sensitivity.v1",
+        "block": "seed; E1/E2 and C2-C4 flip jointly",
+        "strata": "geometry and bit rule",
+        "inference_scope": "selected descriptive inputs; requires valid joint seed sign changes",
+    }
+    if set(cells) != expected or any(set(pair) != set(algorithms) for pair in cells.values()):
+        return {**scope, "status": "incomplete_design", "comparisons": []}
+
+    comparisons = []
+    for baseline in algorithms[1:]:
+        blocks = [
+            {
+                f"{geometry}:{rule}": cells[geometry, seed, rule]["A6_rch"]
+                - cells[geometry, seed, rule][baseline]
+                for geometry in ("E1", "E2")
+                for rule in PRIMARY_BIT_RULES
+            }
+            for seed in range(5)
+        ]
+        result = block_signflip_test(blocks, alternative="less")
+        comparisons.append({"baseline": baseline, "n_pairs": 30, **result})
+    adjusted = holm_bonferroni([result["p"] for result in comparisons])
+    for result, p_adj in zip(comparisons, adjusted):
+        result["p_adj"] = p_adj
+    return {**scope, "status": "complete", "n_seed_blocks": 5, "comparisons": comparisons}
 
 
 def stratified_table_rows(stratified: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -805,22 +874,11 @@ def wilcoxon_hypotheses(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def stratified_hypotheses(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Evaluate the same family separately within each primary bit rule.
+    """Report per-rule nominal legacy tests; shared draws remain dependent.
 
-    Why this exists. The pooled analysis draws its 40 "pairs" from only 10 point
-    clouds (2 geometries x 5 seeds at the pinned gate size); the bit rule is a
-    *within-cloud* factor, so the pooled pairs are not independent, which the
-    paired Wilcoxon test assumes. Worse, the strata do not agree in direction:
-    RCH wins nearly every pair under three of the four primary rules and loses
-    nearly every pair under the fourth, so pooling averages across a sign
-    reversal. Within a single rule the 10 clouds are genuinely independent and
-    the test's assumption holds.
-
-    This is reported alongside the pooled result; it does **not** change any
-    `passed` flag. Turning the stratification into the gate needs two decisions
-    that belong to the author: how to combine strata (all-must-pass, majority, or
-    a stratified test). Holm adjustment is applied within each stratum across the three
-    hypotheses, matching the pooled family size.
+    Rule stratification removes within-cloud rule repetition but does not make
+    geometry-seed cells independent. These are historical regression gates,
+    not calibrated inference; see the separate independent-cloud analysis.
     """
     out: list[dict[str, Any]] = []
     for bit_rule in PRIMARY_BIT_RULES:
@@ -881,8 +939,8 @@ def h3_frame_stability(
         result = wilcoxon(differences, alternative="greater", method="auto")
         wilcoxon_statistic = float(result.statistic)
         wilcoxon_p = float(result.pvalue)
-    # Same blocking argument as the H1/H2/H7 family: the independence unit is the
-    # cloud (geometry x contamination x size x seed); the bit rule sits inside it.
+    # Historical blocking removes repeated rules only. Contamination conditions
+    # and some geometry/seed cells share clean points; inference is nominal.
     h3_blocks: dict[tuple[Any, ...], dict[str, float]] = defaultdict(dict)
     for key, pair in samples.items():
         if "A6_rch" in pair and "A5_pca_compact_hilbert" in pair:
@@ -1045,7 +1103,7 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
     stats_table, stats_pandas_used = dataframe_to_latex(
         statistics_table_rows(hypotheses, spearman_rows),
         ["analysis", "metric", "n", "estimate", "ci95", "p", "effect", "effect_within"],
-        "Synthetic statistical analysis summary",
+        "Legacy synthetic analysis: nominal p-values and intervals; shared inputs not fully preserved",
         "tab:synthetic_statistics",
     )
     stats_rows = statistics_table_rows(hypotheses, spearman_rows)
@@ -1054,7 +1112,7 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
         "table_synthetic_hypothesis_tests.tex",
         stats_rows,
         ["analysis", "metric", "n", "estimate", "ci95", "p", "effect", "effect_within"],
-        "Synthetic statistical analysis summary",
+        "Legacy synthetic analysis: nominal p-values and intervals; shared inputs not fully preserved",
         "tab:synthetic_statistics",
         stats_table,
     )
@@ -1076,7 +1134,7 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
     stratified_latex, stratified_pandas_used = dataframe_to_latex(
         stratified_rows,
         stratified_columns,
-        "Synthetic hypothesis tests stratified by bit rule",
+        "Legacy per-rule summaries: nominal p-values; shared inputs remain dependent",
         "tab:synthetic_statistics_by_bit_rule",
     )
     table_outputs["table_synthetic_hypothesis_tests_by_bit_rule.tex"] = write_table_bundle(
@@ -1084,7 +1142,7 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
         "table_synthetic_hypothesis_tests_by_bit_rule.tex",
         stratified_rows,
         stratified_columns,
-        "Synthetic hypothesis tests stratified by bit rule",
+        "Legacy per-rule summaries: nominal p-values; shared inputs remain dependent",
         "tab:synthetic_statistics_by_bit_rule",
         stratified_latex,
     )
@@ -1105,13 +1163,9 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
             "without failing the H1/H2 locality gate."
         ),
         "hypotheses": hypotheses,
+        "shared_seed_locality_sensitivity": shared_seed_locality_sensitivity(rows),
         "stratified_by_bit_rule": stratified,
-        "stratified_scope": (
-            "Same H1/H2/H7_A7 family evaluated separately inside each primary bit "
-            "rule, where the 10 clouds (2 geometries x 5 seeds at the pinned gate "
-            "size) are genuinely independent. Reported only: `definition_of_done_passed` "
-            "still comes from the pooled `hypotheses` entries."
-        ),
+        "stratified_scope": STRATIFIED_SCOPE,
         "spearman_rank_consistency": spearman_rows,
         "bootstrap": {
             "confidence_level": 0.95,
@@ -1123,6 +1177,7 @@ def make_tables(args: argparse.Namespace) -> dict[str, Any]:
             item["passed"] for item in hypotheses if item["hypothesis"] in ("H1", "H2")
         ),
     }
+    annotate_legacy_statistics(stats)
     (args.stats_dir / "synthetic_statistics.json").write_text(
         json.dumps(stats, indent=2) + "\n", encoding="utf-8"
     )
@@ -1147,7 +1202,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--stats-dir", type=Path, default=REPO_ROOT / "analysis/generated/stats"
     )
-    parser.add_argument("--require-significance", action="store_true")
+    parser.add_argument("--require-significance", action="store_true",
+                        help="Require the historical nominal gate for regression compatibility; not calibrated inference")
     return parser.parse_args()
 
 

@@ -2,6 +2,7 @@
 #include <CGAL/hilbert_sort.h>
 #include <CGAL/spatial_sort.h>
 #include <CGAL/version.h>
+#include "rch/metrics/memory.hpp"
 
 // ----------------------------------------------------------------------------
 // cgal_hilbert_sort_adapter.cpp - A7 baseline adapter for CGAL spatial_sort.
@@ -238,6 +239,11 @@ write_metadata(const std::filesystem::path& path, const std::string_view policy)
         return false;
     }
     output << "{\n";
+    const auto rss = rch::metrics::read_peak_rss_kb();
+    output << "  \"peak_rss_kb\": ";
+    if (rss) output << *rss; else output << "null";
+    output << ",\n  \"peak_rss_source\": \"" << (rss ? "linux_proc_self_status_VmHWM" : "unavailable") << "\",\n";
+
     output << "  \"schema\": \"rch.cgal_adapter.metadata.v1\",\n";
     output << "  \"cgal_version\": \"" << RCH_STRINGIFY(CGAL_VERSION) << "\",\n";
     output << "  \"cgal_version_nr\": " << CGAL_VERSION_NR << ",\n";

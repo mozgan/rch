@@ -123,6 +123,61 @@
       "seed_count_a6": 5,
       "seed_count_a3": 5,
       "passed": false
+    },
+    {
+      "dataset_id": "usgs_cameron_peak",
+      "bit_rule": "C0_uniform",
+      "contamination_id": "D0",
+      "a6_miad": 1.4827036158897604,
+      "a3_miad": 1.1286181517950011,
+      "delta_a6_minus_a3": 0.3540854640947593,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "usgs_cameron_peak",
+      "bit_rule": "C1_monotone_half",
+      "contamination_id": "D0",
+      "a6_miad": 1.770438972500585,
+      "a3_miad": 1.1286181517950011,
+      "delta_a6_minus_a3": 0.6418208207055838,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "usgs_cameron_peak",
+      "bit_rule": "C2_occupancy_floor1",
+      "contamination_id": "D0",
+      "a6_miad": 1.0286541189336535,
+      "a3_miad": 1.1286181517950011,
+      "delta_a6_minus_a3": -0.09996403286134758,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": true
+    },
+    {
+      "dataset_id": "usgs_cameron_peak",
+      "bit_rule": "C3_frame_core_occupancy",
+      "contamination_id": "D0",
+      "a6_miad": 3.4773342548181683,
+      "a3_miad": 1.1286181517950011,
+      "delta_a6_minus_a3": 2.3487161030231674,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": false
+    },
+    {
+      "dataset_id": "usgs_cameron_peak",
+      "bit_rule": "C4_hybrid",
+      "contamination_id": "D0",
+      "a6_miad": 0.8366707503503997,
+      "a3_miad": 1.1286181517950011,
+      "delta_a6_minus_a3": -0.2919474014446014,
+      "seed_count_a6": 5,
+      "seed_count_a3": 5,
+      "passed": true
     }
   ]
 }

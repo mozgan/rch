@@ -17,6 +17,7 @@ The executables are written under `build/src-tools/src/cli/`.
 CSV, and records a JSON manifest.
 
 ```bash
+mkdir -p build/cli-output
 build/src-tools/src/cli/rch_order \
   --input examples/tiny_point_cloud.xyz \
   --method rch \
@@ -24,18 +25,19 @@ build/src-tools/src/cli/rch_order \
   --bit-allocator frame_core_occupancy \
   --refinement off \
   --timing-repeats 3 \
-  --output /tmp/order.csv \
-  --manifest /tmp/order.json
+  --output build/cli-output/order.csv \
+  --manifest build/cli-output/order.json
 ```
 
 All three file options, `--input`, `--output`, and `--manifest`, are required.
 The CLI accepts:
 
 - whitespace-separated `.xyz` rows;
-- comma- or whitespace-separated `.csv` rows accepted by the repository parser;
+- comma-, semicolon-, or whitespace-separated `.csv` rows without a header;
 - ASCII PLY 1.0 vertex files whose first three vertex fields are x, y, and z.
 
-Binary PLY and unsupported extensions are rejected.
+Only the first three numeric fields of each row are read. Binary PLY and
+unsupported extensions are rejected.
 
 ### Method tokens
 
@@ -67,6 +69,11 @@ the CLI, but descriptive names are preferable in user scripts.
 
 `--refinement` accepts `off` or `all`.
 
+The frame-control options are `--fixed-frame-domain-half-extent X`,
+`--fixed-frame-quantizer H0,H1,H2,B0,B1,B2`, and
+`--frame-grid-shift-cells F`. They support controlled PCA/RCH experiments;
+use the defaults for normal ordering. See [API controls](api.md#configuration).
+
 ## Output CSV
 
 The order file is:
@@ -91,10 +98,13 @@ The manifest records enough context to audit one invocation, including:
 - point count, bit depths, frame axes, center, and half-extents;
 - scatter repair and robust-fallback flags;
 - integer-output SHA-256 digest;
+- clipping, saturation, shared-key counts, and phase timings;
 - median ordering time and process peak RSS when supported.
 
 Timing and RSS are environment-dependent diagnostics. They are not part of the
-integer-output digest.
+integer-output digest. Nested estimator phases must not be added again to
+the estimator total. Saved flags do not give a complete event history of
+repairs, non-convergence, or failure reasons.
 
 ## Other Tools
 

@@ -1,2 +1,2 @@
 preset,configure,build,ctest,log
-no logs,Not verified,Not verified,Not verified,
+bench,PASS,PASS,PASS,test_bench_20261113T223152Z.json

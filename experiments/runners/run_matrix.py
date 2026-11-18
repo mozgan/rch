@@ -42,10 +42,6 @@ from typing import Any
 
 import yaml
 
-try:
-    import resource
-except ImportError:  # pragma: no cover - non-POSIX fallback
-    resource = None  # type: ignore[assignment]
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -435,10 +431,27 @@ def expand_runlist(
 
 
 def make_clean_points(
-    geometry: dict[str, Any], point_count: int, seed: int
+    geometry: dict[str, Any],
+    point_count: int,
+    seed: int,
+    independent_sampling: bool = False,
 ) -> list[Point]:
-    """Generate an E-axis clean point cloud for a matrix case"""
+    """Generate an E-axis clean point cloud for a matrix case.
+
+    Independent runlists derive a geometry-specific PRNG seed. Surface
+    generators then use IID parameter samples instead of overlapping Halton
+    windows. The default path preserves the established experiment inputs.
+    """
     generator = geometry.get("generator")
+    sample_seed = seed
+    if independent_sampling:
+        payload = f"rch-independent-v1:{geometry['id']}:{seed}".encode("utf-8")
+        sample_seed = int.from_bytes(hashlib.sha256(payload).digest()[:8], "little")
+    if generator == "regime_family":
+        from data.synthetic.generators.regime import regime_points
+        if not independent_sampling:
+            raise ValueError("regime_family requires independent sampling")
+        return regime_points(point_count, geometry["family"], geometry["shape"], sample_seed)
     if generator == "gaussian_ellipsoid":
         axes = tuple(
             float(value)
@@ -446,20 +459,45 @@ def make_clean_points(
         )
         if len(axes) != 3:
             raise ValueError(f"geometry {geometry['id']} must define three axes")
-        return ellipsoid_points(point_count, axes, seed)
+        return ellipsoid_points(point_count, axes, sample_seed)
     if generator == "surface_patch":
         family = str(geometry.get("family", "paraboloid_low"))
-        return patch_points(point_count, family, seed)
+        return patch_points(
+            point_count, family, sample_seed, "iid" if independent_sampling else "halton"
+        )
     if generator == "torus":
         family = str(geometry.get("family", "standard"))
-        return torus_points(point_count, family, seed)
+        return torus_points(
+            point_count, family, sample_seed, "iid" if independent_sampling else "halton"
+        )
     if generator == "cylinder":
         family = str(geometry.get("family", "standard"))
-        return cylinder_points(point_count, family, seed)
+        return cylinder_points(
+            point_count, family, sample_seed, "iid" if independent_sampling else "halton"
+        )
     if generator == "mixed_density":
         family = str(geometry.get("family", "three_blobs"))
-        return mixture_points(point_count, family, seed)
+        return mixture_points(point_count, family, sample_seed)
     raise ValueError(f"unsupported Synthetic geometry generator: {generator}")
+
+
+def shared_frame_domain_half_extent(points: list[Point]) -> float:
+    """Return a common frame-coordinate cube half-width covering the cloud.
+
+    The diagonal of the raw AABB is at least the cloud diameter. Since both
+    tested frame centers are convex combinations of the input points, this
+    cube contains every centered orthogonal projection for either frame.
+    """
+    if not points:
+        raise ValueError("cannot define a shared frame domain for an empty cloud")
+    spans = tuple(
+        max(point[axis] for point in points) - min(point[axis] for point in points)
+        for axis in range(3)
+    )
+    extent = math.sqrt(sum(span * span for span in spans))
+    if not math.isfinite(extent) or extent <= 0.0:
+        raise ValueError("shared frame domain must have a finite positive extent")
+    return extent
 
 
 def case_stem(case: MatrixCase) -> str:
@@ -482,6 +520,7 @@ def run_ordering(
     manifest_path: Path,
     timing_repeats: int = 1,
     refinement: str = "off",
+    fixed_frame_domain_half_extent: float | None = None,
 ) -> float:
     """Invoke the C++ ordering facade and return its reported sort time."""
     if timing_repeats < 1:
@@ -510,6 +549,10 @@ def run_ordering(
         "--timing-repeats",
         str(timing_repeats),
     ]
+    if fixed_frame_domain_half_extent is not None:
+        command.extend(
+            ["--fixed-frame-domain-half-extent", format(fixed_frame_domain_half_extent, ".17g")]
+        )
     subprocess.run(command, check=True, cwd=REPO_ROOT)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     sort_seconds = manifest.get("sort_seconds")
@@ -531,33 +574,14 @@ def permutation_hash(order: list[int]) -> str:
 
 
 def run_process_with_peak_rss(command: list[str]) -> tuple[float, int | None]:
-    """Run a subprocess and return elapsed seconds plus child peak RSS in KiB.
+    """Time an external process; wait4 ru_maxrss is not an isolated image peak.
 
-    Linux `wait4` reports `ru_maxrss` in KiB; macOS reports bytes. If the
-    platform lacks per-child rusage, the command still runs but RSS is unknown
-    rather than fabricated.
+    The adapter must report its own post-exec VmHWM in metadata. Missing
+    metadata means unknown RSS; inherited parent peaks are never substituted.
     """
     start = time.perf_counter()
-    if resource is None or not hasattr(os, "wait4"):
-        subprocess.run(command, check=True, cwd=REPO_ROOT)
-        return time.perf_counter() - start, None
-
-    proc = subprocess.Popen(command, cwd=REPO_ROOT)
-    _pid, status, usage = os.wait4(proc.pid, 0)
-    elapsed = time.perf_counter() - start
-    if os.WIFEXITED(status):
-        returncode = os.WEXITSTATUS(status)
-    elif os.WIFSIGNALED(status):
-        returncode = -os.WTERMSIG(status)
-    else:  # defensive: wait4 should return exited/signaled children here.
-        returncode = proc.poll()
-    proc.returncode = returncode
-    if returncode:
-        raise subprocess.CalledProcessError(int(returncode), command)
-    peak = int(getattr(usage, "ru_maxrss", 0))
-    if sys.platform == "darwin":
-        peak = math.ceil(peak / 1024)
-    return elapsed, peak if peak > 0 else None
+    subprocess.run(command, check=True, cwd=REPO_ROOT)
+    return time.perf_counter() - start, None
 
 
 def run_cgal_ordering(
@@ -578,7 +602,7 @@ def run_cgal_ordering(
     elapsed: list[float] = []
     peak_rss_values: list[int] = []
     for _ in range(timing_repeats):
-        seconds, peak_rss_kb = run_process_with_peak_rss(
+        seconds, _legacy_peak = run_process_with_peak_rss(
             [
                 str(cgal_adapter),
                 "--input",
@@ -592,8 +616,10 @@ def run_cgal_ordering(
             ],
         )
         elapsed.append(seconds)
-        if peak_rss_kb is not None:
-            peak_rss_values.append(peak_rss_kb)
+        measured = json.loads(metadata_path.read_text())
+        peak = measured.get("peak_rss_kb")
+        if measured.get("peak_rss_source") == "linux_proc_self_status_VmHWM" and isinstance(peak, int) and peak > 0:
+            peak_rss_values.append(peak)
     order = read_order_csv(order_path)
     validate_permutation(order, count_point_rows(points_path), "A7 CGAL adapter")
     cgal_metadata = read_cgal_metadata(metadata_path)
@@ -615,7 +641,9 @@ def run_cgal_ordering(
         "min_axis_bits": 0,
         "timing_repeats": timing_repeats,
         "sort_seconds": sort_seconds,
-        "peak_rss_kb": max(peak_rss_values) if peak_rss_values else None,
+        "peak_rss_kb": max(peak_rss_values) if len(peak_rss_values) == timing_repeats else None,
+        "peak_rss_source": "linux_proc_self_status_VmHWM" if len(peak_rss_values) == timing_repeats else "unavailable",
+        "peak_rss_scope": "adapter executable image through order output; maximum across process repeats; not incremental algorithm memory",
         "point_count": len(order),
         "hash": permutation_hash(order),
         "bits_axis": [0, 0, 0],
@@ -647,6 +675,7 @@ def execute_ordering(
     manifest_path: Path,
     timing_repeats: int,
     refinement: str = "off",
+    fixed_frame_domain_half_extent: float | None = None,
 ) -> float:
     """Dispatch one ordering case to the in-repo CLI or external A7 adapter."""
     if case.algorithm.get("method") == "external_cgal_spatial_sort":
@@ -665,6 +694,7 @@ def execute_ordering(
         manifest_path,
         timing_repeats,
         refinement,
+        fixed_frame_domain_half_extent,
     )
 
 
@@ -694,7 +724,7 @@ def validate_permutation(order: list[int], expected_count: int, label: str) -> N
 
 
 def is_permutation_of_size(order: list[int], size: int) -> bool:
-    """Return True iff `order` is exactly a permutation of \(0,\ldots,n-1\)."""
+    r"""Return True iff `order` is exactly a permutation of \(0,\ldots,n-1\)."""
     return size >= 0 and len(order) == size and sorted(order) == list(range(size))
 
 
@@ -1118,7 +1148,7 @@ def block_read_locality(
 def kendall_tau_against_clean(
     clean_order: list[int], contaminated_order: list[int], clean_count: int
 ) -> float:
-    """Compute Kendall \(\tau\) of original-point order under contamination."""
+    r"""Compute Kendall \(\tau\) of original-point order under contamination."""
     if clean_count < 0:
         return 0.0
     if clean_count < 2:
@@ -1251,9 +1281,14 @@ def output_row(
         "frame_estimator": manifest.get("frame_estimator", ""),
         "refinement": manifest.get("refinement", ""),
         "sort_seconds": sort_seconds,
+        "robust_work_counts": json.dumps(manifest.get("robust_work_counts", {}), sort_keys=True),
+        "timing_breakdown_seconds": json.dumps(
+            manifest.get("timing_breakdown_seconds", {}), sort_keys=True
+        ),
         "output_hash": manifest["hash"],
         "bits_axis": " ".join(str(value) for value in manifest["bits_axis"]),
         "robust_fallback_used": manifest["robust_fallback_used"],
+        "fixed_frame_domain_half_extent": manifest.get("fixed_frame_domain_half_extent", ""),
     }
     row["miad"] = (
         mean_inter_adjacent_distance(points, order) if "miad" in metrics else ""
@@ -1273,6 +1308,8 @@ def output_row(
     row["recall_8_64"] = (
         recall_at_k_window(points, order, 8, 64) if "recall_8_64" in metrics else ""
     )
+    row["peak_rss_source"] = manifest.get("peak_rss_source", "legacy_unspecified")
+    row["peak_rss_scope"] = manifest.get("peak_rss_scope", "unknown; do not compare as isolated method memory")
     peak_rss = manifest.get("peak_rss_kb")
     row["peak_rss_kb"] = (
         float(peak_rss)
@@ -1307,6 +1344,54 @@ def output_row(
         if "kendall_tau_clean" in metrics
         else ""
     )
+    diagnostics = manifest.get("quantization_diagnostics")
+    diagnostic_count = manifest.get("point_count", len(points))
+    if isinstance(diagnostics, dict) and isinstance(diagnostic_count, int) and diagnostic_count > 0:
+        coordinate_denominator = 3 * diagnostic_count
+        core_axis = diagnostics.get("frame_core_outside_coordinate_count_by_axis", [0, 0, 0])
+        clipped_axis = diagnostics.get("domain_clipped_coordinate_count_by_axis", [0, 0, 0])
+        saturated_axis = diagnostics.get("domain_saturated_coordinate_count_by_axis", [0, 0, 0])
+        boundary_axis = diagnostics.get("boundary_code_coordinate_count_by_axis", [0, 0, 0])
+        row["frame_core_outside_point_fraction"] = (
+            int(diagnostics.get("frame_core_outside_point_count", 0)) / diagnostic_count
+        )
+        row["frame_core_outside_coordinate_fraction"] = sum(map(int, core_axis)) / coordinate_denominator
+        row["domain_clipped_point_fraction"] = (
+            int(diagnostics.get("domain_clipped_point_count", 0)) / diagnostic_count
+        )
+        row["domain_clipped_coordinate_fraction"] = sum(map(int, clipped_axis)) / coordinate_denominator
+        row["domain_saturated_point_fraction"] = (
+            int(diagnostics.get("domain_saturated_point_count", 0)) / diagnostic_count
+        )
+        row["domain_saturated_coordinate_fraction"] = sum(map(int, saturated_axis)) / coordinate_denominator
+        row["boundary_code_coordinate_fraction"] = sum(map(int, boundary_axis)) / coordinate_denominator
+        row["duplicate_quantized_tuple_point_fraction"] = (
+            int(diagnostics.get("duplicate_quantized_tuple_point_count", 0)) / diagnostic_count
+        )
+        row["duplicate_hilbert_key_point_fraction"] = (
+            int(diagnostics.get("duplicate_hilbert_key_point_count", 0)) / diagnostic_count
+        )
+        for axis, label in enumerate(("x", "y", "z")):
+            row[f"frame_core_outside_{label}_coordinate_fraction"] = int(core_axis[axis]) / diagnostic_count
+            row[f"domain_clipped_{label}_coordinate_fraction"] = int(clipped_axis[axis]) / diagnostic_count
+            row[f"domain_saturated_{label}_coordinate_fraction"] = int(saturated_axis[axis]) / diagnostic_count
+            row[f"boundary_code_{label}_coordinate_fraction"] = int(boundary_axis[axis]) / diagnostic_count
+    else:
+        for field in (
+            "frame_core_outside_point_fraction",
+            "frame_core_outside_coordinate_fraction",
+            "domain_clipped_point_fraction",
+            "domain_clipped_coordinate_fraction",
+            "domain_saturated_point_fraction",
+            "domain_saturated_coordinate_fraction",
+            "boundary_code_coordinate_fraction",
+            "duplicate_quantized_tuple_point_fraction",
+            "duplicate_hilbert_key_point_fraction",
+            *(f"{metric}_{axis}_coordinate_fraction" for metric in (
+                "frame_core_outside", "domain_clipped", "domain_saturated", "boundary_code"
+            ) for axis in ("x", "y", "z")),
+        ):
+            row[field] = ""
     if "frame_angle_rad" in metrics and method_uses_frame(
         str(case.algorithm["method"])
     ):
@@ -1339,9 +1424,12 @@ def write_results_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "frame_estimator",
         "refinement",
         "sort_seconds",
+        "timing_breakdown_seconds",
+        "robust_work_counts",
         "output_hash",
         "bits_axis",
         "robust_fallback_used",
+        "fixed_frame_domain_half_extent",
         "miad",
         "m1_l1_locality",
         "l1_locality",
@@ -1349,6 +1437,8 @@ def write_results_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "l2_locality",
         "recall_8_64",
         "peak_rss_kb",
+        "peak_rss_source",
+        "peak_rss_scope",
         "block_read_mean",
         "block_read_p95",
         "cache_references",
@@ -1357,6 +1447,27 @@ def write_results_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "perf_status",
         "kendall_tau_clean",
         "frame_angle_rad",
+        "frame_core_outside_point_fraction",
+        "frame_core_outside_coordinate_fraction",
+        "frame_core_outside_x_coordinate_fraction",
+        "frame_core_outside_y_coordinate_fraction",
+        "frame_core_outside_z_coordinate_fraction",
+        "domain_clipped_point_fraction",
+        "domain_clipped_coordinate_fraction",
+        "domain_clipped_x_coordinate_fraction",
+        "domain_clipped_y_coordinate_fraction",
+        "domain_clipped_z_coordinate_fraction",
+        "domain_saturated_point_fraction",
+        "domain_saturated_coordinate_fraction",
+        "domain_saturated_x_coordinate_fraction",
+        "domain_saturated_y_coordinate_fraction",
+        "domain_saturated_z_coordinate_fraction",
+        "boundary_code_coordinate_fraction",
+        "boundary_code_x_coordinate_fraction",
+        "boundary_code_y_coordinate_fraction",
+        "boundary_code_z_coordinate_fraction",
+        "duplicate_quantized_tuple_point_fraction",
+        "duplicate_hilbert_key_point_fraction",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
@@ -1381,6 +1492,26 @@ def run_matrix(args: argparse.Namespace) -> Path:
         REPO_ROOT / "experiments/configs/sweeps/anisotropy.yaml", "geometries"
     )
     runlist = load_yaml(args.runlist)
+    domain_policy = runlist.get("frame_domain_policy")
+    if domain_policy not in {None, "shared_bbox_diagonal"}:
+        raise ValueError(f"unsupported frame_domain_policy: {domain_policy}")
+    if domain_policy == "shared_bbox_diagonal":
+        if set(runlist.get("contamination_ids", [])) != {"D0"}:
+            raise ValueError("shared_bbox_diagonal frame ablation requires clean D0 inputs")
+        required_methods = {"pca_compact_hilbert", "rch"}
+        available_methods = {
+            str(algorithms[algorithm_id].get("method"))
+            for algorithm_id in runlist.get("algorithm_ids", [])
+        }
+        if not required_methods.issubset(available_methods):
+            raise ValueError("shared_bbox_diagonal requires PCA and RCH frame algorithms")
+    for geometry in runlist.get("additional_geometries", []):
+        geometry_id = geometry.get("id") if isinstance(geometry, dict) else None
+        if not isinstance(geometry_id, str) or not geometry_id:
+            raise ValueError("additional_geometries entries require a non-empty id")
+        if geometry_id in geometries:
+            raise ValueError(f"additional geometry id already exists: {geometry_id}")
+        geometries[geometry_id] = geometry
     cases = expand_runlist(runlist, algorithms, contamination, geometries)
     if args.max_runs is not None:
         cases = cases[: args.max_runs]
@@ -1415,12 +1546,28 @@ def run_matrix(args: argparse.Namespace) -> Path:
 
     for case in cases:
         # print(f"Running case: algorithm={case.algorithm['id']} contamination={case.contamination['id']} geometry={case.geometry['id']} points={case.point_count} seed={case.seed}")
-        clean_points = make_clean_points(case.geometry, case.point_count, case.seed)
+        independent_sampling = bool(runlist.get("independent_sampling", False))
+        clean_points = make_clean_points(
+            case.geometry, case.point_count, case.seed, independent_sampling
+        )
+        fixed_domain_half_extent = (
+            shared_frame_domain_half_extent(clean_points)
+            if domain_policy == "shared_bbox_diagonal"
+            else None
+        )
+        contamination_seed = case.seed
+        if independent_sampling:
+            payload = f"rch-contamination-v1:{case.geometry['id']}:{case.seed}".encode(
+                "utf-8"
+            )
+            contamination_seed = int.from_bytes(
+                hashlib.sha256(payload).digest()[:8], "little"
+            )
         points = contaminate(
             clean_points,
             str(case.contamination["mode"]),
             float(case.contamination["fraction"]),
-            case.seed,
+            contamination_seed,
         )
         stem = case_stem(case)
         points_path = data_dir / f"{stem}.csv"
@@ -1436,6 +1583,7 @@ def run_matrix(args: argparse.Namespace) -> Path:
             manifest_path,
             timing_repeats,
             refinement,
+            fixed_domain_half_extent,
         )
         order = read_order_csv(order_path)
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -1485,6 +1633,24 @@ def run_matrix(args: argparse.Namespace) -> Path:
         "rows": len(rows),
         "timing_repeats": timing_repeats,
         "refinement": refinement,
+        "independent_sampling": bool(runlist.get("independent_sampling", False)),
+        "geometry_ids": list(runlist.get("geometry_ids", [])),
+        "sampling_seed_scheme": (
+            "sha256(rch-independent-v1:<geometry_id>:<replicate_seed>) first 8 bytes, little-endian; IID surface parameters"
+            if bool(runlist.get("independent_sampling", False))
+            else "legacy seed mapping"
+        ),
+        "contamination_seed_scheme": (
+            "sha256(rch-contamination-v1:<geometry_id>:<replicate_seed>) first 8 bytes, little-endian"
+            if bool(runlist.get("independent_sampling", False))
+            else "legacy seed mapping"
+        ),
+        "frame_domain_policy": domain_policy or "per-method default",
+        "fixed_frame_domain_half_extent_scheme": (
+            "raw clean-cloud AABB diagonal, used as the same half-width on all three projected axes"
+            if domain_policy == "shared_bbox_diagonal"
+            else "per-method default"
+        ),
         "rch_order": display_path(rch_order),
         "cgal_adapter": display_path(cgal_adapter),
         "perf_status": perf_status,
